@@ -1,0 +1,4 @@
+ideas:
+
+- interactive visualization of statistical model
+- compute ratio of space needed by bikes vs cars and the actual numbers of bikes/cars passing by

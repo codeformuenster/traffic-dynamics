@@ -28,14 +28,16 @@ summary(data[data$year == 2016,]$Wetter)
 # TODO Temperatur..C. is not numeric!
 
 regressionModel_exgaussian = 
-	brm(noOfBikes ~ Temperatur...C., #weekday + month + poly(hour, 3), # Temperatur...C. * Windstärke..km.h.,
+	brm(noOfBikes ~ poly(hour,3), #weekday + month + poly(hour, 3), # Temperatur...C. * Windstärke..km.h.,
 			cores = 4,
 			family = exgaussian,
-			data = data[data$year == 2015 & data$weekday == 4 & data$hour == 15, ])
+			data = data[data$year == 2016, ])
 
 pp_check(regressionModel_exgaussian)
-plot(marginal_effects(regressionModel_exgaussian))#, points = T) #, jitter_width = 0.25)
+plot(marginal_effects(regressionModel_exgaussian), points = T, jitter_width = 0.25)
 
+y = data[data$year==2016,]$noOfBikes
+launch_shiny(regressionModel_exgaussian)
 
 
 regressionModel_lognormal = 
