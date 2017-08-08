@@ -1,7 +1,8 @@
 # make a cleaner data file
 
-data2015 = read.csv("zaehlstelle_neutor_2015_stundenauswertung.csv")
-data2016 = read.csv("zaehlstelle_neutor_2016_stundenauswertung.csv")
+# na.strings: treat empty cells or "technische Störung" as NA
+data2015 = read.csv("zaehlstelle_neutor_2015_stundenauswertung.csv", na.strings = c("technische Störung", ""))
+data2016 = read.csv("zaehlstelle_neutor_2016_stundenauswertung.csv", na.strings = c("technische Störung", ""))
 
 # remove summary lines
 data2015 = data2015[-nrow(data2015),]
@@ -9,6 +10,7 @@ data2015 = data2015[-nrow(data2015),]
 data2016 = data2016[-nrow(data2016),]
 data2016 = data2016[-nrow(data2016),]
 
+# rename columns
 data2015$noOfBikes = data2015$Zählung.Neutor
 data2016$noOfBikes = data2016$Neutor..gesamt.
 
@@ -27,7 +29,7 @@ library(lubridate)
 data$year = year(data$date)
 data$month = month(data$date)
 data$day = day(data$date)
-data$weekday = wday(data$date)
+data$weekday = wday(data$date, label = TRUE)
 data$hour = hour(data$date)
 
 write.csv(data2015, file = "bikesNeutor2015.csv", row.names = FALSE)
