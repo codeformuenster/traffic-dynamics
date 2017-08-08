@@ -25,10 +25,10 @@ data$hourC = scale(data$hour, center = TRUE, scale = FALSE)
 
 summary(data[data$year == 2016,]$Wetter)
 
-## have aa look at update.brmsfit -> this might be quicker than re-computing all the time!
+## have a look at update.brmsfit -> this might be quicker than re-computing all the time!
 
 regressionModel_exgaussian = 
-	brm(noOfBikes ~ poly(hour,3) * Temperatur...C. * weekday * Wetter, # + month + * Windstärke..km.h.,
+	brm(noOfBikes ~ poly(hour,3) * Temperatur...C. * weekday, # Wetter + month + * Windstärke..km.h.,
 			cores = 4,
 			family = exgaussian,
 			data = data[data$year == 2016, ])
