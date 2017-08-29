@@ -4,10 +4,14 @@
 library(fitdistrplus)
 library(brms)
 
+# load data
 bikes = read.csv("bikesNeutor1516.csv")
-# ordered factors don't survice .csv storing, so, re-order weekdays:
-bikes$weekday = factor(bikes$weekday, ordered = TRUE,
-                       levels = c("Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"))
+
+# ordered factors don't survive .csv storing, so, re-order weekdays:
+bikes$weekday = factor(bikes$weekday, 
+                       ordered = TRUE,
+                       levels = c("Sun", "Mon", "Tues", "Wed", "Thurs", "Fri",
+                                  "Sat"))
 
 # look at the data -> see plotData.R
 # try to find a proper fitting distribution
@@ -57,8 +61,8 @@ pp_check(m)
 plot(marginal_effects(m), points = T)#, jitter_width = 0.25)
 plot(m)
 
-y = bikes[bikes$year==2016,]$noOfBikes
-launch_shiny(regressionModel_exgaussian)
+y = bikes[bikes$year == 2016,]$noOfBikes
+launch_shiny(regressionModel_exgaussian)  # TODO: where is this variable set?
 
 regressionModel_lognormal = 
 	brm(noOfBikes ~ hourC, #hour * Temperatur...C. * Windstärke..km.h.,
