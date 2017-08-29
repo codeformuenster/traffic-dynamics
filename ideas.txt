@@ -5,3 +5,4 @@ ideas:
 - compute ratio of space needed by bikes vs cars and the actual numbers of bikes/cars passing by
 - impute missing weather observations (assuming simiar weather as e.g. 30 minutes earlier)
 - add model benchmarking (e.g. RMSE score, based on cross-validation)
+- store weekdays numerically (e.g. Sunday == 7)
