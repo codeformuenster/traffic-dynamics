@@ -1,9 +1,8 @@
+# set working directory to proper directory
+# setwd("path/to/here")
 
 library(fitdistrplus)
 library(brms)
-
-# set working directory to proper directory
-# setwd("path/to/here")
 
 bikes = read.csv("bikesNeutor1516.csv")
 # ordered factors don't survice .csv storing, so, re-order weekdays:

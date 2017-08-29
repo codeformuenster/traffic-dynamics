@@ -1,7 +1,7 @@
+# make a cleaner data file
 
 library(lubridate)
 
-# make a cleaner data file
 # set working directory to proper directory
 # setwd("path/to/here")
 

@@ -1,11 +1,12 @@
 # create some nice plots
 # okay, there are not nice yet ... but this is going to get better hopefully
 
+library(ggplot2)
+
 bikes = read.csv("bikesNeutor1516.csv")
 
 # histogram (?) by ...
 # temperature
-library(ggplot2)
 bikes$year = as.factor(bikes$year)
 
 p = ggplot(data = bikes[!is.na(bikes$temp),]) +
