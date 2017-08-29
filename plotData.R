@@ -17,9 +17,9 @@ p
 
 # year
 
-p = ggplot() +
+p = ggplot(data = NA, aes(x = noOfBikes, fill = year)) +
 	geom_histogram(data = bikes[bikes$year == 2016, ], 
-	               aes(x = noOfBikes, fill = year), alpha = 0.5) +
-	geom_histogram(data = bikes[bikes$year == 2016, ], 
-	               aes(x = noOfBikes, fill = year), alpha = 0.5)
+	               alpha = 0.5) +
+	geom_histogram(data = bikes[bikes$year == 2015, ],
+	               alpha = 0.5)
 p
