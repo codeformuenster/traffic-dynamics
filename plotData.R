@@ -1,12 +1,11 @@
-# create some nice plots
-# okay, there are not nice yet ... but this is going to get better hopefully
+# create some plots
 
 library(ggplot2)
 
-bikes = read.csv("bikesNeutor1516.csv")
+# load data
+bikes <- read.csv("bikesNeutor1516.csv")
 
-# histogram (?) by ...
-# temperature
+# heatmap of number of bicycles vs. temperature
 bikes$year = as.factor(bikes$year)
 
 p = ggplot(data = bikes[!is.na(bikes$temp),]) +
@@ -15,11 +14,8 @@ p = ggplot(data = bikes[!is.na(bikes$temp),]) +
                  bins = (max(bikes$temp, na.rm = T) - min(bikes$temp, na.rm = T) / 2))
 p
 
-# year
-
+# histogram of number of bicycles by year
 p = ggplot(data = NA, aes(x = noOfBikes, fill = year)) +
-	geom_histogram(data = bikes[bikes$year == 2016, ], 
-	               alpha = 0.5) +
-	geom_histogram(data = bikes[bikes$year == 2015, ],
-	               alpha = 0.5)
+	geom_histogram(data = bikes[bikes$year == 2016, ], alpha = 0.5) +
+	geom_histogram(data = bikes[bikes$year == 2015, ], alpha = 0.5)
 p
