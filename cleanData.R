@@ -1,3 +1,6 @@
+
+library(lubridate)
+
 # make a cleaner data file
 # set working directory to proper directory
 # setwd("path/to/here")
@@ -31,7 +34,6 @@ bikes$wind = bikes$Windstärke..km.h.
 bikes = subset(bikes, select = -c(Windstärke..km.h.))
 
 # convert to proper date (could also be done by changing the format in LibreOffice Calc; anyway ...)
-library(lubridate)
 
 bikes$date = strptime(bikes$Stunden, format = "%m/%d/%Y %H:%M")
 bikes$year = year(bikes$date)

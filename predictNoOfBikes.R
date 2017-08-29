@@ -1,3 +1,7 @@
+
+library(fitdistrplus)
+library(brms)
+
 # set working directory to proper directory
 # setwd("path/to/here")
 
@@ -8,14 +12,12 @@ bikes$weekday = factor(bikes$weekday, ordered = TRUE,
 
 # look at the data -> see plotData.R
 # try to find a proper fitting distribution
-library(fitdistrplus)
 x = bikes$noOfBikes
 x = x[!is.na(x)]
 descdist(x, discrete = FALSE)
 
 ## Bayesian regression model
 
-library(brms)
 
 # I have the feeling that exgaussian fits better -- but this should be checked ...
 # hour seems to be not working correct -- gives a weird regression line ...
