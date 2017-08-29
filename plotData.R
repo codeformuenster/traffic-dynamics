@@ -15,7 +15,7 @@ p = ggplot(data = bikes[!is.na(bikes$temp),]) +
 p
 
 # histogram of number of bicycles by year
-p = ggplot(data = NA, aes(x = noOfBikes, fill = year)) +
+p = ggplot(data = NULL, aes(x = noOfBikes, fill = year)) +
 	geom_histogram(data = bikes[bikes$year == 2016, ], alpha = 0.5) +
 	geom_histogram(data = bikes[bikes$year == 2015, ], alpha = 0.5)
 p
