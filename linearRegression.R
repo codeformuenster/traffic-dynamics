@@ -1,38 +1,34 @@
 ## Simple linear regression
 
+## load libraries ####
 library(dplyr)
 library(ggplot2)
 library(fitdistrplus)
 library(MASS)
 
-# load data
+## load data ####
 bikes <- read.csv("bikesNeutor1516.csv")
 
-## check values for their distribution
-# number of bicycles
-descdist(bikes$noOfBikes, discrete = FALSE)
-# scale data
-bikes$noOfBikes_norm <- bikes$noOfBikes / (max(bikes$noOfBikes) + 10) + 0.001
-x <- dbeta(bikes$noOfBikes_norm, 0.927726829, 3.610553699)
-ggplot(data = bikes, aes(x)) + 
+## check distributions ####
+# number of bicycles - errors probably not normally distributed
+ggplot(data = bikes, aes(bikes$noOfBikes)) + 
   geom_histogram()
-fit.beta <- fitdistr(bikes$noOfBikes_norm, "beta", 
-                    list(shape1 = 2, shape2 = 5))
-ggplot(data = bikes, aes(bikes$noOfBikes_norm)) + 
-  geom_histogram()
-# TODO: clean transformation to normal distribution
-
 # temperature: approx. normally distributed
 ggplot(data = bikes, aes(bikes$temp)) + 
   geom_histogram()
 # wind: lognormal
-ggplot(data = bikes, aes(log(bikes$wind + 1))) + 
+ggplot(data = bikes, aes(log(bikes$wind))) + 
   geom_histogram()
-bikes$wind_log <- log(bikes$wind + 1)
+bikes$wind_log <- log(bikes$wind)
 
-# fit regression model
-fit <- lm(noOfBikes ~ temp + wind_log, 
-          data = bikes)
+## filter data for valid observations ####
+bikes_filtered <-
+  bikes %>%
+  dplyr::select(noOfBikes, temp, wind_log) %>%
+  filter(wind_log != -Inf)
+
+## fit regression model ####
+fit <- lm(noOfBikes ~ temp + wind_log, data = bikes_filtered)
 
 # evaluate
 summary(fit)
