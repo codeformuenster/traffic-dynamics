@@ -32,6 +32,8 @@ bikes$temp = bikes$Temperatur...C.
 bikes = subset(bikes, select = -c(Temperatur...C.))
 bikes$wind = bikes$Windstärke..km.h.
 bikes = subset(bikes, select = -c(Windstärke..km.h.))
+bikes$weather = bikes$Wetter
+bikes = subset(bikes, select = -c(Wetter))
 
 # convert to proper date (could also be done by changing the format in LibreOffice Calc; anyway ...)
 
