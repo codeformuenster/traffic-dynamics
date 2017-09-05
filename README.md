@@ -23,3 +23,4 @@ The files contain the number of cyclists that passed every hour at the counting 
 * impute missing weather observations (assuming simiar weather as e.g. 30 minutes earlier)
 * add model benchmarking (e.g. RMSE score, based on cross-validation)
 * store weekdays numerically (e.g. Sunday == 7)
+* double-check effect of month -> boxplot
