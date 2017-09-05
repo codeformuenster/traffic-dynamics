@@ -24,11 +24,14 @@ bikes$wind_log <- log(bikes$wind)
 ## filter data for valid observations ####
 bikes_filtered <-
   bikes %>%
-  dplyr::select(noOfBikes, temp, wind_log) %>%
+  dplyr::select(noOfBikes, temp, wind_log, wind) %>%
   filter(wind_log != -Inf)
+
+
+## regression model without transformation ####
+fit1 <- lm(noOfBikes ~ temp + wind, data = bikes_filtered)
+summary(fit1)
 
 ## fit regression model ####
 fit <- lm(noOfBikes ~ temp + wind_log, data = bikes_filtered)
-
-# evaluate
 summary(fit)
