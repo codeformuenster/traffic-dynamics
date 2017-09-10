@@ -24,3 +24,4 @@ The files contain the number of cyclists that passed every hour at the counting 
 * add model benchmarking (e.g. RMSE score, based on cross-validation)
 * store weekdays numerically (e.g. Sunday == 7)
 * double-check effect of month -> boxplot
+* compare results for 'Neutor' with 'Wolbecker Str.' (http://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/radverkehrszaehlungen/wolbecker-strasse.html)
