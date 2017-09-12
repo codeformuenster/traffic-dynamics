@@ -29,13 +29,14 @@ bikes$wind_log <- log(bikes$wind)
 # filter data for valid observations
 bikes_filtered <-
   bikes %>%
-  dplyr::select(noOfBikes, temp, wind_log, wind, weekday, year, month) %>%
+  dplyr::select(noOfBikes, temp, wind_log, wind, weekday, year, month, hour) %>%
   filter(wind_log != -Inf) %>%
   mutate(month = as.factor(month)) %>%
   filter(year == 2016) %>%
   mutate(weekday = factor(weekday, 
-                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun")))
-
+                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"))) %>%
+  filter(hour < 20) %>%
+  filter(hour > 7)
 
 ## fit model ####
 # negative binomial model (due to potentially high level of dispersion)
@@ -50,6 +51,10 @@ fit$coefficients %>%
 ## visualize fitted model against data ####
 plot(fit)
 
+# effect ranking of independent variables? (effects of months odd)
 sjp.glm(fit)
-sjp.glm(fit, type = "slope")
+# predictions
+sjp.glm(fit, type = "pred", vars = c("month", "weekday"))
+sjp.glm(fit, type = "pred", vars = c("month"))
+# marginal effects
 sjp.glm(fit, type = "eff")
