@@ -1,4 +1,4 @@
-## Simple linear regression
+## Negative binomial GLM
 
 ## load libraries ####
 library(dplyr)
@@ -21,10 +21,12 @@ ggplot(data = bikes, aes(bikes$temp)) +
 # wind: lognormal
 ggplot(data = bikes, aes(log(bikes$wind))) + 
   geom_histogram()
+
+
+## preprocessing data ####
+# log of wind speed (due to log-normal distribution)
 bikes$wind_log <- log(bikes$wind)
-
-
-## filter data for valid observations ####
+# filter data for valid observations
 bikes_filtered <-
   bikes %>%
   dplyr::select(noOfBikes, temp, wind_log, wind, weekday, year, month) %>%
@@ -32,29 +34,12 @@ bikes_filtered <-
   mutate(month = as.factor(month))
 
 
-## fit models
-# linear regression
-fit1 <- lm(noOfBikes ~ temp + wind, data = bikes_filtered)
-summary(fit1)
-
-fit <- lm(noOfBikes ~ temp + wind_log, data = bikes_filtered)
-summary(fit)
-
-# poisson regression
-glm(noOfBikes ~ temp + wind_log + weekday + month, 
-    data = bikes_filtered, 
-    family = poisson()) %>%
-  summary
-
+## fit model ####
 # negative binomial model (due to potentially high level of dispersion)
-glm.nb(noOfBikes ~ temp + wind_log + weekday + month, 
-       data = bikes_filtered) %>%
+fit <-
+  glm.nb(noOfBikes ~ temp + wind_log + weekday + month, 
+       data = bikes_filtered)
+
+fit %>%
   summary
 
-# weekday effect
-glm.nb(noOfBikes ~ weekday, data = bikes_filtered) %>% 
-  summary
-glm(noOfBikes ~ weekday, data = bikes_filtered, family = poisson()) %>% 
-  summary
-lm(noOfBikes ~ weekday, data = bikes_filtered) %>% 
-  summary
