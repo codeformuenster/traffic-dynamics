@@ -32,7 +32,9 @@ bikes_filtered <-
   dplyr::select(noOfBikes, temp, wind_log, wind, weekday, year, month) %>%
   filter(wind_log != -Inf) %>%
   mutate(month = as.factor(month)) %>%
-  filter(year == 2016)
+  filter(year == 2016) %>%
+  mutate(weekday = factor(weekday, 
+                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun")))
 
 
 ## fit model ####
@@ -41,6 +43,13 @@ fit <-
   glm.nb(noOfBikes ~ temp + wind_log + weekday + month, 
        data = bikes_filtered)
 
-fit %>%
-  summary
+fit$coefficients %>%
+  exp() %>%
+  data.frame()
 
+## visualize fitted model against data ####
+plot(fit)
+
+sjp.glm(fit)
+sjp.glm(fit, type = "slope")
+sjp.glm(fit, type = "eff")

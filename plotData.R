@@ -26,7 +26,9 @@ p
 bikes_boxplot <-
   bikes %>%
   filter(year == 2016) %>%
-  mutate(month = as.factor(month))
+  mutate(month = as.factor(month)) %>%
+  mutate(weekday = factor(weekday, 
+                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun")))
 
 ggplot(data = bikes_boxplot, 
        aes(x = month, y = noOfBikes, group = month)) +
@@ -34,4 +36,14 @@ ggplot(data = bikes_boxplot,
 
 bikes_boxplot %>%
   group_by(month) %>%
+  summarise(mean_month = mean(noOfBikes))
+
+
+# boxplots of number of bicycles by WEEKDAY
+ggplot(data = bikes_boxplot, 
+       aes(x = weekday, y = noOfBikes, group = weekday)) +
+  geom_boxplot()
+
+bikes_boxplot %>%
+  group_by(weekday) %>%
   summarise(mean_month = mean(noOfBikes))
