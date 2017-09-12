@@ -31,7 +31,8 @@ bikes_filtered <-
   bikes %>%
   dplyr::select(noOfBikes, temp, wind_log, wind, weekday, year, month) %>%
   filter(wind_log != -Inf) %>%
-  mutate(month = as.factor(month))
+  mutate(month = as.factor(month)) %>%
+  filter(year == 2016)
 
 
 ## fit model ####
