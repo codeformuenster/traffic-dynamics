@@ -1,10 +1,12 @@
 # create some plots
 
+## load libraries ####
 library(ggplot2)
 
-# load data
+## load data ####
 bikes <- read.csv("bikesNeutor1516.csv")
 
+## plots ####
 # heatmap of number of bicycles vs. temperature
 bikes$year = as.factor(bikes$year)
 
@@ -19,3 +21,17 @@ p = ggplot(data = NULL, aes(x = noOfBikes, fill = year)) +
 	geom_histogram(data = bikes[bikes$year == 2016, ], alpha = 0.5) +
 	geom_histogram(data = bikes[bikes$year == 2015, ], alpha = 0.5)
 p
+
+# boxplots of number of bicycles by MONTH
+bikes_boxplot <-
+  bikes %>%
+  filter(year == 2016) %>%
+  mutate(month = as.factor(month))
+
+ggplot(data = bikes_boxplot, 
+       aes(x = month, y = noOfBikes, group = month)) +
+  geom_boxplot()
+
+bikes_boxplot %>%
+  group_by(month) %>%
+  summarise(mean_month = mean(noOfBikes))
