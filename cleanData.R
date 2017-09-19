@@ -6,30 +6,36 @@ library(lubridate)
 
 ## load data ####
 # na.strings: treat empty cells or "technische Störung" as NA
-data2015 <- read.csv("zaehlstelle_neutor_2015_stundenauswertung.csv", 
+data2015Neutor <- read.csv("zaehlstelle_neutor_2015_stundenauswertung.csv", 
                      na.strings = c("technische Störung", ""))
-data2016 <- read.csv("zaehlstelle_neutor_2016_stundenauswertung.csv", 
+data2016Neutor <- read.csv("zaehlstelle_neutor_2016_stundenauswertung.csv", 
+                     na.strings = c("technische Störung", ""))
+data2016Wolbecker <- read.csv("zaehlstelle_wolbecker_2016_stundenauswertung.csv", 
                      na.strings = c("technische Störung", ""))
 
 
 ## preprocess data ####
 # remove summary lines
-data2015 <- data2015[-nrow(data2015),]
-# 2016 files has two of those
-data2016 <- data2016[-nrow(data2016),]
-data2016 <- data2016[-nrow(data2016),]
+data2015Neutor <- data2015Neutor[-nrow(data2015Neutor),]
+# 2016Neutor files has two of those
+data2016Neutor <- data2016Neutor[-nrow(data2016Neutor),]
+data2016Neutor <- data2016Neutor[-nrow(data2016Neutor),]
+# 2016Wolbecker has also two lines too much
+data2016Wolbecker <- data2016Wolbecker[-nrow(data2016Wolbecker),]
+data2016Wolbecker <- data2016Wolbecker[-nrow(data2016Wolbecker),]
 
 # rename columns
-data2015$noOfBikes <- data2015$Zählung.Neutor
-data2016$noOfBikes <- data2016$Neutor..gesamt.
+data2015Neutor$noOfBikes <- data2015Neutor$Zählung.Neutor
+data2016Neutor$noOfBikes <- data2016Neutor$Neutor..gesamt.
+data2016Wolbecker$noOfBikes <- data2016Wolbecker$Wolbecker.Straße..gesamt.
 
-data2015 <- subset(data2015, select = -c(Zählung.Neutor))
-data2016 <- subset(data2016, select = -c(Neutor..gesamt.))
+data2015Neutor <- subset(data2015Neutor, select = -c(Zählung.Neutor))
+data2016Neutor <- subset(data2016Neutor, select = -c(Neutor..gesamt.))
 
-# no weather for 2015
-data2015$Wetter <- NA
+# no weather for 2015Neutor
+data2015Neutor$Wetter <- NA
 
-bikes <- rbind(data2015, data2016)
+bikes <- rbind(data2015Neutor, data2016Neutor)
 
 # rename more columns
 bikes$temp <- bikes$Temperatur...C.
@@ -39,7 +45,8 @@ bikes <- subset(bikes, select = -c(Windstärke..km.h.))
 bikes$weather <- bikes$Wetter
 bikes <- subset(bikes, select = -c(Wetter))
 
-# convert to proper date (could also be done by changing the format in LibreOffice Calc; anyway ...)
+# convert to proper date (could also be done by changing the format in 
+# LibreOffice Calc; anyway ...)
 
 bikes$date <- strptime(bikes$Stunden, format = "%m/%d/%Y %H:%M")
 bikes$year <- year(bikes$date)
@@ -60,6 +67,6 @@ nrow(bikes[(is.na(bikes$temp)),])
 
 
 ## write processed data to file ####
-write.csv(data2015, file = "bikesNeutor2015.csv", row.names = FALSE)
-write.csv(data2016, file = "bikesNeutor2016.csv", row.names = FALSE)
+write.csv(data2015Neutor, file = "bikesNeutor2015.csv", row.names = FALSE)
+write.csv(data2016Neutor, file = "bikesNeutor2016.csv", row.names = FALSE)
 write.csv(bikes, file = "bikesNeutor1516.csv", row.names = FALSE)
