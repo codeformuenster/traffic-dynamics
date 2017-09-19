@@ -1,6 +1,8 @@
 ## temorary paste bin for learning how-to deploy our R scripts to docker
 sudo docker run -ti --rm --volume $PWD:/home/docker -w /home/docker -u docker r-base bash
 
+docker run --rm -it --user rstudio --volume $PWD:/home/rstudio -w /home/rstudio jackinovik/rstan-complete /usr/bin/R
+
 apt-get update
 apt-get install g++
 

@@ -1,7 +1,7 @@
 # make a cleaner data file
 
 ## load libraries ############
-library(lubridate)
+require(lubridate)
 
 
 ## load data ############
@@ -27,18 +27,23 @@ data2016Neutor <- data2016Neutor[-nrow(data2016Neutor),]
 data2016Wolbecker <- data2016Wolbecker[-nrow(data2016Wolbecker),]
 data2016Wolbecker <- data2016Wolbecker[-nrow(data2016Wolbecker),]
 
-# rename columns
+# rename columns (and delete the old column)
 data2015Neutor$noOfBikes <- data2015Neutor$Zählung.Neutor
-data2016Neutor$noOfBikes <- data2016Neutor$Neutor..gesamt.
-data2016Wolbecker$noOfBikes <- data2016Wolbecker$Wolbecker.Straße..gesamt.
-
 data2015Neutor <- subset(data2015Neutor, select = -c(Zählung.Neutor))
+data2016Neutor$noOfBikes <- data2016Neutor$Neutor..gesamt.
 data2016Neutor <- subset(data2016Neutor, select = -c(Neutor..gesamt.))
+data2016Wolbecker$noOfBikes <- data2016Wolbecker$Wolbecker.Straße..gesamt.
+data2016Wolbecker <- subset(data2016Wolbecker, select = -c(Wolbecker.Straße..gesamt.))
+
+# add column for location
+data2015Neutor$location <- "neutor"
+data2016Neutor$location <- "neutor"
+data2016Wolbecker$location <- "wolbecker"
 
 # no weather for 2015Neutor
 data2015Neutor$Wetter <- NA
 
-bikes <- rbind(data2015Neutor, data2016Neutor)
+bikes <- rbind(data2015Neutor, data2016Neutor, data2016Wolbecker)
 
 # rename more columns
 bikes$temp <- bikes$Temperatur...C.
@@ -58,17 +63,6 @@ bikes$day <- day(bikes$date)
 bikes$weekday <- wday(bikes$date, label = TRUE)
 bikes$hour <- hour(bikes$date)
 
-
-# remove double line in 2015 data set
-bikes <- bikes[!(bikes$year == 2015 
-                 & bikes$month == 3 
-                 & bikes$day == 29 
-                 & bikes$hour == 3),]
-any(is.na(bikes$noOfBikes))
-
-nrow(bikes[(is.na(bikes$temp)),])
-
-
 ## write processed data to file ####
 write.csv(data2015Neutor, 
           file = "../data/processed/bikesNeutor2015.csv", 
@@ -76,6 +70,10 @@ write.csv(data2015Neutor,
 write.csv(data2016Neutor, 
           file = "../data/processed/bikesNeutor2016.csv", 
           row.names = FALSE)
-write.csv(bikes, 
-          file = "../data/processed/bikesNeutor1516.csv", 
+write.csv(data2016Wolbecker, 
+          file = "../data/processed/bikesWolbecker2016.csv", 
           row.names = FALSE)
+write.csv(bikes,
+          file = "../data/processed/bikes1516.csv", 
+          row.names = FALSE)
+# 
