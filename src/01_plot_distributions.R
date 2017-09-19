@@ -7,11 +7,11 @@ library(ggplot2)
 
 ## load data ####
 bikes <- 
-  read.csv("../data/processed/bikesNeutor1516.csv") %>%
+  read.csv("../data/processed/bikes1516.csv") %>%
   filter(wind_log != -Inf,
          year == 2016,
          hour < 20,
-         hour > 6)
+         hour > 7)
 
 ## distribution of target variable ####
 # number of bicycles - errors probably not normally distributed

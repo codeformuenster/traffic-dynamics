@@ -80,4 +80,3 @@ write.csv(data2016Wolbecker,
 write.csv(bikes,
           file = "../data/processed/bikes1516.csv", 
           row.names = FALSE)
-# 
