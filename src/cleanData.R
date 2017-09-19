@@ -1,20 +1,23 @@
 # make a cleaner data file
 
-## load libraries ####
+## load libraries ############
 library(lubridate)
 
 
-## load data ####
+## load data ############
 # na.strings: treat empty cells or "technische Störung" as NA
-data2015Neutor <- read.csv("zaehlstelle_neutor_2015_stundenauswertung.csv", 
-                     na.strings = c("technische Störung", ""))
-data2016Neutor <- read.csv("zaehlstelle_neutor_2016_stundenauswertung.csv", 
-                     na.strings = c("technische Störung", ""))
-data2016Wolbecker <- read.csv("zaehlstelle_wolbecker_2016_stundenauswertung.csv", 
-                     na.strings = c("technische Störung", ""))
+data2015Neutor <- 
+  read.csv("../data/raw/zaehlstelle_neutor_2015_stundenauswertung.csv", 
+           na.strings = c("technische Störung", ""))
+data2016Neutor <- 
+  read.csv("../data/raw/zaehlstelle_neutor_2016_stundenauswertung.csv", 
+           na.strings = c("technische Störung", ""))
+data2016Wolbecker <- 
+  read.csv("../data/raw/zaehlstelle_wolbecker_2016_stundenauswertung.csv", 
+           na.strings = c("technische Störung", ""))
 
 
-## preprocess data ####
+## preprocess data ###########
 # remove summary lines
 data2015Neutor <- data2015Neutor[-nrow(data2015Neutor),]
 # 2016Neutor files has two of those
@@ -67,6 +70,12 @@ nrow(bikes[(is.na(bikes$temp)),])
 
 
 ## write processed data to file ####
-write.csv(data2015Neutor, file = "bikesNeutor2015.csv", row.names = FALSE)
-write.csv(data2016Neutor, file = "bikesNeutor2016.csv", row.names = FALSE)
-write.csv(bikes, file = "bikesNeutor1516.csv", row.names = FALSE)
+write.csv(data2015Neutor, 
+          file = "../data/processed/bikesNeutor2015.csv", 
+          row.names = FALSE)
+write.csv(data2016Neutor, 
+          file = "../data/processed/bikesNeutor2016.csv", 
+          row.names = FALSE)
+write.csv(bikes, 
+          file = "../data/processed/bikesNeutor1516.csv", 
+          row.names = FALSE)
