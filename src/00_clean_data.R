@@ -63,6 +63,10 @@ bikes$day <- day(bikes$date)
 bikes$weekday <- wday(bikes$date, label = TRUE)
 bikes$hour <- hour(bikes$date)
 
+## feature generation ####
+# log of wind speed (due to log-normal distribution)
+bikes$wind_log <- log(bikes$wind)
+
 ## write processed data to file ####
 write.csv(data2015Neutor, 
           file = "../data/processed/bikesNeutor2015.csv", 
