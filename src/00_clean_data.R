@@ -69,6 +69,11 @@ any(is.na(bikes$noOfBikes))
 nrow(bikes[(is.na(bikes$temp)),])
 
 
+## feature generation ####
+# log of wind speed (due to log-normal distribution)
+bikes$wind_log <- log(bikes$wind)
+
+
 ## write processed data to file ####
 write.csv(data2015Neutor, 
           file = "../data/processed/bikesNeutor2015.csv", 
