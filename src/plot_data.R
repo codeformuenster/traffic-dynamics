@@ -4,7 +4,7 @@
 library(ggplot2)
 
 ## load data ####
-bikes <- read.csv("bikesNeutor1516.csv")
+bikes <- read.csv("../data/processed/bikesNeutor1516.csv")
 
 ## plots ####
 # heatmap of number of bicycles vs. temperature

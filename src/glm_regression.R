@@ -5,10 +5,11 @@ library(dplyr)
 library(ggplot2)
 library(fitdistrplus)
 library(MASS)
+library(sjPlot)
 
 
 ## load data ####
-bikes <- read.csv("bikesNeutor1516.csv")
+bikes <- read.csv("../data/processed/bikesNeutor1516.csv")
 
 
 ## check distributions ####

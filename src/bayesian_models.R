@@ -14,7 +14,7 @@ library(brms)
 # }
 
 # load data
-bikes = read.csv("bikesNeutor1516.csv")
+bikes = read.csv("../data/processed/bikesNeutor1516.csv")
 
 # ordered factors don't survive .csv storing, so, re-order weekdays:
 bikes$weekday = factor(bikes$weekday, 
