@@ -22,6 +22,4 @@ The files contain the number of cyclists that passed every hour at the counting 
 * compute ratio of space needed by bikes vs cars and the actual numbers of bikes/cars passing by
 * impute missing weather observations (assuming simiar weather as e.g. 30 minutes earlier)
 * add model benchmarking (e.g. RMSE score, based on cross-validation)
-* store weekdays numerically (e.g. Sunday == 7)
-* double-check effect of month -> boxplot
-* compare results for 'Neutor' with 'Wolbecker Str.' (http://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/radverkehrszaehlungen/wolbecker-strasse.html)
+* migrate 'negative-binomial regression' to 'linear regression', due to normal distribution of target variable during day hours

@@ -19,7 +19,6 @@ ggplot(data = bikes, aes(bikes$noOfBikes)) +
   geom_histogram()
 
 descdist(bikes$noOfBikes)
-shapiro.test(bikes$noOfBikes)
 # => can assume normal distribution
 
 ## distribution of features ####
