@@ -1,7 +1,8 @@
-# create some plots
+# create some high level plots
 
 ## load libraries ####
 library(ggplot2)
+library(dplyr)
 
 ## load data ####
 bikes <- read.csv("../data/processed/bikesNeutor1516.csv")
@@ -10,17 +11,15 @@ bikes <- read.csv("../data/processed/bikesNeutor1516.csv")
 # heatmap of number of bicycles vs. temperature
 bikes$year = as.factor(bikes$year)
 
-p = ggplot(data = bikes[!is.na(bikes$temp),]) +
+ggplot(data = bikes[!is.na(bikes$temp),]) +
   geom_bin2d(aes(x = temp, y = noOfBikes),
                  # no of bins: one bin for two degree celsius
                  bins = (max(bikes$temp, na.rm = T) - min(bikes$temp, na.rm = T) / 2))
-p
 
 # histogram of number of bicycles by year
-p = ggplot(data = NULL, aes(x = noOfBikes, fill = year)) +
+ggplot(data = NULL, aes(x = noOfBikes, fill = year)) +
 	geom_histogram(data = bikes[bikes$year == 2016, ], alpha = 0.5) +
 	geom_histogram(data = bikes[bikes$year == 2015, ], alpha = 0.5)
-p
 
 # boxplots of number of bicycles by MONTH
 bikes_boxplot <-
