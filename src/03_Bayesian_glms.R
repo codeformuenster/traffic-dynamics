@@ -1,12 +1,14 @@
 # set working directory to proper directory
 # setwd("path/to/here")
 
-if(require(brms) == FALSE){
+if (require(brms) == FALSE) {
   install.packages("brms")
+  require(brms)
 }
 
 # load data
-bikes = read.csv("../data/processed/bikes1516.csv")
+# this assumes the script is called from the root directory of the repository
+bikes = read.csv("data/processed/bikes1516.csv")
 
 # ordered factors don't survive .csv storing, so, re-order weekdays:
 bikes$weekday = factor(bikes$weekday, 
@@ -27,55 +29,55 @@ bikes$weekday = factor(bikes$weekday,
 
 #### exgaussian ####
 
-regressionModel_exgaussian_hours = 
+regressionModel_exgaussian_hours =
 	brm(noOfBikes ~ poly(hour,3),
 			cores = 4,
 			family = exgaussian,
 			data = bikes)
 
-regressionModel_exgaussian_temp = 
+regressionModel_exgaussian_temp =
 	brm(noOfBikes ~ poly(temp, 3),
 			cores = 4,
 			family = exgaussian,
 			data = bikes[!(is.na(bikes$temp)), ]) # TODO fix this before fitting the model ...
 
-regressionModel_exgaussian_wday = 
+regressionModel_exgaussian_wday =
 	brm(noOfBikes ~ weekday,
 			cores = 4,
 			family = exgaussian,
 			data = bikes)
 
-regressionModel_exgaussian_wind = 
+regressionModel_exgaussian_wind =
 	brm(noOfBikes ~ wind, # poly is not needed -> the model converges to a straight line
 			cores = 4,
 			family = exgaussian,
 			data = bikes[!is.na(bikes$wind), ])  # TODO fix this before fitting the model ...
 
-regressionModel_exgaussian_weather = 
+regressionModel_exgaussian_weather =
 	brm(noOfBikes ~ weather,
 			cores = 4,
 			family = exgaussian,
 			data = bikes)
 
-regressionModel_exgaussian_month = 
+regressionModel_exgaussian_month =
 	brm(noOfBikes ~ month,
 			cores = 4,
 			family = exgaussian,
 			data = bikes)
 
-regressionModel_exgaussian_year = 
+regressionModel_exgaussian_year =
 	brm(noOfBikes ~ year,
 			cores = 4,
 			family = exgaussian,
 			data = bikes)
 
-regressionModel_exgaussian_location = 
+regressionModel_exgaussian_location =
 	brm(noOfBikes ~ location,
 			cores = 4,
 			family = exgaussian,
 			data = bikes)
 
-regressionModel_exgaussian_all = 
+regressionModel_exgaussian_all =
 	brm(noOfBikes ~ hours * temp * wday * wind * weather * month * year * location,
 			cores = 4,
 			family = exgaussian,
@@ -83,69 +85,69 @@ regressionModel_exgaussian_all =
 
 save(regressionModel_exgaussian_hours, 
      regressionModel_exgaussian_temp, 
-     regressionModel_exgaussian_wday, 
-     regressionModel_exgaussian_wind, 
+     regressionModel_exgaussian_wday,
+     regressionModel_exgaussian_wind,
      regressionModel_exgaussian_weather,
      regressionModel_exgaussian_month,
      regressionModel_exgaussian_year,
      regressionModel_exgaussian_location,
      regressionModel_exgaussian_all,
-     file = "exgaussian_models.RData")
+     file = "results/Bayesian_exgaussian_models.RData")
 
 #### negbinomial ####
 
 regressionModel_negbinom_hours = 
 	brm(noOfBikes ~ poly(hour,3),
 			cores = 4,
-			family = negbinom,
+			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_temp = 
 	brm(noOfBikes ~ poly(temp, 3),
 			cores = 4,
-			family = negbinom,
+			family = negbinomial,
 			data = bikes[!(is.na(bikes$temp)), ]) # TODO fix this before fitting the model ...
 
 regressionModel_negbinom_wday = 
 	brm(noOfBikes ~ weekday,
 			cores = 4,
-			family = negbinom,
+			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_wind = 
 	brm(noOfBikes ~ wind, # poly is not needed -> the model converges to a straight line
 			cores = 4,
-			family = negbinom,
+			family = negbinomial,
 			data = bikes[!is.na(bikes$wind), ])  # TODO fix this before fitting the model ...
 
 regressionModel_negbinom_weather = 
 	brm(noOfBikes ~ weather,
 			cores = 4,
-			family = negbinom,
+			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_month = 
 	brm(noOfBikes ~ month,
 			cores = 4,
-			family = negbinom,
+			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_year = 
 	brm(noOfBikes ~ year,
 			cores = 4,
-			family = negbinom,
+			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_location = 
 	brm(noOfBikes ~ location,
 			cores = 4,
-			family = negbinom,
+			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_all = 
 	brm(noOfBikes ~ hours * temp * wday * wind * weather * month * year * location,
 			cores = 4,
-			family = negbinom,
+			family = negbinomial,
 			data = bikes)
 
 save(regressionModel_negbinom_hours, 
@@ -157,7 +159,7 @@ save(regressionModel_negbinom_hours,
      regressionModel_negbinom_year,
      regressionModel_negbinom_location,
      regressionModel_negbinom_all,
-     file = "negbinom_models.RData")
+     file = "results/Bayesian_negbinom_models.RData")
 
 # TODO
 # lognormal
