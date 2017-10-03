@@ -1,31 +1,19 @@
 # set working directory to proper directory
 # setwd("path/to/here")
 
-install.packages("brms")
-
-# library(fitdistrplus) for finding proper distributions --> TODO move to a better place
-library(brms)
-
-# TODO make a nice plot function to investigate the important properties of a model
-# plotModel <- function(model){
-#   pp_check(model)
-#   plot(marginal_effects(model), points = T, point_args = list(alpha = 0.05))#, jitter_width = 0.25)
-#   plot(model)
-# }
+if(require(brms) == FALSE){
+  install.packages("brms")
+}
 
 # load data
-bikes = read.csv("../data/processed/bikesNeutor1516.csv")
+bikes = read.csv("../data/processed/bikes1516.csv")
 
 # ordered factors don't survive .csv storing, so, re-order weekdays:
 bikes$weekday = factor(bikes$weekday, 
                        ordered = TRUE,
                        levels = c("Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"))
 
-# look at the data -> see plotData.R
-# try to find a proper fitting distribution
-# x = bikes$noOfBikes
-# x = x[!is.na(x)]
-# descdist(x, discrete = FALSE)
+# look at the data -> see 02_plot_data.R
 
 ## Bayesian regression models
 
@@ -75,8 +63,20 @@ regressionModel_exgaussian_month =
 			family = exgaussian,
 			data = bikes)
 
+regressionModel_exgaussian_year = 
+	brm(noOfBikes ~ year,
+			cores = 4,
+			family = exgaussian,
+			data = bikes)
+
+regressionModel_exgaussian_location = 
+	brm(noOfBikes ~ location,
+			cores = 4,
+			family = exgaussian,
+			data = bikes)
+
 regressionModel_exgaussian_all = 
-	brm(noOfBikes ~ hours * temp * wday * wind * weather * month,
+	brm(noOfBikes ~ hours * temp * wday * wind * weather * month * year * location,
 			cores = 4,
 			family = exgaussian,
 			data = bikes)
@@ -87,6 +87,8 @@ save(regressionModel_exgaussian_hours,
      regressionModel_exgaussian_wind, 
      regressionModel_exgaussian_weather,
      regressionModel_exgaussian_month,
+     regressionModel_exgaussian_year,
+     regressionModel_exgaussian_location,
      regressionModel_exgaussian_all,
      file = "exgaussian_models.RData")
 
@@ -128,8 +130,20 @@ regressionModel_negbinom_month =
 			family = negbinom,
 			data = bikes)
 
+regressionModel_negbinom_year = 
+	brm(noOfBikes ~ year,
+			cores = 4,
+			family = negbinom,
+			data = bikes)
+
+regressionModel_negbinom_location = 
+	brm(noOfBikes ~ location,
+			cores = 4,
+			family = negbinom,
+			data = bikes)
+
 regressionModel_negbinom_all = 
-	brm(noOfBikes ~ hours * temp * wday * wind * weather * month,
+	brm(noOfBikes ~ hours * temp * wday * wind * weather * month * year * location,
 			cores = 4,
 			family = negbinom,
 			data = bikes)
@@ -140,6 +154,8 @@ save(regressionModel_negbinom_hours,
      regressionModel_negbinom_wind, 
      regressionModel_negbinom_weather,
      regressionModel_negbinom_month,
+     regressionModel_negbinom_year,
+     regressionModel_negbinom_location,
      regressionModel_negbinom_all,
      file = "negbinom_models.RData")
 

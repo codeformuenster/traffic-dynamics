@@ -7,6 +7,12 @@ library(dplyr)
 ## load data ####
 bikes <- read.csv("../data/processed/bikesNeutor1516.csv")
 
+# try to find a proper fitting distribution
+# library(fitdistrplus)
+# x = bikes$noOfBikes
+# x = x[!is.na(x)]
+# descdist(x, discrete = FALSE)
+
 ## plots ####
 # heatmap of number of bicycles vs. temperature
 bikes$year = as.factor(bikes$year)
