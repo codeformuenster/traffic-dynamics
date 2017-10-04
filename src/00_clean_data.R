@@ -6,14 +6,14 @@ require(lubridate)
 
 ## load data ############
 # na.strings: treat empty cells or "technische Störung" as NA
-data2015Neutor <- 
-  read.csv("../data/raw/zaehlstelle_neutor_2015_stundenauswertung.csv", 
+data2015Neutor <-
+  read.csv("../data/raw/zaehlstelle_neutor_2015_stundenauswertung.csv",
            na.strings = c("technische Störung", ""))
-data2016Neutor <- 
-  read.csv("../data/raw/zaehlstelle_neutor_2016_stundenauswertung.csv", 
+data2016Neutor <-
+  read.csv("../data/raw/zaehlstelle_neutor_2016_stundenauswertung.csv",
            na.strings = c("technische Störung", ""))
-data2016Wolbecker <- 
-  read.csv("../data/raw/zaehlstelle_wolbecker_2016_stundenauswertung.csv", 
+data2016Wolbecker <-
+  read.csv("../data/raw/zaehlstelle_wolbecker_2016_stundenauswertung.csv",
            na.strings = c("technische Störung", ""))
 
 
@@ -53,10 +53,11 @@ bikes <- subset(bikes, select = -c(Windstärke..km.h.))
 bikes$weather <- bikes$Wetter
 bikes <- subset(bikes, select = -c(Wetter))
 
-# convert to proper date (could also be done by changing the format in 
+# convert to proper date (could also be done by changing the format in
 # LibreOffice Calc; anyway ...)
 
-bikes$date <- strptime(bikes$Stunden, format = "%m/%d/%Y %H:%M")
+bikes$timestamp <- strptime(bikes$Stunden, format = "%m/%d/%Y %H:%M")
+bikes$date <- lubridate::date(bikes$timestamp)
 bikes$year <- year(bikes$date)
 bikes$month <- month(bikes$date)
 bikes$day <- day(bikes$date)
@@ -68,15 +69,15 @@ bikes$hour <- hour(bikes$date)
 bikes$wind_log <- log(bikes$wind)
 
 ## write processed data to file ####
-write.csv(data2015Neutor, 
-          file = "../data/processed/bikesNeutor2015.csv", 
+write.csv(data2015Neutor,
+          file = "../data/processed/bikesNeutor2015.csv",
           row.names = FALSE)
-write.csv(data2016Neutor, 
-          file = "../data/processed/bikesNeutor2016.csv", 
+write.csv(data2016Neutor,
+          file = "../data/processed/bikesNeutor2016.csv",
           row.names = FALSE)
-write.csv(data2016Wolbecker, 
-          file = "../data/processed/bikesWolbecker2016.csv", 
+write.csv(data2016Wolbecker,
+          file = "../data/processed/bikesWolbecker2016.csv",
           row.names = FALSE)
 write.csv(bikes,
-          file = "../data/processed/bikes1516.csv", 
+          file = "../data/processed/bikes1516.csv",
           row.names = FALSE)
