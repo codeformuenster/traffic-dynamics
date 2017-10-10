@@ -3,7 +3,6 @@
 ## load libraries ############
 require(lubridate)
 
-
 ## load data ############
 # na.strings: treat empty cells or "technische Störung" as NA
 data2015Neutor <-
@@ -62,7 +61,7 @@ bikes$year <- year(bikes$date)
 bikes$month <- month(bikes$date)
 bikes$day <- day(bikes$date)
 bikes$weekday <- wday(bikes$date, label = TRUE)
-bikes$hour <- hour(bikes$date)
+bikes$hour <- hour(bikes$timestamp)
 
 ## feature generation ####
 # log of wind speed (due to log-normal distribution)
