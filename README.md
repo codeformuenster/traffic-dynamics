@@ -44,3 +44,16 @@ If all went fine, you should have some `.RData` files (that contain `brms` model
 * impute missing weather observations (assuming simiar weather as e.g. 30 minutes earlier)
 * add model benchmarking (e.g. RMSE score, based on cross-validation)
 * migrate 'negative-binomial regression' to 'linear regression', due to normal distribution of target variable during day hours
+
+## Ideas from talking to bike stakeholders
+
+* Pendler quantifizieren
+  * Tagesverlauf (Pendlerpulse) visualisieren -> Pendler identifizieren
+  * Daten zu stadtein- und auswärts nutzen
+  * Wo / wann wird gependelt?
+* Ausweichen auf andere verkehrsmittel
+  * Umstieg der Pendler aufs Auto im Winter / bei Schlechtwetter?
+  * "Regeneffekt"
+  * Vergleich mit Autozählstellen
+  * Ausweichen auf ÖPNV oder auf Auto?
+* Auto & Luftqualität -> mehr Autos, schlechtere Luft?
