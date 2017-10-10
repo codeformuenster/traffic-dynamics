@@ -1,7 +1,0 @@
-## temorary paste bin for learning how-to deploy our R scripts to docker
-sudo docker run -ti --rm --volume $PWD:/home/docker -w /home/docker -u docker r-base bash
-
-apt-get update
-apt-get install g++
-
-R --slave -f BayesianModels.R
