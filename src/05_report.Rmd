@@ -1,5 +1,6 @@
-### Reporting on key findings.
+# Reporting on key findings.
 
+```{r}
 library(dplyr)
 
 ## load data ####
@@ -9,17 +10,22 @@ bikes <-
 ## change between years ####
 bikes2015 <-
   bikes %>%
-  dplyr::select(year, noOfBikes) %>%
+  dplyr::select(year, noOfBikes, location) %>%
+  dplyr::filter(location == "neutor") %>%
   dplyr::filter(year == 2015) %>%
   .$noOfBikes %>%
   sum(., na.rm = T)
 
 bikes2016 <-
   bikes %>%
-  dplyr::select(year, noOfBikes) %>%
+  dplyr::select(year, noOfBikes, location) %>%
+  dplyr::filter(location == 'neutor') %>%
   dplyr::filter(year == 2016) %>%
   .$noOfBikes %>%
   sum(., na.rm = T)
 
 print(paste(round((bikes2016 / bikes2015 - 1) * 100, 1),
             "% increase from 2015 to 2016?"))
+
+```
+
