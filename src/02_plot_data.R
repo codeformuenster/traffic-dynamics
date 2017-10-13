@@ -33,7 +33,8 @@ bikes_boxplot <-
   filter(year == 2016) %>%
   mutate(month = as.factor(month)) %>%
   mutate(weekday = factor(weekday,
-                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun")))
+                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri", 
+                                     "Sat", "Sun")))
 
 # calculate means per month
 bikes_boxplot %>%
