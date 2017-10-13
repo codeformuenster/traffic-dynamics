@@ -57,3 +57,12 @@ bikes_location_daily <-
 
 ggplot(data = bikes_location_daily,aes(x = date, y = bikes_per_day)) +
   geom_line(aes(group = location, color = location))
+
+# time lines of rides per day
+bikes %>%
+  filter(location == 'wolbecker') %>%
+  select(date, hour, noOfBikes, FR.stadteinwärts, FR.stadtauswärts,
+         weekend) %>%
+  ggplot(data = .) +
+  geom_line(aes(x = hour, y = noOfBikes, group = date, color = weekend), 
+            alpha = .4, size = 1)
