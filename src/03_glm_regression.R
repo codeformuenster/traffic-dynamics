@@ -1,11 +1,15 @@
 ## Negative binomial GLM
 
+# TODO: for commuting model, remove public holidays
+# TODO: add weather feature
+
 ## load libraries ####
 library(dplyr)
 library(ggplot2)
 library(fitdistrplus)
 library(MASS)
 library(sjPlot)
+library(nortest)
 
 
 ## load data ####
@@ -16,32 +20,37 @@ bikes <- read.csv("../data/processed/bikes1516.csv")
 # filter data for valid observations
 bikes_filtered <-
   bikes %>%
-  dplyr::select(noOfBikes, temp, wind_log, wind, weekday, year, month, hour) %>%
+  dplyr::select(noOfBikes, location, temp, wind_log, wind, weekday, year, month, 
+                hour) %>%
   filter(wind_log != -Inf,
+         location == 'wolbecker',
          year == 2016,
-         hour < 20,
-         hour > 6) %>%
+         hour == 7) %>%
   mutate(month = as.factor(month)) %>%
   mutate(weekday = factor(weekday, 
-                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"))) %>%
+                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri")))
 
 ## fit model ####
-# negative binomial model (due to potentially high level of dispersion)
-fit <-
-  glm.nb(noOfBikes ~ temp + wind_log + weekday + month, 
-       data = bikes_filtered)
+# linear regression
+fit <- 
+  glm(noOfBikes ~ temp + wind_log + weekday + month, 
+     data = bikes_filtered)
 
-fit$coefficients %>%
-  exp() %>%
-  data.frame()
+# analyze residuals
+fit %>%
+  resid() %>%
+  ad.test() # not perfect, yet
 
-## visualize fitted model against data ####
 plot(fit)
+
+# coefficients
+fit$coefficients %>%
+  data.frame()
 
 # effect ranking of independent variables? (effects of months odd)
 sjp.glm(fit)
 # predictions
 sjp.glm(fit, type = "pred", vars = c("month", "weekday"))
-sjp.glm(fit, type = "pred", vars = c("month"))
+sjp.glm(fit, type = "pred", vars = c("weekday"))
 # marginal effects
 sjp.glm(fit, type = "eff")
