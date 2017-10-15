@@ -33,7 +33,8 @@ bikes_boxplot <-
   filter(year == 2016) %>%
   mutate(month = as.factor(month)) %>%
   mutate(weekday = factor(weekday,
-                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun")))
+                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri", 
+                                     "Sat", "Sun")))
 
 # calculate means per month
 bikes_boxplot %>%
@@ -57,3 +58,35 @@ bikes_location_daily <-
 
 ggplot(data = bikes_location_daily,aes(x = date, y = bikes_per_day)) +
   geom_line(aes(group = location, color = location))
+
+# time lines of rides per day
+bikes %>%
+  filter(location == 'wolbecker') %>%
+  select(date, hour, noOfBikes, FR.stadteinwärts, FR.stadtauswärts,
+         weekend) %>%
+  ggplot(data = .) +
+  geom_line(aes(x = hour, y = noOfBikes, group = date, color = weekend), 
+            alpha = .4, size = 1)
+
+# examine dates with low morning peaks:
+bikes %>%
+  filter(location == 'wolbecker') %>%
+  select(date, hour, noOfBikes, FR.stadteinwärts, FR.stadtauswärts,
+         weekend) %>%
+  filter(weekend == F & hour == 7 & noOfBikes < 300) %>%
+  select(date)
+
+# compare into town with out of town
+bikes %>%
+  filter(location == 'wolbecker') %>%
+  dplyr::select(date, hour, noOfBikes, FR.stadteinwärts, FR.stadtauswärts,
+         weekend) %>%
+  # filter(weekend == F) %>%
+  ggplot(data = .) +
+  geom_line(aes(x = hour, y = FR.stadteinwärts, group = date, 
+                color = 'into town', linetype = weekend), 
+            alpha = .2, size = 1) +
+  geom_line(aes(x = hour, y = FR.stadtauswärts, group = date, 
+                color = 'out of town', linetype = weekend), 
+            alpha = .2, size = 1) +
+  scale_color_discrete(c("Direction"))

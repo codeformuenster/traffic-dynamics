@@ -1,7 +1,8 @@
 # make a cleaner data file
 
 ## load libraries ############
-require(lubridate)
+library(lubridate)
+library(dplyr)
 
 ## load data ############
 # na.strings: treat empty cells or "technische Störung" as NA
@@ -55,7 +56,8 @@ bikes <- subset(bikes, select = -c(Wetter))
 # convert to proper date (could also be done by changing the format in
 # LibreOffice Calc; anyway ...)
 
-bikes$timestamp <- strptime(bikes$Stunden, format = "%m/%d/%Y %H:%M")
+bikes$timestamp <- as.POSIXct(strptime(bikes$Stunden, 
+                                       format = "%m/%d/%Y %H:%M"))
 bikes$date <- lubridate::date(bikes$timestamp)
 bikes$year <- year(bikes$date)
 bikes$month <- month(bikes$date)
@@ -63,9 +65,11 @@ bikes$day <- day(bikes$date)
 bikes$weekday <- wday(bikes$date, label = TRUE)
 bikes$hour <- hour(bikes$timestamp)
 
-## feature generation ####
-# log of wind speed (due to log-normal distribution)
-bikes$wind_log <- log(bikes$wind)
+bikes <-
+  bikes %>%
+  mutate(weekend = (weekday == 'Sat' | weekday == 'Sun')) %>%
+  # log of wind speed (due to log-normal distribution)
+  mutate(wind_log = log(wind))
 
 ## write processed data to file ####
 write.csv(data2015Neutor,
