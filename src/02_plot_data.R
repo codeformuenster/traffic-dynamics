@@ -67,3 +67,26 @@ bikes %>%
   ggplot(data = .) +
   geom_line(aes(x = hour, y = noOfBikes, group = date, color = weekend), 
             alpha = .4, size = 1)
+
+# examine dates with low morning peaks:
+bikes %>%
+  filter(location == 'wolbecker') %>%
+  select(date, hour, noOfBikes, FR.stadteinwärts, FR.stadtauswärts,
+         weekend) %>%
+  filter(weekend == F & hour == 7 & noOfBikes < 300) %>%
+  select(date)
+
+# compare into town with out of town
+bikes %>%
+  filter(location == 'wolbecker') %>%
+  select(date, hour, noOfBikes, FR.stadteinwärts, FR.stadtauswärts,
+         weekend) %>%
+  # filter(weekend == F) %>%
+  ggplot(data = .) +
+  geom_line(aes(x = hour, y = FR.stadteinwärts, group = date, 
+                color = 'into town', linetype = weekend), 
+            alpha = .2, size = 1) +
+  geom_line(aes(x = hour, y = FR.stadtauswärts, group = date, 
+                color = 'out of town', linetype = weekend), 
+            alpha = .2, size = 1) +
+  scale_color_discrete(c("Direction"))
