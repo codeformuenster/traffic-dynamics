@@ -79,7 +79,7 @@ bikes %>%
 # compare into town with out of town
 bikes %>%
   filter(location == 'wolbecker') %>%
-  select(date, hour, noOfBikes, FR.stadteinwärts, FR.stadtauswärts,
+  dplyr::select(date, hour, noOfBikes, FR.stadteinwärts, FR.stadtauswärts,
          weekend) %>%
   # filter(weekend == F) %>%
   ggplot(data = .) +
