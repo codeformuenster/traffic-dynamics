@@ -45,7 +45,7 @@ bikes <-
   rename(temp = Temperatur...C.) %>%
   rename(wind = Windstärke..km.h.) %>%
   rename(weather = Wetter) %>%
-  mutate(rain = as.factor(weather == 'Regen'))
+  mutate(rain = (weather == 'Regen'))
 
 bikes$timestamp <- as.POSIXct(strptime(bikes$Stunden, 
                                        format = "%m/%d/%Y %H:%M"))
