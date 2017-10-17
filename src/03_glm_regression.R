@@ -6,8 +6,6 @@
 ## load libraries ####
 library(dplyr)
 library(ggplot2)
-library(fitdistrplus)
-library(MASS)
 library(sjPlot)
 library(nortest)
 
@@ -47,9 +45,7 @@ plot(fit)
 fit$coefficients %>%
   data.frame()
 
-# effect ranking of independent variables? (effects of months odd)
-sjp.glm(fit)
-# predictions
+# predictions compared to data
 sjp.glm(fit, type = "pred", vars = c("month", "weekday"))
 sjp.glm(fit, type = "pred", vars = c("weekday"))
 # marginal effects
