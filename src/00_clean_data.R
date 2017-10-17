@@ -1,60 +1,50 @@
 # make a cleaner data file
 
-## load libraries ############
+
+# load libraries ####
 library(lubridate)
 library(dplyr)
 
-## load data ############
-# na.strings: treat empty cells or "technische Störung" as NA
+
+# load data ####
 data2015Neutor <-
   read.csv("../data/raw/zaehlstelle_neutor_2015_stundenauswertung.csv",
-           na.strings = c("technische Störung", ""))
+           na.strings = c("technische Störung", "")) %>%
+  head(., -1)  # remove summary lines at end of file
 data2016Neutor <-
   read.csv("../data/raw/zaehlstelle_neutor_2016_stundenauswertung.csv",
-           na.strings = c("technische Störung", ""))
+           na.strings = c("technische Störung", "")) %>%
+  head(., -2)  # remove summary lines at end of file
 data2016Wolbecker <-
   read.csv("../data/raw/zaehlstelle_wolbecker_2016_stundenauswertung.csv",
-           na.strings = c("technische Störung", ""))
+           na.strings = c("technische Störung", "")) %>%
+  head(., -2)  # remove summary lines at end of file
 
 
-## preprocess data ###########
-# remove summary lines
-data2015Neutor <- data2015Neutor[-nrow(data2015Neutor),]
-# 2016Neutor files has two of those
-data2016Neutor <- data2016Neutor[-nrow(data2016Neutor),]
-data2016Neutor <- data2016Neutor[-nrow(data2016Neutor),]
-# 2016Wolbecker has also two lines too much
-data2016Wolbecker <- data2016Wolbecker[-nrow(data2016Wolbecker),]
-data2016Wolbecker <- data2016Wolbecker[-nrow(data2016Wolbecker),]
+# rename columns, add location ####
+data2015Neutor <-
+  data2015Neutor %>%
+  rename(noOfBikes = Zählung.Neutor) %>%
+  mutate(location = 'neutor') %>%
+  mutate(Wetter = NA)  # no weather data
 
-# rename columns (and delete the old column)
-data2015Neutor$noOfBikes <- data2015Neutor$Zählung.Neutor
-data2015Neutor <- subset(data2015Neutor, select = -c(Zählung.Neutor))
-data2016Neutor$noOfBikes <- data2016Neutor$Neutor..gesamt.
-data2016Neutor <- subset(data2016Neutor, select = -c(Neutor..gesamt.))
-data2016Wolbecker$noOfBikes <- data2016Wolbecker$Wolbecker.Straße..gesamt.
-data2016Wolbecker <- subset(data2016Wolbecker, select = -c(Wolbecker.Straße..gesamt.))
+data2016Neutor <-
+  data2016Neutor %>%
+  rename(noOfBikes = Neutor..gesamt.) %>%
+  mutate(location = 'neutor')
 
-# add column for location
-data2015Neutor$location <- "neutor"
-data2016Neutor$location <- "neutor"
-data2016Wolbecker$location <- "wolbecker"
+data2016Wolbecker <-
+  data2016Wolbecker %>%
+  rename(noOfBikes = Wolbecker.Straße..gesamt.) %>%
+  mutate(location = 'wolbecker')
 
-# no weather for 2015Neutor
-data2015Neutor$Wetter <- NA
 
-bikes <- rbind(data2015Neutor, data2016Neutor, data2016Wolbecker)
-
-# rename more columns
-bikes$temp <- bikes$Temperatur...C.
-bikes <- subset(bikes, select = -c(Temperatur...C.))
-bikes$wind <- bikes$Windstärke..km.h.
-bikes <- subset(bikes, select = -c(Windstärke..km.h.))
-bikes$weather <- bikes$Wetter
-bikes <- subset(bikes, select = -c(Wetter))
-
-# convert to proper date (could also be done by changing the format in
-# LibreOffice Calc; anyway ...)
+# combine data sources, rename columns ####
+bikes <- 
+  rbind(data2015Neutor, data2016Neutor, data2016Wolbecker) %>%
+  rename(temp = Temperatur...C.) %>%
+  rename(wind = Windstärke..km.h.) %>%
+  rename(weather = Wetter)
 
 bikes$timestamp <- as.POSIXct(strptime(bikes$Stunden, 
                                        format = "%m/%d/%Y %H:%M"))
@@ -68,19 +58,10 @@ bikes$hour <- hour(bikes$timestamp)
 bikes <-
   bikes %>%
   mutate(weekend = (weekday == 'Sat' | weekday == 'Sun')) %>%
-  # log of wind speed (due to log-normal distribution)
-  mutate(wind_log = log(wind))
+  mutate(wind_log = log(wind))  # log of wind speed (due to distribution)
 
-## write processed data to file ####
-write.csv(data2015Neutor,
-          file = "../data/processed/bikesNeutor2015.csv",
-          row.names = FALSE)
-write.csv(data2016Neutor,
-          file = "../data/processed/bikesNeutor2016.csv",
-          row.names = FALSE)
-write.csv(data2016Wolbecker,
-          file = "../data/processed/bikesWolbecker2016.csv",
-          row.names = FALSE)
+
+# write processed data to file ####
 write.csv(bikes,
           file = "../data/processed/bikes1516.csv",
           row.names = FALSE)
