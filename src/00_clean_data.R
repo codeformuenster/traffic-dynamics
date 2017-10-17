@@ -44,7 +44,8 @@ bikes <-
   rbind(data2015Neutor, data2016Neutor, data2016Wolbecker) %>%
   rename(temp = Temperatur...C.) %>%
   rename(wind = Windstärke..km.h.) %>%
-  rename(weather = Wetter)
+  rename(weather = Wetter) %>%
+  mutate(rain = as.factor(weather == 'Regen'))
 
 bikes$timestamp <- as.POSIXct(strptime(bikes$Stunden, 
                                        format = "%m/%d/%Y %H:%M"))
