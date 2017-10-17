@@ -6,7 +6,6 @@
 ## (4) don't install texlive
 
 FROM rocker/tidyverse:latest
-MAINTAINER Jon Zelner jzelner@gmail.com
 
 ## Mostly pirated from jrnold/docker-stan
 
