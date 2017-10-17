@@ -1,20 +1,21 @@
-## Negative binomial GLM
+# LINEAR GLM REGRESSION MODEL
 
+# TODOs ####
 # TODO: for commuting model, remove public holidays
 # TODO: add weather feature
 
-## load libraries ####
+# load libraries ####
 library(dplyr)
 library(ggplot2)
 library(sjPlot)
 library(nortest)
 
 
-## load data ####
+# load data ####
 bikes <- read.csv("../data/processed/bikes1516.csv")
 
 
-## filtering data ####
+# filtering data ####
 # filter data for valid observations
 bikes_filtered <-
   bikes %>%
@@ -28,23 +29,24 @@ bikes_filtered <-
   mutate(weekday = factor(weekday, 
                           levels = c("Mon", "Tues", "Wed", "Thurs", "Fri")))
 
-## fit model ####
+
+# fit model ####
 # linear regression
 fit <- 
   glm(noOfBikes ~ temp + wind_log + weekday + month, 
      data = bikes_filtered)
 
-# analyze residuals
+# analyze residuals ####
 fit %>%
   resid() %>%
   ad.test() # not perfect, yet
 
 plot(fit)
 
-# coefficients
+
+# analyze coefficients ####
 fit$coefficients %>%
   data.frame()
-
 # predictions compared to data
 sjp.glm(fit, type = "pred", vars = c("month", "weekday"))
 sjp.glm(fit, type = "pred", vars = c("weekday"))
