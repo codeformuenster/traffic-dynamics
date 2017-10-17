@@ -1,8 +1,8 @@
 # LINEAR GLM REGRESSION MODEL
 
 # TODOs ####
-# TODO: for commuting model, remove public holidays
 # TODO: add weather feature
+# TODO: for commuting model, remove public holidays
 
 # load libraries ####
 library(dplyr)
