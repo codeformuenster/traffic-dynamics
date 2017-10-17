@@ -19,8 +19,8 @@ bikes$year = as.factor(bikes$year)
 
 ggplot(data = bikes[!is.na(bikes$temp),]) +
   geom_bin2d(aes(x = temp, y = noOfBikes),
-                 # no of bins: one bin for two degree celsius
-                 bins = (max(bikes$temp, na.rm = T) - min(bikes$temp, na.rm = T) / 2))
+             # no of bins: one bin for two degree celsius
+             bins = (max(bikes$temp, na.rm = T) - min(bikes$temp, na.rm = T) / 2))
 
 # histogram of number of bicycles by year
 ggplot(data = NULL, aes(x = noOfBikes, fill = year)) +
