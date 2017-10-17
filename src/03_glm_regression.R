@@ -1,8 +1,7 @@
 # LINEAR GLM REGRESSION MODEL
 
 # TODOs ####
-# TODO: add weather feature
-# TODO: for commuting model, remove public holidays
+# TODO: for commuting model, remove public holidays (outliers for weekdays)
 
 # load libraries ####
 library(dplyr)
@@ -20,11 +19,13 @@ bikes <- read.csv("../data/processed/bikes1516.csv")
 bikes_filtered <-
   bikes %>%
   dplyr::select(noOfBikes, location, temp, wind_log, wind, weekday, year, month, 
-                hour) %>%
+                hour, rain) %>%
   filter(wind_log != -Inf,
          location == 'wolbecker',
          year == 2016,
          hour == 7) %>%
+  # generate factors
+  mutate(rain = as.factor(rain)) %>%
   mutate(month = as.factor(month)) %>%
   mutate(weekday = factor(weekday, 
                           levels = c("Mon", "Tues", "Wed", "Thurs", "Fri")))
@@ -33,7 +34,7 @@ bikes_filtered <-
 # fit model ####
 # linear regression
 fit <- 
-  glm(noOfBikes ~ temp + wind_log + weekday + month, 
+  glm(noOfBikes ~ temp + wind_log + weekday + month + rain, 
      data = bikes_filtered)
 
 # analyze residuals ####
@@ -48,7 +49,7 @@ plot(fit)
 fit$coefficients %>%
   data.frame()
 # predictions compared to data
-sjp.glm(fit, type = "pred", vars = c("month", "weekday"))
+sjp.glm(fit, type = "pred", vars = c("rain"))
 sjp.glm(fit, type = "pred", vars = c("weekday"))
 # marginal effects
 sjp.glm(fit, type = "eff")
