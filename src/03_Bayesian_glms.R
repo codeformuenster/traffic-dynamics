@@ -1,10 +1,19 @@
 # set working directory to proper directory
 # setwd("path/to/here")
 
+# TODO nicer way to load package in a tolerant way
+
 if (require(brms) == FALSE) {
   install.packages("brms")
   require(brms)
 }
+
+if (require(parallel) == FALSE) {
+  install.packages("parallel")
+  require(parallel)
+}
+
+noOfCores = parallel::detectCores()
 
 # load data
 # this assumes the script is called from the root directory of the repository
@@ -31,55 +40,55 @@ bikes$weekday = factor(bikes$weekday,
 
 regressionModel_exgaussian_hours =
 	brm(noOfBikes ~ poly(hour,3),
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
 regressionModel_exgaussian_temp =
 	brm(noOfBikes ~ poly(temp, 3),
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes[!(is.na(bikes$temp)), ]) # TODO fix this before fitting the model ...
 
 regressionModel_exgaussian_wday =
 	brm(noOfBikes ~ weekday,
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
 regressionModel_exgaussian_wind =
 	brm(noOfBikes ~ wind, # poly is not needed -> the model converges to a straight line
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes[!is.na(bikes$wind), ])  # TODO fix this before fitting the model ...
 
 regressionModel_exgaussian_weather =
 	brm(noOfBikes ~ weather,
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
 regressionModel_exgaussian_month =
 	brm(noOfBikes ~ month,
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
 regressionModel_exgaussian_year =
 	brm(noOfBikes ~ year,
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
 regressionModel_exgaussian_location =
 	brm(noOfBikes ~ location,
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
 regressionModel_exgaussian_all =
 	brm(noOfBikes ~ hours * temp * wday * wind * weather * month * year * location,
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
@@ -98,55 +107,55 @@ save(regressionModel_exgaussian_hours,
 
 regressionModel_negbinom_hours = 
 	brm(noOfBikes ~ poly(hour,3),
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_temp = 
 	brm(noOfBikes ~ poly(temp, 3),
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes[!(is.na(bikes$temp)), ]) # TODO fix this before fitting the model ...
 
 regressionModel_negbinom_wday = 
 	brm(noOfBikes ~ weekday,
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_wind = 
 	brm(noOfBikes ~ wind, # poly is not needed -> the model converges to a straight line
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes[!is.na(bikes$wind), ])  # TODO fix this before fitting the model ...
 
 regressionModel_negbinom_weather = 
 	brm(noOfBikes ~ weather,
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_month = 
 	brm(noOfBikes ~ month,
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_year = 
 	brm(noOfBikes ~ year,
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_location = 
 	brm(noOfBikes ~ location,
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_all = 
 	brm(noOfBikes ~ hours * temp * wday * wind * weather * month * year * location,
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 

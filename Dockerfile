@@ -29,6 +29,7 @@ RUN install2.r --error \
     StanHeaders \
     rstan \
     brms \
+    parallel \
     KernSmooth
 
 # Config for rstudio user
