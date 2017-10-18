@@ -8,11 +8,7 @@ if (require(brms) == FALSE) {
   require(brms)
 }
 
-if (require(parallel) == FALSE) {
-  install.packages("parallel")
-  require(parallel)
-}
-
+require(parallel)
 noOfCores = parallel::detectCores()
 
 # load data
