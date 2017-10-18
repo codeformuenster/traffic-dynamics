@@ -5,7 +5,7 @@
 ## (3) install clang instead of clang-3.6 which isn't available anymore
 ## (4) don't install texlive
 
-FROM rocker/tidyverse:latest
+FROM rocker/tidyverse:3.4.2
 
 ## Mostly pirated from jrnold/docker-stan
 
@@ -28,7 +28,6 @@ RUN install2.r --error \
     StanHeaders \
     rstan \
     brms \
-    parallel \
     KernSmooth
 
 # Config for rstudio user
