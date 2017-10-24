@@ -7,8 +7,12 @@ if (require(brms) == FALSE) {
   install.packages("brms")
   require(brms)
 }
+if (require(dplyr) == FALSE) {
+  install.packages("dplyr")
+  require(dplyr)
+}
 
-require(parallel)
+
 noOfCores = parallel::detectCores()
 
 # load data
@@ -21,6 +25,36 @@ bikes$weekday = factor(bikes$weekday,
                        levels = c("Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"))
 
 # look at the data -> see 02_plot_data.R
+
+# filtering data ####
+# filter data for valid observations
+bikes_commuter_wolbecker <-
+  bikes %>%
+  dplyr::select(noOfBikes, location, temp, wind_log, wind, weekday, year, month, 
+                hour, rain) %>%
+  filter(wind_log != -Inf,
+         location == 'wolbecker',
+         year == 2016,
+         hour == 7) %>%
+  # generate factors
+  mutate(rain = as.factor(rain)) %>%
+  mutate(month = as.factor(month)) %>%
+  mutate(weekday = factor(weekday, 
+                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri")))
+
+write.csv(bikes_commuter_wolbecker,
+          file = "results/bikesCommuterWolbecker.csv",
+          row.names = FALSE)
+
+# temp test
+quit(save = "no")
+
+# Bayesian commuter model
+commuter_model = 
+  brm(noOfBikes ~ temp + wind_log + weekday + month + rain, 
+		cores = noOfCores,
+	  #family ?=
+    data = bikes_commuter_wolbecker)
 
 ## Bayesian regression models
 
