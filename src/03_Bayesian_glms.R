@@ -12,7 +12,6 @@ if (require(dplyr) == FALSE) {
   require(dplyr)
 }
 
-
 noOfCores = parallel::detectCores()
 
 # load data

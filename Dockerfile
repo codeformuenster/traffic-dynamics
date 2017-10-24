@@ -51,4 +51,4 @@ COPY ./data /home/rstudio/
 COPY ./src /home/rstudio/
 
 ## this should not run when building the image but only when starting it:
-CMD Rscript src/03_Bayesian_glms.R
+CMD Rscript ./src/03_Bayesian_glms.R
