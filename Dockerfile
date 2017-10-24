@@ -43,12 +43,13 @@ RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
                    curl 
 
-# USER rstudio
-
-VOLUME /home/rstudio/
+# VOLUME /home/rstudio/
 
 COPY ./data /home/rstudio/data
 COPY ./src /home/rstudio/src
+COPY ./results /home/rstudio/results
+
+WORKDIR /home/rstudio
 
 ## this should not run when building the image but only when starting it:
 CMD Rscript ./src/03_Bayesian_glms.R
