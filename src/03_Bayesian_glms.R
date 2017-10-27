@@ -31,29 +31,83 @@ bikes_commuter_wolbecker <-
   bikes %>%
   dplyr::select(noOfBikes, location, temp, wind_log, wind, weekday, year, month, 
                 hour, rain) %>%
-  filter(wind_log != -Inf,
-         location == 'wolbecker',
+  filter(location == 'wolbecker',
+         weekday != "Sat",
+         weekday != "Sun",
          year == 2016,
-         hour == 7) %>%
+         (hour == 7 | hour == 8)) %>%
   # generate factors
   mutate(rain = as.factor(rain)) %>%
   mutate(month = as.factor(month)) %>%
   mutate(weekday = factor(weekday, 
-                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri")))
+                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri"))) %>%
+  mutate(tempC = as.vector(scale(temp, center = TRUE, scale = FALSE))) %>%
+  mutate(windC = as.vector(scale(wind, center = TRUE, scale = FALSE)))
 
-write.csv(bikes_commuter_wolbecker,
-          file = "results/bikesCommuterWolbecker.csv",
-          row.names = FALSE)
+# write.csv(bikes_commuter_wolbecker,
+#           file = "results/bikesCommuterWolbecker.csv",
+#           row.names = FALSE)
 
 # temp test
-quit(save = "no")
+# quit(save = "no")
 
-# Bayesian commuter model
-commuter_model = 
-  brm(noOfBikes ~ temp + wind_log + weekday + month + rain, 
+# Bayesian commuter models
+commuter_model_A = 
+  brm(noOfBikes ~ tempC * windC * weekday * month * rain, 
 		cores = noOfCores,
-	  #family ?=
     data = bikes_commuter_wolbecker)
+
+commuter_model_B = 
+  brm(noOfBikes ~ tempC * windC * weekday * month + rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_C = 
+  brm(noOfBikes ~ tempC * windC * weekday + month + rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_D = 
+  brm(noOfBikes ~ tempC * windC + weekday + month + rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_E = 
+  brm(noOfBikes ~ tempC + windC + weekday + month + rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_F = 
+  brm(noOfBikes ~ tempC + windC * weekday * month * rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_G = 
+  brm(noOfBikes ~ tempC + windC + weekday * month * rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_H = 
+  brm(noOfBikes ~ tempC + windC + weekday + month * rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_I = 
+  brm(noOfBikes ~ tempC * windC * rain + weekday + month,
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+save(commuter_model_A,
+     commuter_model_B,
+     commuter_model_C,
+     commuter_model_D,
+     commuter_model_E,
+     commuter_model_F,
+     commuter_model_G,
+     commuter_model_H,
+     commuter_model_I,
+     file = "results/Bayesian_commuter_models.RData")
+
 
 ## Bayesian regression models
 
