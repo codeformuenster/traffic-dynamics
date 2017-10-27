@@ -44,13 +44,6 @@ bikes_commuter_wolbecker <-
   mutate(tempC = as.vector(scale(temp, center = TRUE, scale = FALSE))) %>%
   mutate(windC = as.vector(scale(wind, center = TRUE, scale = FALSE)))
 
-# write.csv(bikes_commuter_wolbecker,
-#           file = "results/bikesCommuterWolbecker.csv",
-#           row.names = FALSE)
-
-# temp test
-# quit(save = "no")
-
 # Bayesian commuter models
 commuter_model_A = 
   brm(noOfBikes ~ tempC * windC * weekday * month * rain, 

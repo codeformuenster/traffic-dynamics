@@ -51,5 +51,10 @@ COPY ./results /home/rstudio/results
 
 WORKDIR /home/rstudio
 
-## this should not run when building the image but only when starting it:
-CMD Rscript ./src/03_Bayesian_glms.R
+## this runs not when building the image but only when starting it:
+# file writing test:
+CMD Rscript ./src/temp_docker_test.R
+
+# computations:
+# CMD Rscript ./src/03_Bayesian_glms.R
+
