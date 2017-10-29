@@ -12,6 +12,7 @@ df <-
   bikes %>% 
   select(date, hour, weather, wind, temp) %>%
   mutate(year = as.integer(year(date))) %>%
+  mutate(month = as.integer(month(date))) %>%
   mutate(weekday = wday(date, label = T, abbr = F)) %>%
   mutate(weekend = is.weekend(date)) %>%
   mutate(wind_log = log(wind)) %>%
