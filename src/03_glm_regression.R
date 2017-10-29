@@ -8,10 +8,10 @@ library(dplyr)
 library(ggplot2)
 library(sjPlot)
 library(nortest)
-
+library(sqldf)
 
 # load data ####
-bikes <- read.csv("../data/processed/bikes1516.csv")
+bikes <- read.csv("data/processed/bikes1516.csv")
 
 
 # filtering data ####
@@ -57,3 +57,53 @@ sjp.glm(fit, type = "pred", vars = c("rain"))
 sjp.glm(fit, type = "pred", vars = c("weekday"))
 # marginal effects
 sjp.glm(fit, type = "eff")
+
+
+# CARS ----
+# load data
+wolbecker <- 
+  sqldf("SELECT 
+         date, hour, count, location,
+         CASE location
+           WHEN 'MQ_09040_FV3_G (MQ1034)' THEN 'entering_city'
+           WHEN 'MQ_09040_FV1_G (MQ1033)' THEN 'leaving_city'
+           END 'direction'
+         FROM car_data
+         WHERE location LIKE '%09040%'", 
+        dbname = "data/database/kfz_data.sqlite") 
+
+temporal_features <-
+  sqldf("SELECT * FROM temporal_features", 
+        dbname = "data/database/kfz_data.sqlite") 
+
+wolbecker2 <-
+  sqldf("SELECT * 
+        FROM wolbecker
+        LEFT JOIN temporal_features
+          ON (wolbecker.date == temporal_features.date 
+          AND wolbecker.hour == temporal_features.hour)") %>%
+  setNames(make.names(names(.), unique = T))  # makes column names unique
+
+# linear regression
+fit2 <- 
+  wolbecker2 %>%
+  dplyr::select(date, temp, wind_log, weekday, month,
+                count, hour, count, weekend, direction, rain) %>%
+  filter(direction == 'entering_city') %>%
+  filter(hour >= 7 & hour <= 8) %>%
+  filter(weekend == FALSE) %>%
+  filter(complete.cases(.)) %>%
+  filter(wind_log != -Inf) %>%
+  mutate(month = as.factor(month)) %>%
+  mutate(weekday = as.factor(weekday)) %>%
+  glm(count ~ rain + temp + wind_log + weekday + month, 
+      data = .)
+
+fit2$coefficients %>%
+  data.frame()
+
+# predictions compared to data
+sjp.glm(fit2, type = "pred", vars = c("rain"))
+sjp.glm(fit2, type = "pred", vars = c("weekday"))
+# marginal effects
+sjp.glm(fit2, type = "eff")
