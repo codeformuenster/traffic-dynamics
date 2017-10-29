@@ -73,7 +73,7 @@ bikes %>%
   filter(location == 'wolbecker') %>%
   select(date, hour, noOfBikes, FR.stadteinwärts, FR.stadtauswärts,
          weekend) %>%
-  filter(weekend == F & hour == 7 & noOfBikes < 300) %>%
+  filter(weekend == F & (hour == 7 | hour == 8) & noOfBikes < 300) %>%
   select(date)
 
 # compare into town with out of town

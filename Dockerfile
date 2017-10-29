@@ -5,8 +5,7 @@
 ## (3) install clang instead of clang-3.6 which isn't available anymore
 ## (4) don't install texlive
 
-FROM rocker/tidyverse:latest
-MAINTAINER Jon Zelner jzelner@gmail.com
+FROM rocker/tidyverse:3.4.2
 
 ## Mostly pirated from jrnold/docker-stan
 
@@ -29,6 +28,7 @@ RUN install2.r --error \
     StanHeaders \
     rstan \
     brms \
+    dplyr \
     KernSmooth
 
 # Config for rstudio user
@@ -43,5 +43,18 @@ RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
                    curl 
 
-USER rstudio
+# VOLUME /home/rstudio/
+
+COPY ./data /home/rstudio/data
+COPY ./src /home/rstudio/src
+COPY ./results /home/rstudio/results
+
+WORKDIR /home/rstudio
+
+## this runs not when building the image but only when starting it:
+# file writing test:
+CMD Rscript ./src/temp_docker_test.R
+
+# computations:
+# CMD Rscript ./src/03_Bayesian_glms.R
 

@@ -20,8 +20,7 @@ bikes_filtered <-
   bikes %>%
   dplyr::select(noOfBikes, location, temp, wind_log, wind, weekday, year, month, 
                 hour, rain) %>%
-  filter(wind_log != -Inf,
-         location == 'wolbecker',
+  filter(location == 'wolbecker', # wind_log != -Inf, #this removes all days without wind (see below)
          year == 2016,
          hour == 7) %>%
   # generate factors
@@ -31,10 +30,15 @@ bikes_filtered <-
                           levels = c("Mon", "Tues", "Wed", "Thurs", "Fri")))
 
 
+nrow(bikes[bikes$location == "wolbecker" & bikes$wind_log == -Inf,])
+nrow(bikes[bikes$location == "wolbecker" & bikes$wind == 0,])
+nrow(bikes[bikes$location == "wolbecker",])
+
+
 # fit model ####
 # linear regression
 fit <- 
-  glm(noOfBikes ~ temp + wind_log + weekday + month + rain, 
+  glm(noOfBikes ~ temp + wind + weekday + month + rain, 
      data = bikes_filtered)
 
 # analyze residuals ####

@@ -1,10 +1,18 @@
 # set working directory to proper directory
 # setwd("path/to/here")
 
+# TODO nicer way to load package in a tolerant way
+
 if (require(brms) == FALSE) {
   install.packages("brms")
   require(brms)
 }
+if (require(dplyr) == FALSE) {
+  install.packages("dplyr")
+  require(dplyr)
+}
+
+noOfCores = parallel::detectCores()
 
 # load data
 # this assumes the script is called from the root directory of the repository
@@ -16,6 +24,83 @@ bikes$weekday = factor(bikes$weekday,
                        levels = c("Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"))
 
 # look at the data -> see 02_plot_data.R
+
+# filtering data ####
+# filter data for valid observations
+bikes_commuter_wolbecker <-
+  bikes %>%
+  dplyr::select(noOfBikes, location, temp, wind_log, wind, weekday, year, month, 
+                hour, rain) %>%
+  filter(location == 'wolbecker',
+         weekday != "Sat",
+         weekday != "Sun",
+         year == 2016,
+         (hour == 7 | hour == 8)) %>%
+  # generate factors
+  mutate(rain = as.factor(rain)) %>%
+  mutate(month = as.factor(month)) %>%
+  mutate(weekday = factor(weekday, 
+                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri"))) %>%
+  mutate(tempC = as.vector(scale(temp, center = TRUE, scale = FALSE))) %>%
+  mutate(windC = as.vector(scale(wind, center = TRUE, scale = FALSE)))
+
+# Bayesian commuter models
+commuter_model_A = 
+  brm(noOfBikes ~ tempC * windC * weekday * month * rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_B = 
+  brm(noOfBikes ~ tempC * windC * weekday * month + rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_C = 
+  brm(noOfBikes ~ tempC * windC * weekday + month + rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_D = 
+  brm(noOfBikes ~ tempC * windC + weekday + month + rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_E = 
+  brm(noOfBikes ~ tempC + windC + weekday + month + rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_F = 
+  brm(noOfBikes ~ tempC + windC * weekday * month * rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_G = 
+  brm(noOfBikes ~ tempC + windC + weekday * month * rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_H = 
+  brm(noOfBikes ~ tempC + windC + weekday + month * rain, 
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+commuter_model_I = 
+  brm(noOfBikes ~ tempC * windC * rain + weekday + month,
+		cores = noOfCores,
+    data = bikes_commuter_wolbecker)
+
+save(commuter_model_A,
+     commuter_model_B,
+     commuter_model_C,
+     commuter_model_D,
+     commuter_model_E,
+     commuter_model_F,
+     commuter_model_G,
+     commuter_model_H,
+     commuter_model_I,
+     file = "results/Bayesian_commuter_models.RData")
+
 
 ## Bayesian regression models
 
@@ -31,55 +116,55 @@ bikes$weekday = factor(bikes$weekday,
 
 regressionModel_exgaussian_hours =
 	brm(noOfBikes ~ poly(hour,3),
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
 regressionModel_exgaussian_temp =
 	brm(noOfBikes ~ poly(temp, 3),
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes[!(is.na(bikes$temp)), ]) # TODO fix this before fitting the model ...
 
 regressionModel_exgaussian_wday =
 	brm(noOfBikes ~ weekday,
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
 regressionModel_exgaussian_wind =
 	brm(noOfBikes ~ wind, # poly is not needed -> the model converges to a straight line
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes[!is.na(bikes$wind), ])  # TODO fix this before fitting the model ...
 
 regressionModel_exgaussian_weather =
 	brm(noOfBikes ~ weather,
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
 regressionModel_exgaussian_month =
 	brm(noOfBikes ~ month,
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
 regressionModel_exgaussian_year =
 	brm(noOfBikes ~ year,
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
 regressionModel_exgaussian_location =
 	brm(noOfBikes ~ location,
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
 regressionModel_exgaussian_all =
 	brm(noOfBikes ~ hours * temp * wday * wind * weather * month * year * location,
-			cores = 4,
+			cores = noOfCores,
 			family = exgaussian,
 			data = bikes)
 
@@ -98,55 +183,55 @@ save(regressionModel_exgaussian_hours,
 
 regressionModel_negbinom_hours = 
 	brm(noOfBikes ~ poly(hour,3),
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_temp = 
 	brm(noOfBikes ~ poly(temp, 3),
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes[!(is.na(bikes$temp)), ]) # TODO fix this before fitting the model ...
 
 regressionModel_negbinom_wday = 
 	brm(noOfBikes ~ weekday,
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_wind = 
 	brm(noOfBikes ~ wind, # poly is not needed -> the model converges to a straight line
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes[!is.na(bikes$wind), ])  # TODO fix this before fitting the model ...
 
 regressionModel_negbinom_weather = 
 	brm(noOfBikes ~ weather,
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_month = 
 	brm(noOfBikes ~ month,
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_year = 
 	brm(noOfBikes ~ year,
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_location = 
 	brm(noOfBikes ~ location,
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
 regressionModel_negbinom_all = 
 	brm(noOfBikes ~ hours * temp * wday * wind * weather * month * year * location,
-			cores = 4,
+			cores = noOfCores,
 			family = negbinomial,
 			data = bikes)
 
