@@ -19,8 +19,10 @@ shinyUI(fluidPage(theme = "bootstrap.css",
     helpText("Predict new time lines"),
     
     # TODO: remove blue bar from slider
-    sliderInput("month", "Month", min = 1, max = 12, value = 6),
-    sliderInput("weekday", "Day of week", min = 1, max = 7, value = 3),
+    sliderInput("month", "Month (JAN - DEC)", min = 1, max = 12, value = 6,
+                ticks = T),
+    sliderInput("weekday", "Day of week (MON - SUN)", min = 1, max = 7, 
+                value = 3, ticks = T),
     selectInput("weather", "Weather", c("Rain" = "rain", "Snow" = "snow")),
     actionButton("button", "Predict traffic!")
   ),
