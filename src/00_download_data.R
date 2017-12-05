@@ -3,17 +3,20 @@
 library(RCurl)
 
 # CREATE FOLDERS
+dir.create("data", showWarnings = F)
+dir.create("data/raw", showWarnings = F)
 
+# DOWNLOAD BICYCLE DATA
+url = "https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/fahrrad/Fahrradzaehlstellen-Stundenwerte.csv"
+download.file(url = url, destfile = "data/raw/Fahrradzaehlstellen-Stundenwerte.csv")
 
 # DOWNLOAD CAR DATA
 # 2015
-file = "https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/kfz/kfzzaehlstellen2015.zip"
-download.file(url = file, destfile = "data/raw/kfzzaehlstellen2015.zip")
+url = "https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/kfz/kfzzaehlstellen2015.zip"
+download.file(url = url, destfile = "data/raw/kfzzaehlstellen2015.zip")
 # 2016
-file = "https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/kfz/kfzzaehlstellen2016.zip"
-download.file(url = file, destfile = "data/raw/kfzzaehlstellen2016.zip")
+url = "https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/kfz/kfzzaehlstellen2016.zip"
+download.file(url = url, destfile = "data/raw/kfzzaehlstellen2016.zip")
 
-# DOWNLOAD BICYCLE DATA
-file = "https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/fahrrad/Fahrradzaehlstellen-Stundenwerte.csv"
-download.file(url = file, destfile = "data/raw/Fahrradzaehlstellen-Stundenwerte.csv")
+# UNZIP CAR DATA
 
