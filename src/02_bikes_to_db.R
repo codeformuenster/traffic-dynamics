@@ -1,6 +1,9 @@
 # MOVE BIKES DATA TO DATABASE
 
 library(dplyr)
+library(DBI)
+library(RSQLite)
+
 
 file = "data/raw/Fahrradzaehlstellen-Stundenwerte.csv"
 
