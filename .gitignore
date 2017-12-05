@@ -3,5 +3,5 @@
 *.Rproj
 
 # downloaded data
-data/raw/kfz-data/*
+data/raw/*
 data/database/*
