@@ -8,12 +8,6 @@ library(DBI)
 library(RSQLite)
 
 
-# unzip raw files ----
-unzip(zipfile = "data/raw/kfz-data/kfz-data.zip", 
-      exdir = "data/raw/kfz-data/")
-
-dir("data/raw/kfz-data/")
-
 
 process_df <- function(df) {
   # shift header left and remove last column 
