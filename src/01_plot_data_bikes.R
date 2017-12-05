@@ -1,15 +1,15 @@
+# This program is free software.
+# You should have received a copy of the GNU General Public License
+# along with this program (file COPYING). If not, see <http://www.gnu.org/licenses/>.
+
 # create some high level plots
 
 ## load libraries ----
-library(ggplot2)
-library(dplyr)
-library(DBI)
-library(RSQLite)
-library(sqldf)
-
+lapply(c("sqldf", "ggplot2", "gridExtra", "dplyr", "assertthat", "lubridate", "tidyr", "DBI", "RSQLite"), require, character.only = TRUE)
 
 # BICYCLES ----
 ## load data ####
+## TODO use database ##
 bikes <- read.csv("data/processed/bikes1516.csv")
 
 
@@ -33,7 +33,7 @@ bikes_boxplot <-
   filter(year == 2016) %>%
   mutate(month = as.factor(month)) %>%
   mutate(weekday = factor(weekday,
-                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri", 
+                          levels = c("Mon", "Tues", "Wed", "Thurs", "Fri",
                                      "Sat", "Sun")))
 
 # calculate means per month
@@ -65,7 +65,7 @@ bikes %>%
   select(date, hour, noOfBikes, FR.stadteinwärts, FR.stadtauswärts,
          weekend) %>%
   ggplot(data = .) +
-  geom_line(aes(x = hour, y = noOfBikes, group = date, color = weekend), 
+  geom_line(aes(x = hour, y = noOfBikes, group = date, color = weekend),
             alpha = .4, size = 1)
 
 # examine dates with low morning peaks:
@@ -83,58 +83,10 @@ bikes %>%
          weekend) %>%
   # filter(weekend == F) %>%
   ggplot(data = .) +
-  geom_line(aes(x = hour, y = FR.stadteinwärts, group = date, 
-                color = 'into town', linetype = weekend), 
+  geom_line(aes(x = hour, y = FR.stadteinwärts, group = date,
+                color = 'into town', linetype = weekend),
             alpha = .2, size = 1) +
-  geom_line(aes(x = hour, y = FR.stadtauswärts, group = date, 
-                color = 'out of town', linetype = weekend), 
+  geom_line(aes(x = hour, y = FR.stadtauswärts, group = date,
+                color = 'out of town', linetype = weekend),
             alpha = .2, size = 1) +
   scale_color_discrete(c("Direction"))
-
-# CARS ----
-# load data ----
-wolbecker <- 
-  sqldf("SELECT 
-         date, hour, count, location,
-         CASE location
-           WHEN 'MQ_09040_FV3_G (MQ1034)' THEN 'entering_city'
-           WHEN 'MQ_09040_FV1_G (MQ1033)' THEN 'leaving_city'
-           END 'direction'
-         FROM car_data
-         WHERE location LIKE '%09040%'", 
-        dbname = "data/database/kfz_data.sqlite") 
-
-# plot data ----
-# GROUPED PLOTS
-# plot aggregated days over year
-wolbecker %>%
-  group_by(direction, date) %>%
-  summarise(count_day = sum(count)) %>%
-  ggplot(data = ., aes(x = date, y = count_day)) +
-  geom_line(aes(group = direction, color = direction)) +
-  theme_minimal()
-
-# plot days as line plot
-wolbecker %>%
-  ggplot(data = ., aes(x = hour, y = count)) +
-  geom_line(aes(group = interaction(date, direction), color = direction),
-            alpha = .2) +
-  theme_minimal()
-
-# UN-GROUPED PLOTS
-# plot aggregated days over year
-wolbecker %>%
-  group_by(date) %>%
-  summarise(count_day = sum(count)) %>%
-  ggplot(data = ., aes(x = date, y = count_day)) +
-  geom_line(group = 1) +
-  theme_minimal()
-
-# plot days as line plot
-wolbecker %>%
-  group_by(date, hour) %>%
-  summarise(count_sum = sum(count)) %>%
-  ggplot(data = ., aes(x = hour, y = count_sum)) +
-  geom_line(aes(group = date),
-            alpha = .2) +
-  theme_minimal()
