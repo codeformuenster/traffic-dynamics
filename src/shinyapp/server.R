@@ -9,16 +9,25 @@
 lapply(c("shiny", "datasets", "RSQLite", "dplyr", "sqldf", "ggplot2"), 
        require, character.only = TRUE)
 
-wolbecker <- 
+# wolbecker_cars <- 
+#   sqldf("SELECT 
+#          date, hour, count, location,
+#          CASE location
+#            WHEN 'MQ_09040_FV3_G (MQ1034)' THEN 'entering_city'
+#            WHEN 'MQ_09040_FV1_G (MQ1033)' THEN 'leaving_city'
+#            END 'direction'
+#          FROM cars
+#          WHERE location LIKE '%09040%'", 
+#         dbname = "../../data/database/traffic_data.sqlite") 
+# TODO only one dataframe ... shiny-interactive SQL statements?
+wolbecker_bikes <- 
   sqldf("SELECT 
-         date, hour, count, location,
-         CASE location
-           WHEN 'MQ_09040_FV3_G (MQ1034)' THEN 'entering_city'
-           WHEN 'MQ_09040_FV1_G (MQ1033)' THEN 'leaving_city'
-           END 'direction'
-         FROM kfz_data
-         WHERE location LIKE '%09040%'", 
-        dbname = "../../data/processed/kfz_data.sqlite") 
+         date, hour, count, location
+         FROM bikes
+         WHERE location LIKE 'Neutor'", 
+        dbname = "../../data/database/traffic_data.sqlite")
+head(wolbecker_bikes)
+wolbecker_bikes$direction = rep("unknown", nrow(wolbecker_bikes))
 
 # Define server logic required to plot
 shinyServer(function(input, output) {
@@ -29,7 +38,7 @@ shinyServer(function(input, output) {
   })
   
   filteredHourData <- reactive({
-    wolbecker %>% 
+    wolbecker_bikes %>% 
       filter(
         hour > input$hour_range[1] &
           hour < input$hour_range[2],
@@ -41,7 +50,7 @@ shinyServer(function(input, output) {
     })
     
   filteredYearData <- reactive({
-    wolbecker %>%
+    wolbecker_bikes %>%
       filter(
         hour > input$hour_range[1] &
           hour < input$hour_range[2],
