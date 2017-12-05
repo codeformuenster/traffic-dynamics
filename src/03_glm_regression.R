@@ -8,11 +8,9 @@
 # TODO: for commuting model, remove public holidays (outliers for weekdays)
 
 # load libraries ####
-library(dplyr)
-library(ggplot2)
-library(sjPlot)
-library(nortest)
-library(sqldf)
+# use 00_install_R_packages.R for installing missing packages
+lapply(c("ggplot2", "dplyr", "sjPlot", "nortest", "sqldf"), 
+       require, character.only = TRUE)
 
 # load data ####
 bikes <- read.csv("data/processed/bikes1516.csv")

@@ -4,8 +4,11 @@
 
 # create some high level plots
 
-## load libraries ----
-lapply(c("sqldf", "ggplot2", "gridExtra", "dplyr", "assertthat", "lubridate", "tidyr", "DBI", "RSQLite", "fitdistrplus"), require, character.only = TRUE)
+# load libraries ####
+# use 00_install_R_packages.R for installing missing packages
+lapply(c("sqldf", "ggplot2", "gridExtra", "dplyr", 
+         "assertthat", "lubridate", "tidyr", "DBI", 
+         "RSQLite", "fitdistrplus"), require, character.only = TRUE)
 
 # BICYCLES ----
 ## load data ####

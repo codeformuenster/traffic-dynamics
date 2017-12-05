@@ -5,8 +5,8 @@
 # make a cleaner data file
 
 # load libraries ####
-library(lubridate)
-library(dplyr)
+# use 00_install_R_packages.R for installing missing packages
+lapply(c("lubridate", "dplyr"), require, character.only = TRUE)
 
 # load data ####
 data2015Neutor <-
@@ -42,14 +42,14 @@ data2016Wolbecker <-
 
 
 # combine data sources, rename columns ####
-bikes <- 
+bikes <-
   rbind(data2015Neutor, data2016Neutor, data2016Wolbecker) %>%
   rename(temp = Temperatur...C.) %>%
   rename(wind = Windstärke..km.h.) %>%
   rename(weather = Wetter) %>%
   mutate(rain = (weather == 'Regen'))
 
-bikes$timestamp <- as.POSIXct(strptime(bikes$Stunden, 
+bikes$timestamp <- as.POSIXct(strptime(bikes$Stunden,
                                        format = "%m/%d/%Y %H:%M"))
 bikes$date <- lubridate::date(bikes$timestamp)
 bikes$year <- year(bikes$date)

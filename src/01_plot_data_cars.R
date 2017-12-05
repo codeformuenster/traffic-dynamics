@@ -2,7 +2,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program (file COPYING). If not, see <http://www.gnu.org/licenses/>.
 
-lapply(c("sqldf", "ggplot2", "gridExtra", "dplyr", "assertthat", "lubridate", "tidyr", "DBI", "RSQLite"), require, character.only = TRUE)
+lapply(c("sqldf", "ggplot2", "gridExtra", "dplyr", 
+         "assertthat", "lubridate", "tidyr", 
+         "DBI", "RSQLite"), require, character.only = TRUE)
 
 # LOAD DATA
 wolbecker <-
