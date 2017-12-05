@@ -5,13 +5,15 @@
 # create some high level plots
 
 ## load libraries ----
-lapply(c("sqldf", "ggplot2", "gridExtra", "dplyr", "assertthat", "lubridate", "tidyr", "DBI", "RSQLite"), require, character.only = TRUE)
+lapply(c("sqldf", "ggplot2", "gridExtra", "dplyr", "assertthat", "lubridate", "tidyr", "DBI", "RSQLite", "fitdistrplus"), require, character.only = TRUE)
 
 # BICYCLES ----
 ## load data ####
 ## TODO use database ##
 bikes <- read.csv("data/processed/bikes1516.csv")
 
+# test for distribution
+descdist(bikes$noOfBikes)
 
 ## plots ####
 # heatmap of number of bicycles vs. temperature

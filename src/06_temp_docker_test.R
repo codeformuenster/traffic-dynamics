@@ -1,14 +1,11 @@
 # set working directory to proper directory
 # setwd("path/to/here")
 
-if (require(brms) == FALSE) {
-  install.packages("brms")
-  require(brms)
-}
-if (require(dplyr) == FALSE) {
-  install.packages("dplyr")
-  require(dplyr)
-}
+# temporary file to test docker deployment
+
+# load libraries ####
+# use 00_install_R_packages.R for installing missing packages
+lapply(c("brms", "dplyr"), require, character.only = TRUE)
 
 noOfCores = parallel::detectCores()
 
@@ -17,7 +14,7 @@ noOfCores = parallel::detectCores()
 bikes = read.csv("data/processed/bikes1516.csv")
 
 # ordered factors don't survive .csv storing, so, re-order weekdays:
-bikes$weekday = factor(bikes$weekday, 
+bikes$weekday = factor(bikes$weekday,
                        ordered = TRUE,
                        levels = c("Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"))
 
@@ -27,7 +24,7 @@ bikes$weekday = factor(bikes$weekday,
 # filter data for valid observations
 bikes_commuter_wolbecker <-
   bikes %>%
-  dplyr::select(noOfBikes, location, temp, wind_log, wind, weekday, year, month, 
+  dplyr::select(noOfBikes, location, temp, wind_log, wind, weekday, year, month,
                 hour, rain) %>%
   filter(wind_log != -Inf,
          location == 'wolbecker',
@@ -36,7 +33,7 @@ bikes_commuter_wolbecker <-
   # generate factors
   mutate(rain = as.factor(rain)) %>%
   mutate(month = as.factor(month)) %>%
-  mutate(weekday = factor(weekday, 
+  mutate(weekday = factor(weekday,
                           levels = c("Mon", "Tues", "Wed", "Thurs", "Fri")))
 
 write.csv(bikes_commuter_wolbecker,

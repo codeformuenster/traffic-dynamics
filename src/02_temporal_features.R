@@ -1,15 +1,20 @@
+# This program is free software.
+# You should have received a copy of the GNU General Public License
+# along with this program (file COPYING). If not, see <http://www.gnu.org/licenses/>.
+
 # ENGINEER TEMPORAL FEATURES AND STORE IN DATABASE
 
-library(dplyr)
-library(chron)
-library(lubridate)
+# load libraries ####
+# if the following fails, you might want to use 00_install_R_packages.R
+# to install missing packages
+lapply(c("chron", "dplyr", "lubridate"), require, character.only = TRUE)
 
 # LOAD DATA ----
 bikes <- read.csv(file = "data/processed/bikes1516.csv")
 
 # FEATURE ENGINEERING ----
 df <-
-  bikes %>% 
+  bikes %>%
   select(date, hour, weather, wind, temp) %>%
   mutate(year = as.integer(year(date))) %>%
   mutate(month = as.integer(month(date))) %>%
