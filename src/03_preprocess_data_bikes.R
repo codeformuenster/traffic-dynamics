@@ -9,14 +9,14 @@ sapply(c("lubridate", "dplyr"), require, character.only = TRUE)
 # load data ----
 con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
 bikes <-
-  dbGetQuery(conn = con, 
+  dbGetQuery(conn = con,
              "SELECT
              date, hour, location, count
              FROM bikes")
 dbDisconnect(con)
 
 # feature engineering ----
-bikes$date_iso <- as.POSIXct(strptime(bikes$date, format = "%m/%d/%Y"))
+bikes$date_iso <- as.character(date(strptime(bikes$date, format = "%d/%m/%Y")))
 bikes$year <- year(bikes$date_iso)
 bikes$month <- month(bikes$date_iso)
 bikes$day <- day(bikes$date_iso)
