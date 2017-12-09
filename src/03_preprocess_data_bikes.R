@@ -2,8 +2,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program (file COPYING). If not, see <http://www.gnu.org/licenses/>.
 
-# make a cleaner data file
-
 # load libraries ----
 # use 00_install_R_packages.R for installing required packages
 sapply(c("lubridate", "dplyr"), require, character.only = TRUE)
@@ -28,7 +26,6 @@ bikes$hour_int <- hour(as.POSIXlt(bikes$hour, format="%H:%M"))
 bikes <-
   bikes %>%
   mutate(weekend = (weekday == 'Sa' | weekday == 'So'))
-
 
 # write processed data to file ----
 con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
