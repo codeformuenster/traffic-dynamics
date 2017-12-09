@@ -2,21 +2,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program (file COPYING). If not, see <http://www.gnu.org/licenses/>.
 
-lapply(c("sqldf", "ggplot2", "gridExtra", "dplyr", 
+sapply(c("sqldf", "ggplot2", "gridExtra", "dplyr", 
          "assertthat", "lubridate", "tidyr", 
          "DBI", "RSQLite"), require, character.only = TRUE)
 
 # LOAD DATA
+con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
 wolbecker <-
-  sqldf("SELECT
-         date, hour, count, location,
-         CASE location
-           WHEN 'MQ_09040_FV3_G (MQ1034)' THEN 'entering_city'
-           WHEN 'MQ_09040_FV1_G (MQ1033)' THEN 'leaving_city'
-           END 'direction'
-         FROM kfz_data
-         WHERE location LIKE '%09040%'",
-         dbname = "data/processed/kfz_data.sqlite")
+  dbGetQuery(conn = con, 
+             "SELECT
+             date, hour, count, location,
+             CASE location
+               WHEN 'MQ_09040_FV3_G (MQ1034)' THEN 'entering_city'
+               WHEN 'MQ_09040_FV1_G (MQ1033)' THEN 'leaving_city'
+               END 'direction'
+             FROM cars
+             WHERE location LIKE '%09040%'")
+dbDisconnect(con)
 
 # GROUPED PLOTS
 # plot aggregated days over year
