@@ -2,11 +2,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program (file COPYING). If not, see <http://www.gnu.org/licenses/>.
 
+# load libraries ----
 sapply(c("sqldf", "ggplot2", "gridExtra", "dplyr", 
          "assertthat", "lubridate", "tidyr", 
          "DBI", "RSQLite"), require, character.only = TRUE)
 
-# LOAD DATA
+# LOAD DATA ----
 con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
 wolbecker <-
   dbGetQuery(conn = con, 
