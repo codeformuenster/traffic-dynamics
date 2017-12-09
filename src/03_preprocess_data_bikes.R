@@ -4,67 +4,36 @@
 
 # make a cleaner data file
 
-# load libraries ####
-# use 00_install_R_packages.R for installing missing packages
-lapply(c("lubridate", "dplyr"), require, character.only = TRUE)
+# load libraries ----
+# use 00_install_R_packages.R for installing required packages
+sapply(c("lubridate", "dplyr"), require, character.only = TRUE)
 
-# load data ####
-data2015Neutor <-
-  read.csv("../data/raw/zaehlstelle_neutor_2015_stundenauswertung.csv",
-           na.strings = c("technische Störung", "")) %>%
-  head(., -1)  # remove summary lines at end of file
-data2016Neutor <-
-  read.csv("../data/raw/zaehlstelle_neutor_2016_stundenauswertung.csv",
-           na.strings = c("technische Störung", "")) %>%
-  head(., -2)  # remove summary lines at end of file
-data2016Wolbecker <-
-  read.csv("../data/raw/zaehlstelle_wolbecker_2016_stundenauswertung.csv",
-           na.strings = c("technische Störung", "")) %>%
-  head(., -2)  # remove summary lines at end of file
-
-
-# rename columns, add location ####
-data2015Neutor <-
-  data2015Neutor %>%
-  rename(noOfBikes = Zählung.Neutor) %>%
-  mutate(location = 'neutor') %>%
-  mutate(Wetter = NA)  # no weather data
-
-data2016Neutor <-
-  data2016Neutor %>%
-  rename(noOfBikes = Neutor..gesamt.) %>%
-  mutate(location = 'neutor')
-
-data2016Wolbecker <-
-  data2016Wolbecker %>%
-  rename(noOfBikes = Wolbecker.Straße..gesamt.) %>%
-  mutate(location = 'wolbecker')
-
-
-# combine data sources, rename columns ####
+# load data ----
+con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
 bikes <-
-  rbind(data2015Neutor, data2016Neutor, data2016Wolbecker) %>%
-  rename(temp = Temperatur...C.) %>%
-  rename(wind = Windstärke..km.h.) %>%
-  rename(weather = Wetter) %>%
-  mutate(rain = (weather == 'Regen'))
+  dbGetQuery(conn = con, 
+             "SELECT
+             date, hour, location, count
+             FROM bikes")
+dbDisconnect(con)
 
-bikes$timestamp <- as.POSIXct(strptime(bikes$Stunden,
-                                       format = "%m/%d/%Y %H:%M"))
-bikes$date <- lubridate::date(bikes$timestamp)
-bikes$year <- year(bikes$date)
-bikes$month <- month(bikes$date)
-bikes$day <- day(bikes$date)
-bikes$weekday <- wday(bikes$date, label = TRUE)
-bikes$hour <- hour(bikes$timestamp)
+# feature engineering ----
+bikes$date_iso <- as.POSIXct(strptime(bikes$date, format = "%m/%d/%Y"))
+bikes$year <- year(bikes$date_iso)
+bikes$month <- month(bikes$date_iso)
+bikes$day <- day(bikes$date_iso)
+bikes$weekday <- wday(bikes$date_iso, label = TRUE)
+bikes$hour_int <- hour(as.POSIXlt(bikes$hour, format="%H:%M"))
 
 bikes <-
   bikes %>%
-  mutate(weekend = (weekday == 'Sat' | weekday == 'Sun')) %>%
-  mutate(wind_log = log(wind))  # log of wind speed (due to distribution)
+  mutate(weekend = (weekday == 'Sa' | weekday == 'So'))
 
 
-# write processed data to file ####
-write.csv(bikes,
-          file = "../data/processed/bikes1516.csv",
-          row.names = FALSE)
+# write processed data to file ----
+con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
+if (dbExistsTable(con, "bikes_processed")) {
+  dbRemoveTable(con, "bikes_processed") 
+}
+dbWriteTable(con, "bikes_processed", bikes, row.names = F)
+dbDisconnect(con)
