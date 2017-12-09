@@ -15,10 +15,10 @@ process_df <- function(df) {
     colnames(df) <-
       colnames(df) %>% 
       tail(-1)
-    assert_that(df %>% select(26) %>% is.na %>% all)
+    assert_that(df %>% dplyr::select(26) %>% is.na %>% all)
     df <-
       df %>%
-      select(-26)
+      dplyr::select(-26)
   }
   
   # DATE
