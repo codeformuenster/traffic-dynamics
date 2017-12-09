@@ -9,5 +9,7 @@ installed_packages <- installed.packages()[,"Package"]
 
 needed_packages <- packages[!(packages %in% installed_packages)]
 
-install.packages(needed_packages)
+if (length(needed_packages) > 0) {
+  install.packages(needed_packages)
+}
 
