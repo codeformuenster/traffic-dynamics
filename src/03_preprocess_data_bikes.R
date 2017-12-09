@@ -29,8 +29,5 @@ bikes <-
 
 # write processed data to file ----
 con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
-if (dbExistsTable(con, "bikes_processed")) {
-  dbRemoveTable(con, "bikes_processed") 
-}
-dbWriteTable(con, "bikes_processed", bikes, row.names = F)
+dbWriteTable(con, "bikes_processed", bikes, row.names = F, overwrite = T)
 dbDisconnect(con)

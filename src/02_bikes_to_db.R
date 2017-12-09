@@ -22,7 +22,6 @@ df <-
 # write 'df' to SQLite database
 dir.create("data/database", showWarnings = F)
 con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
-if (dbExistsTable(con, "bikes")) { dbRemoveTable(con, "bikes") }
-dbWriteTable(con, "bikes", df, row.names = F)
+dbWriteTable(con, "bikes", df, row.names = F, overwrite = T)
 dbDisconnect(con)
 
