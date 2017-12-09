@@ -2,26 +2,29 @@
 # You should have received a copy of the GNU General Public License
 # along with this program (file COPYING). If not, see <http://www.gnu.org/licenses/>.
 
-# create some high level plots
-
 # load libraries ####
 # use 00_install_R_packages.R for installing missing packages
-lapply(c("sqldf", "ggplot2", "gridExtra", "dplyr", 
+sapply(c("sqldf", "ggplot2", "gridExtra", "dplyr", 
          "assertthat", "lubridate", "tidyr", "DBI", 
          "RSQLite", "fitdistrplus"), require, character.only = TRUE)
 
-# BICYCLES ----
-## load data ####
-## TODO use database ##
-bikes <- read.csv("data/processed/bikes1516.csv")
+# load data ----
+# read from database
+con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
+bikes <- dbGetQuery(conn = con, "SELECT * FROM bikes_processed")
+dbDisconnect(con)
+# scale data
+bikes <- 
+  bikes %>%
+  mutate(month = as.factor(month)) %>%
+  mutate(weekday = factor(weekday,
+                          levels = c("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So")))
 
 # test for distribution
-descdist(bikes$noOfBikes)
+descdist(bikes$count)
 
 ## plots ####
 # heatmap of number of bicycles vs. temperature
-bikes$year = as.factor(bikes$year)
-
 ggplot(data = bikes[!is.na(bikes$temp),]) +
   geom_bin2d(aes(x = temp, y = noOfBikes),
              # no of bins: one bin for two degree celsius
@@ -44,7 +47,7 @@ bikes_boxplot <-
 # calculate means per month
 bikes_boxplot %>%
   group_by(month) %>%
-  summarise(mean_month = mean(noOfBikes))
+  summarise(mean_month = mean(count))
 
 
 # boxplots of number of bicycles by WEEKDAY
