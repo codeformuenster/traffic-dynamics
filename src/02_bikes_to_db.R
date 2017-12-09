@@ -24,4 +24,3 @@ dir.create("data/database", showWarnings = F)
 con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
 dbWriteTable(con, "bikes", df, row.names = F, overwrite = T)
 dbDisconnect(con)
-
