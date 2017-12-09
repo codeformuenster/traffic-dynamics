@@ -6,10 +6,10 @@
 
 # load libraries ####
 # use 00_install_R_packages.R for installing missing packages
-lapply(c("dplyr", "DBI", "RSQLite"), 
+sapply(c("dplyr", "DBI", "RSQLite", "tidyr"), 
        require, character.only = TRUE)
 
-file = "data/raw/Fahrradzaehlstellen-Stundenwerte.csv"
+file <- "data/raw/Fahrradzaehlstellen-Stundenwerte.csv"
 
 df <- 
   read.csv(file, sep = ";") %>%

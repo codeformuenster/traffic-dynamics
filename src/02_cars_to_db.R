@@ -6,9 +6,8 @@
 
 # load libraries ####
 # use 00_install_R_packages.R for installing missing packages
-lapply(c("dplyr", "assertthat", "lubridate", "tidyr", "DBI", "RSQLITE"), 
+sapply(c("dplyr", "assertthat", "lubridate", "tidyr", "DBI", "RSQLite"), 
        require, character.only = TRUE)
-
 
 process_df <- function(df) {
   # shift header left and remove last column 

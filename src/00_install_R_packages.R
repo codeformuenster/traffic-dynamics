@@ -12,4 +12,3 @@ needed_packages <- packages[!(packages %in% installed_packages)]
 if (length(needed_packages) > 0) {
   install.packages(needed_packages)
 }
-
