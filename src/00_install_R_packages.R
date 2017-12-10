@@ -3,7 +3,7 @@
 # along with this program (file COPYING). If not, see <http://www.gnu.org/licenses/>.
 
 packages <- c("dplyr", "assertthat", "lubridate", "tidyr", "DBI",
-              "RSQLite", "ggplot2")
+              "RSQLite", "ggplot2", "darksky")
 
 installed_packages <- installed.packages()[,"Package"]
 

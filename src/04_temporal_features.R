@@ -5,7 +5,8 @@
 # load libraries ####
 # if the following fails, you might want to use 00_install_R_packages.R
 # to install missing packages
-lapply(c("chron", "dplyr", "lubridate"), require, character.only = TRUE)
+sapply(c("chron", "dplyr", "lubridate", "darksky", "DBI", "RSQLite"),
+       require, character.only = TRUE)
 
 # LOAD DATES AND HOURS ----
 con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
@@ -27,7 +28,9 @@ temporal_features <-
   mutate(weekday = wday(date, label = T, abbr = T)) %>%
   mutate(weekend = is.weekend(date))
 
+# Darksky API
 # TODO: add weather from Dark Sky API
+
 
 # SAVE TO DATABASE ----
 con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
