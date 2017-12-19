@@ -17,7 +17,12 @@ df <-
   rename(hour = X) %>%
   rename(date = Datum) %>%
   # wide to long format
-  gather(location, count, -date, -hour)
+  gather(location, count, -date, -hour) %>%
+	mutate(date = dmy(date)) %>% 
+	mutate(date = as.character(date)) %>% 
+	mutate(hour = substring(hour, 1, 2)) %>% 
+  mutate(hour = as.integer(hour))
+
 
 # write 'df' to SQLite database
 dir.create("data/database", showWarnings = F)
