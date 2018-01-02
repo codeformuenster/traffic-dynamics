@@ -64,13 +64,28 @@ shinyServer(function(input, output) {
   filteredYearData <- reactive({
   	vehicles <- load_data_from_db()
   	
+  	if (input$tabs == "timerange") {
+	  	vehicles_filtered <-
+	  		vehicles %>% 
+	  		filter(
+		    	date >= as.POSIXct(input$date_range[1]) &
+		      date <= as.POSIXct(input$date_range[2])
+		    	)
+  	} else if (input$tabs == "timepoints") {
+   		vehicles_filtered <-
+	  		vehicles %>% 
+	  		filter(
+	  			year(date) %in% input$years &
+		    	month(date) %in% input$months &
+		    	wday(date) %in% input$weekdays
+		    )
+  	}
+  	
   	vehicles_filtered <-
-	    vehicles %>%
+	    vehicles_filtered %>%
 	      filter(
 	        hour >= input$hour_range[1] &
-	          hour <= input$hour_range[2],
-	        date >= as.POSIXct(input$date_range[1]) &
-	          date <= as.POSIXct(input$date_range[2])
+	          hour <= input$hour_range[2]
 	      ) %>% 
   			mutate(vehicle = as.factor(vehicle)) %>%
 	      group_by(date, vehicle) %>%
@@ -85,8 +100,25 @@ shinyServer(function(input, output) {
   filteredHourData <- reactive({
   	vehicles <- load_data_from_db()
   	
+  	if (input$tabs == "timerange") {
+	  	vehicles_filtered <-
+	  		vehicles %>% 
+	  		filter(
+		    	date >= as.POSIXct(input$date_range[1]) &
+		      date <= as.POSIXct(input$date_range[2])
+		    	)
+  	} else if (input$tabs == "timepoints") {
+   		vehicles_filtered <-
+	  		vehicles %>% 
+	  		filter(
+	  			year(date) %in% input$years &
+		    	month(date) %in% input$months &
+		    	wday(date) %in% input$weekdays
+		    )
+  	}
+  	
   	vehicles_filtered <-
-			vehicles %>% 
+			vehicles_filtered %>% 
 	      filter(
 	        hour >= input$hour_range[1] &
 	          hour <= input$hour_range[2],
@@ -105,9 +137,9 @@ shinyServer(function(input, output) {
     
   output$plotYear <- renderPlot({
     ggplot(data = filteredYearData()) +
-    geom_line(aes(x = date, y = count_day, group = vehicle, color = vehicle)) +
+    geom_line(aes(x = as.POSIXct(date), y = count_day, group = vehicle, color = vehicle)) +
   	labs(x = "Datum", y = "Anzahl", color = "Verkehrsmittel") +
-  	scale_color_manual(labels = c("Fahrräder", "Autos"), values = c("bike" = "blue", "car" = "red")) +
+  	scale_color_manual(labels = c("bike" = "Fahrräder", "car" = "Autos"), values = c("bike" = "blue", "car" = "red")) +
     theme_minimal(base_size = 18)
   })
   
@@ -115,7 +147,7 @@ shinyServer(function(input, output) {
     ggplot(data = filteredHourData(), aes(x = hour, y = count_hour)) +
     geom_line(aes(group = interaction(vehicle, date), color = vehicle), alpha = 0.2) +
     labs(x = "Stunde", y = "Anzahl", color = "Verkehrsmittel") +
-  	scale_color_manual(labels = c("Fahrräder", "Autos"), values = c("bike" = "blue", "car" = "red")) +
+  	scale_color_manual(labels = c("bike" = "Fahrräder", "car" = "Autos"), values = c("bike" = "blue", "car" = "red")) +
     theme_minimal(base_size = 18)
   })
 })

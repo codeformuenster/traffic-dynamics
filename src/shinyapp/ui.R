@@ -16,8 +16,9 @@ shinyUI(
 		# sidebarPanel(
 		fluidRow(
 		column(2,
-					 wellPanel(
-					 	dateRangeInput(
+				 tabsetPanel(id = "tabs",
+          tabPanel("Zeitspanne", value = "timerange", 
+          	dateRangeInput(
 					 		"date_range",
 					 		"Wähle eine Zeitspanne:",
 					 		min = "2015-01-01",
@@ -26,10 +27,17 @@ shinyUI(
 					 		end = "2015-12-31",
 					 		format = "dd. M yyyy",
 					 		language = "de"
-					 	),
+					 	)),
+          	tabPanel("Zeitpunkte", value = "timepoints", 
+          					 checkboxGroupInput("years", "Wähle Jahre:", inline = TRUE, selected = 2017, choices = c("2013", "2014", "2015", "2016", "2017")),
+          				 		checkboxGroupInput("months", "Wähle Monate:", inline = TRUE, selected = 8, choices = c("Januar" = 1, "Februar" = 2, "März" = 3, "April" = 4, "Mai" = 5, "Juni" = 6, "Juli" = 7, "August" = 8, "September" = 9, "Oktober" = 10, "November" = 11, "Dezember" = 12)),
+          				 checkboxGroupInput("weekdays", "Wähle Wochentage:", inline = TRUE, selected = 3, choices = c("Montag" = 1, "Dienstag" = 2, "Mittwoch" = 3, "Donnerstag" = 4, "Freitag" = 5, "Samstag" = 6, "Sonntag" = 7))
+  				)
+  				),
+					 wellPanel(
 					 	sliderInput(
 					 		"hour_range",
-					 		"Wähle eine Zeitspanne:",
+					 		"Uhrzeit:",
 					 		min = 0,
 					 		max = 24,
 					 		value = c(0, 24)
