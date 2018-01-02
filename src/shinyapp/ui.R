@@ -34,7 +34,7 @@ shinyUI(
 					 		max = 24,
 					 		value = c(0, 24)
 					 	),
-					 	selectInput("vehicle", "Verkehrsmittel:", c("Fahrräder" = "bikes", "Autos" = "cars")),
+					 	selectInput("vehicle", "Verkehrsmittel:", c("Fahrräder" = "bikes", "Autos" = "cars", "Fahrräder & Autos" = "both")),
 					 	selectInput("location", "Ort:", c("Neutor" = "'Neutor'", "Wolbecker" = "'Wolbecker.Straße'"))
 					 )),
 		#mainPanel(

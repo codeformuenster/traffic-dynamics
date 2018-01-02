@@ -43,6 +43,10 @@ process_df <- function(df) {
     # 'hour' to integer format
     mutate(hour = substring(hour, 2)) %>% 
     mutate(hour = as.integer(hour))
+  
+  df <-
+  	df %>% 
+  	mutate(vehicle = "car")
 
   return(df)
 }

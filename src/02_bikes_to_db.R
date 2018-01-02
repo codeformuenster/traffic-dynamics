@@ -6,7 +6,7 @@
 
 # load libraries ####
 # use 00_install_R_packages.R for installing missing packages
-sapply(c("dplyr", "DBI", "RSQLite", "tidyr"), 
+sapply(c("dplyr", "DBI", "RSQLite", "tidyr", "lubridate"), 
        require, character.only = TRUE)
 
 file <- "data/raw/Fahrradzaehlstellen-Stundenwerte.csv"
@@ -21,7 +21,8 @@ df <-
 	mutate(date = dmy(date)) %>% 
 	mutate(date = as.character(date)) %>% 
 	mutate(hour = substring(hour, 1, 2)) %>% 
-  mutate(hour = as.integer(hour))
+ 	mutate(hour = as.integer(hour)) %>% 
+	mutate(vehicle = "bike")
 
 
 # write 'df' to SQLite database

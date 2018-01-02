@@ -20,20 +20,33 @@ shinyServer(function(input, output) {
   load_data_from_db <- reactive({  
   	con <- dbConnect(SQLite(), dbname = "../../data/database/traffic_data.sqlite")
   	
-  	if (input$vehicle == "cars") {
+  	if (input$vehicle == "bikes") {
+  		sql_table = "bikes"
+  		sql_location = input$location
+  	} else  { 
+  		# default to cars only 
+  		# (for selecting both, a second SQL query is added below)
+  		sql_table = "cars"
   		if(input$location == "'Wolbecker.Straße'") {
 				sql_location = "'%09040%'"
   		} else if(input$location == "'Neutor'") {
   			sql_location = "'%01080%'"
   		}
-  	} else {
-  		sql_location = input$location
   	}
   	
-		sql_string <- paste0("SELECT
-         date, hour, count, location
-         FROM ", input$vehicle, "
-					WHERE location LIKE ", sql_location)
+		sql_string <- paste0(
+			"SELECT date, hour, count, location, vehicle", 
+      " FROM ", sql_table,
+			" WHERE location LIKE ", sql_location)
+		if (input$vehicle == "both") {
+	  	# add bikes
+			sql_table = "bikes"
+  		sql_location = input$location
+	  	sql_string <-	paste0(sql_string, 
+			" UNION SELECT date, hour, count, location, vehicle",
+    	" FROM ", sql_table,
+			" WHERE location LIKE ", sql_location)
+		}
 		print(sql_string)
 		
 		vehicles <-
@@ -48,31 +61,10 @@ shinyServer(function(input, output) {
 		return(vehicles)
 	})
 
-  filteredHourData <- reactive({
-  	vehicles <- load_data_from_db()
-  	
-  	vehicles <-
-			vehicles %>% 
-	      filter(
-	        hour >= input$hour_range[1] &
-	          hour <= input$hour_range[2],
-	        date >= as.POSIXct(input$date_range[1]) & 
-	          date <= as.POSIXct(input$date_range[2])
-	      ) %>% 
-	      group_by(date, hour) %>%
-	      summarise(count_hour = sum(count))
-		
-  print("for hour plot:")
-  print(head(vehicles))
-  	
-    return(vehicles)
-    })
-    
   filteredYearData <- reactive({
-  	
   	vehicles <- load_data_from_db()
   	
-  	vehicles <-
+  	vehicles_filtered <-
 	    vehicles %>%
 	      filter(
 	        hour >= input$hour_range[1] &
@@ -80,25 +72,50 @@ shinyServer(function(input, output) {
 	        date >= as.POSIXct(input$date_range[1]) &
 	          date <= as.POSIXct(input$date_range[2])
 	      ) %>% 
-	      group_by(date) %>%
+  			mutate(vehicle = as.factor(vehicle)) %>%
+	      group_by(date, vehicle) %>%
 	      summarise(count_day = sum(count))
   	
   	print("for year plot:")
-  	print(head(vehicles))
+  	print(head(vehicles_filtered))
     
-    return(vehicles)
+    return(vehicles_filtered)
   })
 
-  output$plotYear <- renderPlot({
+  filteredHourData <- reactive({
+  	vehicles <- load_data_from_db()
   	
+  	vehicles_filtered <-
+			vehicles %>% 
+	      filter(
+	        hour >= input$hour_range[1] &
+	          hour <= input$hour_range[2],
+	        date >= as.POSIXct(input$date_range[1]) & 
+	          date <= as.POSIXct(input$date_range[2])
+	      ) %>% 
+  			mutate(vehicle = as.factor(vehicle)) %>% 
+	      group_by(date, hour, vehicle) %>%
+	      summarise(count_hour = sum(count))
+		
+	  print("for hour plot:")
+	  print(head(vehicles_filtered))
+	
+  	return(vehicles_filtered)
+  })
+    
+  output$plotYear <- renderPlot({
     ggplot(data = filteredYearData()) +
-    geom_line(aes(x = date, y = count_day, group = 1)) +
+    geom_line(aes(x = date, y = count_day, group = vehicle, color = vehicle)) +
+  	labs(x = "Datum", y = "Anzahl", color = "Verkehrsmittel") +
+  	scale_color_manual(labels = c("Fahrräder", "Autos"), values = c("bike" = "blue", "car" = "red")) +
     theme_minimal(base_size = 18)
   })
   
   output$plotDay <- renderPlot({
     ggplot(data = filteredHourData(), aes(x = hour, y = count_hour)) +
-    geom_line(aes(group = date), alpha = .2) +
+    geom_line(aes(group = interaction(vehicle, date), color = vehicle), alpha = 0.2) +
+    labs(x = "Stunde", y = "Anzahl", color = "Verkehrsmittel") +
+  	scale_color_manual(labels = c("Fahrräder", "Autos"), values = c("bike" = "blue", "car" = "red")) +
     theme_minimal(base_size = 18)
   })
 })
