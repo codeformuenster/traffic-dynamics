@@ -15,7 +15,7 @@ temporal_features <-
              "SELECT DISTINCT * FROM (
                SELECT date, hour FROM cars
                UNION ALL
-               SELECT date_iso as date, hour_int as hour FROM bikes_processed
+               SELECT date_iso as date, hour FROM bikes_processed
              ) ORDER BY date ASC, hour ASC")
 dbDisconnect(con)
 

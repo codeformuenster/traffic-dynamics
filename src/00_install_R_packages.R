@@ -2,7 +2,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program (file COPYING). If not, see <http://www.gnu.org/licenses/>.
 
-packages <- c("dplyr", "assertthat", "lubridate", "tidyr", "DBI",
+packages <- c("envDocument", "dplyr", "assertthat", "lubridate", "tidyr", "DBI",
               "RSQLite", "ggplot2", "darksky")
 
 installed_packages <- installed.packages()[,"Package"]

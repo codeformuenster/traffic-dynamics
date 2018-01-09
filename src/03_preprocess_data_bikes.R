@@ -4,7 +4,7 @@
 
 # load libraries ----
 # use 00_install_R_packages.R for installing required packages
-sapply(c("lubridate", "dplyr"), require, character.only = TRUE)
+sapply(c("lubridate", "dplyr", "RSQLite"), require, character.only = TRUE)
 
 # load data ----
 con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
@@ -21,7 +21,7 @@ bikes$year <- year(bikes$date_iso)
 bikes$month <- month(bikes$date_iso)
 bikes$day <- day(bikes$date_iso)
 bikes$weekday <- wday(bikes$date_iso, label = TRUE)
-bikes$hour_int <- hour(as.POSIXlt(bikes$hour, format="%H:%M"))
+#bikes$hour_int <- hour(as.POSIXlt(bikes$hour, format = "%H:%M"))
 
 bikes <-
   bikes %>%
