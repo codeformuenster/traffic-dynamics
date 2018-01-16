@@ -16,6 +16,17 @@ shinyUI(
 		# sidebarPanel(
 		fluidRow(
 		column(2,
+					 wellPanel(
+					 	selectInput("vehicle", "Verkehrsmittel:", c("Fahrräder" = "bikes", "Autos" = "cars", "Fahrräder & Autos" = "both")),
+					 	selectInput("location", "Ort:", c("Neutor" = "'Neutor'", "Wolbecker" = "'Wolbecker.Straße'")),
+					 	sliderInput(
+					 		"hour_range",
+					 		"Uhrzeit:",
+					 		min = 0,
+					 		max = 24,
+					 		value = c(0, 24)
+					 	)
+					 ),
 				 tabsetPanel(id = "tabs",
           tabPanel("Zeitspanne", value = "timerange", 
           	dateRangeInput(
@@ -23,29 +34,18 @@ shinyUI(
 					 		"Wähle eine Zeitspanne:",
 					 		min = "2015-01-01",
 					 		max = "2016-12-31",
-					 		start = "2015-01-01",
-					 		end = "2015-12-31",
+					 		start = "2016-01-01",
+					 		end = "2016-12-31",
 					 		format = "dd. M yyyy",
-					 		language = "de"
+					 		language = "de", separator = "bis"
 					 	)),
           	tabPanel("Zeitpunkte", value = "timepoints", 
-          					 checkboxGroupInput("years", "Wähle Jahre:", inline = TRUE, selected = 2017, choices = c("2013", "2014", "2015", "2016", "2017")),
-          				 		checkboxGroupInput("months", "Wähle Monate:", inline = TRUE, selected = 8, choices = c("Januar" = 1, "Februar" = 2, "März" = 3, "April" = 4, "Mai" = 5, "Juni" = 6, "Juli" = 7, "August" = 8, "September" = 9, "Oktober" = 10, "November" = 11, "Dezember" = 12)),
-          				 checkboxGroupInput("weekdays", "Wähle Wochentage:", inline = TRUE, selected = 3, choices = c("Montag" = 1, "Dienstag" = 2, "Mittwoch" = 3, "Donnerstag" = 4, "Freitag" = 5, "Samstag" = 6, "Sonntag" = 7))
+          					 checkboxGroupInput("years", "Wähle Jahre:", inline = TRUE, selected = 2017, choices = list("2013", "2014", "2015", "2016", "2017")),
+          				 		checkboxGroupInput("months", "Wähle Monate:", inline = TRUE, selected = '08', choices = c("Januar" = '01', "Februar" = '02', "März" = '03', "April" = '04', "Mai" = '05', "Juni" = '06', "Juli" = '07', "August" = '08', "September" = '09', "Oktober" = '10', "November" = '11', "Dezember" = '12')),
+          				 checkboxGroupInput("weekdays", "Wähle Wochentage:", inline = TRUE, selected = '3', choices = c("Montag" = '1', "Dienstag" = '2', "Mittwoch" = '3', "Donnerstag" = '4', "Freitag" = '5', "Samstag" = '6', "Sonntag" = '0'))
   				)
-  				),
-					 wellPanel(
-					 	sliderInput(
-					 		"hour_range",
-					 		"Uhrzeit:",
-					 		min = 0,
-					 		max = 24,
-					 		value = c(0, 24)
-					 	),
-					 	selectInput("vehicle", "Verkehrsmittel:", c("Fahrräder" = "bikes", "Autos" = "cars", "Fahrräder & Autos" = "both")),
-					 	selectInput("location", "Ort:", c("Neutor" = "'Neutor'", "Wolbecker" = "'Wolbecker.Straße'"))
-					 )),
-		#mainPanel(
+  				)
+					 ),
 		column(5,
 			h3(textOutput("caption")),
 			

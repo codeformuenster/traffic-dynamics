@@ -14,10 +14,10 @@ shinyServer(function(input, output) {
   
   # Return the formula text for printing as a caption
   output$caption <- renderText({
-    paste("Time scale: ", input$scale)
+    paste("Alpha-Version, Daten nicht verlässlich!", input$scale)
   })
 
-  load_data_from_db <- reactive({  
+  load_filtered_data_from_db <- reactive({  
   	con <- dbConnect(SQLite(), dbname = "../../data/database/traffic_data.sqlite")
   	
   	if (input$vehicle == "bikes") {
@@ -27,116 +27,104 @@ shinyServer(function(input, output) {
   		# default to cars only 
   		# (for selecting both, a second SQL query is added below)
   		sql_table = "cars"
-  		if(input$location == "'Wolbecker.Straße'") {
+  		if (input$location == "'Wolbecker.Straße'") {
 				sql_location = "'%09040%'"
-  		} else if(input$location == "'Neutor'") {
+  		} else if (input$location == "'Neutor'") {
   			sql_location = "'%01080%'"
   		}
   	}
   	
+  	date_filter <- 
+			paste0(" WHERE hour >= ", input$hour_range[1],
+						" AND hour <= ", input$hour_range[2])
+  	
+  	if (input$tabs == "timerange") {
+	  	date_filter <- 
+	  		paste0(date_filter,
+			" AND date >= '", input$date_range[1], "'", 
+			" AND date <= '", input$date_range[2], "'")
+  	} else if (input$tabs == "timepoints") {
+  		
+  		# years
+  		date_filter <- 
+  			paste0(date_filter,
+			" AND strftime('%Y', date) IN (")
+  		# construct a list with quotes
+  		for (yidx in 1:length(input$years)) {
+  			if (yidx != length(input$years)) {
+  				date_filter <- paste0(date_filter, "'" , input$years[yidx], "',")
+  			} else {
+  				# no comma after last date
+  				date_filter <- paste0(date_filter, "'" , input$years[yidx], "'")
+  			}
+  		}
+  		date_filter <- paste0(date_filter, ")")
+  		
+  		# months
+			date_filter <- paste0(date_filter, " AND strftime('%m', date) IN (")
+  		for (yidx in 1:length(input$months)) {
+  			if (yidx != length(input$months)) {
+  				date_filter <- paste0(date_filter, "'" , input$months[yidx], "',")
+  			} else {
+  				# no comma after last date
+  				date_filter <- paste0(date_filter, "'" , input$months[yidx], "'")
+  			}
+  		}
+  		date_filter <- paste0(date_filter, ")")
+			
+  		# weekday
+			date_filter <- paste0(date_filter, " AND strftime('%w', date) IN (")
+  		for (yidx in 1:length(input$weekdays)) {
+  			if (yidx != length(input$weekdays)) {
+  				date_filter <- paste0(date_filter, "'" , input$weekdays[yidx], "',")
+  			} else {
+  				# no comma after last date
+  				date_filter <- paste0(date_filter, "'" , input$weekdays[yidx], "'")
+  			}
+  		}
+  		date_filter <- paste0(date_filter, ")")
+  	}
+  	
+  		
 		sql_string <- paste0(
 			"SELECT date, hour, count, location, vehicle", 
-      " FROM ", sql_table,
-			" WHERE location LIKE ", sql_location)
+      " FROM ", sql_table, date_filter,
+			" AND location LIKE ", sql_location)
 		if (input$vehicle == "both") {
 	  	# add bikes
 			sql_table = "bikes"
   		sql_location = input$location
 	  	sql_string <-	paste0(sql_string, 
 			" UNION SELECT date, hour, count, location, vehicle",
-    	" FROM ", sql_table,
-			" WHERE location LIKE ", sql_location)
+    	" FROM ", sql_table, date_filter,
+			" AND location LIKE ", sql_location)
 		}
-		print(sql_string)
 		
-		vehicles <-
-	  dbGetQuery(conn = con,
-				sql_string)
+		vehicles <- dbGetQuery(conn = con, sql_string)
 		
 		dbDisconnect(con)
 		
-		print("unfiltered data")
-		print(head(vehicles))
-  	
 		return(vehicles)
 	})
 
-  filteredYearData <- reactive({
-  	vehicles <- load_data_from_db()
-  	
-  	if (input$tabs == "timerange") {
-	  	vehicles_filtered <-
-	  		vehicles %>% 
-	  		filter(
-		    	date >= as.POSIXct(input$date_range[1]) &
-		      date <= as.POSIXct(input$date_range[2])
-		    	)
-  	} else if (input$tabs == "timepoints") {
-   		vehicles_filtered <-
-	  		vehicles %>% 
-	  		filter(
-	  			year(date) %in% input$years &
-		    	month(date) %in% input$months &
-		    	wday(date) %in% input$weekdays
-		    )
-  	}
-  	
-  	vehicles_filtered <-
-	    vehicles_filtered %>%
-	      filter(
-	        hour >= input$hour_range[1] &
-	          hour <= input$hour_range[2]
-	      ) %>% 
-  			mutate(vehicle = as.factor(vehicle)) %>%
+ 	aggregated_data_year <- reactive({
+ 		vehicles_year <-
+	   load_filtered_data_from_db() %>%
 	      group_by(date, vehicle) %>%
 	      summarise(count_day = sum(count))
-  	
-  	print("for year plot:")
-  	print(head(vehicles_filtered))
-    
-    return(vehicles_filtered)
+    return(vehicles_year)
   })
 
-  filteredHourData <- reactive({
-  	vehicles <- load_data_from_db()
-  	
-  	if (input$tabs == "timerange") {
-	  	vehicles_filtered <-
-	  		vehicles %>% 
-	  		filter(
-		    	date >= as.POSIXct(input$date_range[1]) &
-		      date <= as.POSIXct(input$date_range[2])
-		    	)
-  	} else if (input$tabs == "timepoints") {
-   		vehicles_filtered <-
-	  		vehicles %>% 
-	  		filter(
-	  			year(date) %in% input$years &
-		    	month(date) %in% input$months &
-		    	wday(date) %in% input$weekdays
-		    )
-  	}
-  	
-  	vehicles_filtered <-
-			vehicles_filtered %>% 
-	      filter(
-	        hour >= input$hour_range[1] &
-	          hour <= input$hour_range[2],
-	        date >= as.POSIXct(input$date_range[1]) & 
-	          date <= as.POSIXct(input$date_range[2])
-	      ) %>% 
-  			mutate(vehicle = as.factor(vehicle)) %>% 
+  aggregated_data_hour <- reactive({
+  	vehicles_hour <- 
+  		load_filtered_data_from_db() %>%
 	      group_by(date, hour, vehicle) %>%
 	      summarise(count_hour = sum(count))
-		
-	  print("for hour plot:")
-	  print(head(vehicles_filtered))
-	
-  	return(vehicles_filtered)
+  	return(vehicles_hour)
   })
     
   output$plotYear <- renderPlot({
-    ggplot(data = filteredYearData()) +
+    ggplot(data = aggregated_data_year()) +
     geom_line(aes(x = as.POSIXct(date), y = count_day, group = vehicle, color = vehicle)) +
   	labs(x = "Datum", y = "Anzahl", color = "Verkehrsmittel") +
   	scale_color_manual(labels = c("bike" = "Fahrräder", "car" = "Autos"), values = c("bike" = "blue", "car" = "red")) +
@@ -144,7 +132,7 @@ shinyServer(function(input, output) {
   })
   
   output$plotDay <- renderPlot({
-    ggplot(data = filteredHourData(), aes(x = hour, y = count_hour)) +
+    ggplot(data = aggregated_data_hour(), aes(x = hour, y = count_hour)) +
     geom_line(aes(group = interaction(vehicle, date), color = vehicle), alpha = 0.2) +
     labs(x = "Stunde", y = "Anzahl", color = "Verkehrsmittel") +
   	scale_color_manual(labels = c("bike" = "Fahrräder", "car" = "Autos"), values = c("bike" = "blue", "car" = "red")) +
