@@ -64,7 +64,7 @@ shinyUI(
 		column(12,
 		hr(),
 		print("lizenziert unter der GPLv3,"),
-		a("mehr Infos hier", href = "https://github.com/codeformuenster/kfzData#rechtliches"),
+		a("mehr Infos hier", href = "https://github.com/codeformuenster/traffic-dynamics#rechtliches"),
 		HTML("<br>"),
 		print(
 			"Datenquelle: Stadt Münster (lizenziert unter Datenlizenz Deutschland - Namensnennung - Version 2.0)"
