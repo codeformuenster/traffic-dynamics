@@ -11,13 +11,15 @@ lapply(c("shiny", "datasets", "RSQLite", "dplyr", "sqldf", "ggplot2"),
 
 # Define server logic required to plot
 shinyServer(function(input, output) {
-  
+	
   # Return the formula text for printing as a caption
   output$caption <- renderText({
     paste("Alpha-Version, Daten nicht verlässlich!", input$scale)
   })
 
-  load_filtered_data_from_db <- reactive({  
+  load_filtered_data_from_db <- reactive({
+  	start <- Sys.time()
+  	
   	con <- dbConnect(SQLite(), dbname = "../../data/database/traffic_data.sqlite")
   	
   	if (input$vehicle == "bikes") {
@@ -85,7 +87,6 @@ shinyServer(function(input, output) {
   		date_filter <- paste0(date_filter, ")")
   	}
   	
-  		
 		sql_string <- paste0(
 			"SELECT date, hour, count, location, vehicle", 
       " FROM ", sql_table, date_filter,
@@ -104,38 +105,50 @@ shinyServer(function(input, output) {
 		
 		dbDisconnect(con)
 		
+		cat(paste0("\nload_filtered_data_from_db() took ", Sys.time() - start, " seconds\n"))
+		
 		return(vehicles)
 	})
 
  	aggregated_data_year <- reactive({
+ 		start <- Sys.time()
  		vehicles_year <-
 	   load_filtered_data_from_db() %>%
 	      group_by(date, vehicle) %>%
 	      summarise(count_day = sum(count))
+ 		cat(paste0("aggregated_data_year() took ", Sys.time() - start, " seconds\n"))
     return(vehicles_year)
   })
 
   aggregated_data_hour <- reactive({
+  	start <- Sys.time()
   	vehicles_hour <- 
   		load_filtered_data_from_db() %>%
 	      group_by(date, hour, vehicle) %>%
 	      summarise(count_hour = sum(count))
+  	cat(paste0("aggregated_data_hour() took ", Sys.time() - start, " seconds\n"))
   	return(vehicles_hour)
   })
     
   output$plotYear <- renderPlot({
-    ggplot(data = aggregated_data_year()) +
+  	start <- Sys.time()
+    p <- ggplot(data = aggregated_data_year()) +
     geom_line(aes(x = as.POSIXct(date), y = count_day, group = vehicle, color = vehicle)) +
   	labs(x = "Datum", y = "Anzahl", color = "Verkehrsmittel") +
   	scale_color_manual(labels = c("bike" = "Fahrräder", "car" = "Autos"), values = c("bike" = "blue", "car" = "red")) +
     theme_minimal(base_size = 18)
+  	cat(paste0("renderYearPlot() took ", Sys.time() - start, " seconds\n"))
+  	return(p)
   })
   
   output$plotDay <- renderPlot({
-    ggplot(data = aggregated_data_hour(), aes(x = hour, y = count_hour)) +
+  	start <- Sys.time()
+    p <- ggplot(data = aggregated_data_hour(), aes(x = hour, y = count_hour)) +
     geom_line(aes(group = interaction(vehicle, date), color = vehicle), alpha = 0.2) +
     labs(x = "Stunde", y = "Anzahl", color = "Verkehrsmittel") +
   	scale_color_manual(labels = c("bike" = "Fahrräder", "car" = "Autos"), values = c("bike" = "blue", "car" = "red")) +
     theme_minimal(base_size = 18)
+  	cat(paste0("renderDayPlot() took ", Sys.time() - start, " seconds\n"))
+  	return(p)
   })
 })

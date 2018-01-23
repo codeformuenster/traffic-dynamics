@@ -6,5 +6,4 @@
 
 library(shiny)
 
-# TODO: grouping
 runApp("src/shinyapp")
