@@ -73,4 +73,5 @@ for (raw_file in raw_files) {
                append = T, row.names = F, overwrite = F)
 }
 
+dbExecute(con, "CREATE INDEX timestamp_cars on cars (date, hour)")
 dbDisconnect(con)

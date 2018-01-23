@@ -87,8 +87,7 @@ shinyServer(function(input, output) {
   		date_filter <- paste0(date_filter, ")")
   	}
   	
-		sql_string <- paste0(
-			"SELECT date, hour, count, location, vehicle", 
+		sql_string <- paste0("SELECT date, hour, count, location, vehicle", 
       " FROM ", sql_table, date_filter,
 			" AND location LIKE ", sql_location)
 		if (input$vehicle == "both") {
@@ -100,6 +99,8 @@ shinyServer(function(input, output) {
     	" FROM ", sql_table, date_filter,
 			" AND location LIKE ", sql_location)
 		}
+		
+		print(sql_string)
 		
 		vehicles <- dbGetQuery(conn = con, sql_string)
 		
