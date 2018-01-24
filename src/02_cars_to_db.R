@@ -74,4 +74,5 @@ for (raw_file in raw_files) {
 }
 
 dbExecute(con, "CREATE INDEX timestamp_cars on cars (date, hour)")
+dbExecute(con, "CREATE INDEX location_cars on cars (location)")
 dbDisconnect(con)

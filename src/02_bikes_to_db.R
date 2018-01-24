@@ -26,7 +26,7 @@ df <-
 	mutate(year = year(date_iso)) %>% 
 	mutate(month = month(date_iso)) %>% 
 	mutate(day = day(date_iso)) %>% 
-	mutate(weekday = wday(bikes$date_iso, label = TRUE)) %>% 
+	mutate(weekday = wday(date_iso, label = TRUE)) %>% 
   mutate(weekend = (weekday == 'Sa' | weekday == 'So'))
 
 # write 'df' to SQLite database
