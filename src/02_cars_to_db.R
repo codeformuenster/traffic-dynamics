@@ -35,6 +35,26 @@ process_df <- function(df) {
   # rename first header to 'location'
   colnames(df)[1] <- "location"
   
+  # filter to only add relevant location to the database 
+  # as of now: Roxel and all locations where also bicycles are counted
+  relevant_locations <-
+  	c("24020", "24100", "24140", "24010", "24120", "24130", "24030", # Roxel
+  		# locations where (closeby) also bicycles are counted, in the same order as http://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/radverkehrszaehlungen.html
+  		"01080",  # Neutor
+  		"04050", # Wolbecker Straße / Servatiiplatz
+  		"03052", # Hüfferstraße
+  		"07030", # Hammer Straße
+  		"04051", # Eisenbahnstraße (there are no traffic lights on the Promenade, this one is one the parallel street
+  		"04073", # Gartenstraße
+  		"04061", # Warendorfer Straße
+  		"04010", # Hafenstraße
+  		"01190" # Weseler Straße / Kolde-Ring
+  	)
+  
+  df <-
+  	df %>% 
+  	filter(grepl(paste(relevant_locations, collapse = "|"), location))
+  
   # TIME
   # wide to long format
   df <-
@@ -42,10 +62,7 @@ process_df <- function(df) {
     gather(hour, count, -location, -date) %>%
     # 'hour' to integer format
     mutate(hour = substring(hour, 2)) %>% 
-    mutate(hour = as.integer(hour))
-  
-  df <-
-  	df %>% 
+    mutate(hour = as.integer(hour)) %>% 
   	mutate(vehicle = "car")
 
   return(df)
