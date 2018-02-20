@@ -52,7 +52,7 @@ We are in the process of adding analyses of these data with machine learning and
 
 ### Quelltext
 
-Copyright © 2017 Thorben Jensen, Thomas Kluth
+Copyright © 2017-2018 Thorben Jensen, Thomas Kluth
 
 #### Deutsch 
 
