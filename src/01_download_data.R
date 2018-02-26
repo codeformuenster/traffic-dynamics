@@ -23,9 +23,19 @@ download.file(url = url, destfile = "data/raw/kfzzaehlstellen2015.zip")
 # 2016
 url = "https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/kfz/kfzzaehlstellen2016.zip"
 download.file(url = url, destfile = "data/raw/kfzzaehlstellen2016.zip")
+# 2017
+url = "https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/kfz/kfzzaehlstellen2017.zip"
+download.file(url = url, destfile = "data/raw/kfzzaehlstellen2017.zip")
+# 2018
+url = "https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/kfz/kfzzaehlstellen2018.zip"
+download.file(url = url, destfile = "data/raw/kfzzaehlstellen2018.zip")
 
 # UNZIP CAR DATA
 unzip(zipfile = "data/raw/kfzzaehlstellen2015.zip", 
       exdir = "data/raw/cars_unzipped/")
 unzip(zipfile = "data/raw/kfzzaehlstellen2016.zip", 
+      exdir = "data/raw/cars_unzipped/")
+unzip(zipfile = "data/raw/kfzzaehlstellen2017.zip", 
+      exdir = "data/raw/cars_unzipped/")
+unzip(zipfile = "data/raw/kfzzaehlstellen2018.zip", 
       exdir = "data/raw/cars_unzipped/")
