@@ -12,6 +12,9 @@ date: "3. März 2018"
 - ![Lage der Fahrradzählstationen](https://www.stadt-muenster.de/fileadmin/user_upload/stadt-muenster/61_verkehrsplanung/pics/fahrradzaehlstellen_karte.png)
 - [Lage der Kfz-Zählstationen](https://github.com/codeformuenster/open-data/blob/master/verkehrsdaten/kfz/doc/Uebersichtsplan_Ampeln_25_10_2017.pdf)
 - [unsere Visualisierung](https://traffics.codeformuenster.org)
+    - Promenade, 2017: fehlerhafte Daten, Filter Wochenende, leichter Sommereffekt
+    - Neutor, 2017: Vergleich Autos (gleiches Muster, etwas weniger, Platzverbrauch, Emission)
+    - Neutor, alles (über Zeitspanne), 5-11 Uhr: Pendler, Langzeitanalysen möglich: Steigerung des Radverkehrs? eher nicht.
 
 - [Fahrradstadt Münster](http://fahrradstadt.ms)
 - [Outlook / Aktivierungsbild](https://TO.DO)
