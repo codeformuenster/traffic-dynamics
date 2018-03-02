@@ -48,7 +48,8 @@ process_df <- function(df) {
   		"04073", # Gartenstraße
   		"04061", # Warendorfer Straße
   		"04010", # Hafenstraße
-  		"01190" # Weseler Straße / Kolde-Ring
+  		"01190", # Weseler Straße / Kolde-Ring
+  		"03290" # Hansaring / Albersloher-Weg
   	)
   
   df <-
