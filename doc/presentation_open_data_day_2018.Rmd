@@ -10,7 +10,7 @@ date: "3. März 2018"
 
 - [Daten der Stadt Münster](https://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/allgemeine-erhebungen.html)
 - ![Lage der Fahrradzählstationen](https://www.stadt-muenster.de/fileadmin/user_upload/stadt-muenster/61_verkehrsplanung/pics/fahrradzaehlstellen_karte.png)
-- ![Lage der Kfz-Zählstationen](https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/kfz/doc/Uebersichtsplan_Ampeln_25_10_2017.pdf)
+- [Lage der Kfz-Zählstationen](https://github.com/codeformuenster/open-data/blob/master/verkehrsdaten/kfz/doc/Uebersichtsplan_Ampeln_25_10_2017.pdf)
 - [unsere Visualisierung](https://traffics.codeformuenster.org)
 
 - [Fahrradstadt Münster](http://fahrradstadt.ms)
