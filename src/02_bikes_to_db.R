@@ -12,7 +12,9 @@ sapply(c("dplyr", "DBI", "RSQLite", "tidyr", "lubridate"),
 file <- "data/raw/Fahrradzaehlstellen-Stundenwerte.csv"
 
 df <- 
-  read.csv(file, sep = ";") %>%
+  read.csv(file, sep = ";", na.strings = "technische Störung") %>%
+  # remove weather (TODO: put it somewhere else)
+  select(c(-Temperatur...C., -Windstärke..km.h., -Wetter)) %>% 
   # renaming columns
   rename(hour = X) %>%
   rename(date = Datum) %>%
@@ -20,14 +22,14 @@ df <-
   gather(location, count, -date, -hour) %>%
 	mutate(date = as.character(dmy(date))) %>% 
 	mutate(hour = as.integer(substring(hour, 1, 2))) %>% 
-	mutate(vehicle = "bike") %>% 
+	mutate(vehicle = "bike") #%>% 
 	# TODO are the following columns actually used?
-	mutate(date_iso = as.character(date(strptime(date, format = "%d/%m/%Y")))) %>% 
-	mutate(year = year(date_iso)) %>% 
-	mutate(month = month(date_iso)) %>% 
-	mutate(day = day(date_iso)) %>% 
-	mutate(weekday = wday(date_iso, label = TRUE)) %>% 
-  mutate(weekend = (weekday == 'Sa' | weekday == 'So'))
+	#mutate(date_iso = as.character(date(strptime(date, format = "%d/%m/%Y")))) %>% 
+	#mutate(year = year(date_iso)) %>% 
+	#mutate(month = month(date_iso)) %>% 
+	#mutate(day = day(date_iso)) %>% 
+	#mutate(weekday = wday(date_iso, label = TRUE)) %>% 
+  #mutate(weekend = (weekday == 'Sa' | weekday == 'So'))
 
 # write 'df' to SQLite database
 dir.create("data/database", showWarnings = F)
