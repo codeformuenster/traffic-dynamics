@@ -4,9 +4,9 @@ author: "Thorben Jensen, Thomas Kluth"
 date: "3. März 2018"
 ---
 
-- ![Intro Bild: Diesel & Fahrrad?](https://TO.DO)
-- ![Was steckt dahinter? Ursache für Verhalten; key-moment Bild](https://TO.DO)
-- ![Bild Zählstelle (TODO: besseres Bild?)](https://www.stadt-muenster.de/fileadmin/user_upload/stadt-muenster/61_verkehrsplanung/pics/radverkehr/Eco-Barometer.jpg)
+- ![Intro Bild: Fahhradstadt Münster?](http://200tage.de/wp-content/uploads/2015/12/header-cut5.jpg)
+- ![Was steckt dahinter? Ursache für Verhalten; key-moment Bild](https://static1.squarespace.com/static/52722face4b02a66778dc9d0/5379a898e4b0e957bf2e1bb9/5379a8b3e4b002aab7ae2fd5/1400482570922/IMG_1104.jpg)
+- ![Bild Zählstelle](https://www.eco-compteur.com/blog/wp-content/uploads/2016/04/active_transportation-1038x576.jpg)
 
 - [Daten der Stadt Münster](https://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/allgemeine-erhebungen.html)
 - ![Lage der Fahrradzählstationen](https://www.stadt-muenster.de/fileadmin/user_upload/stadt-muenster/61_verkehrsplanung/pics/fahrradzaehlstellen_karte.png)
@@ -17,4 +17,4 @@ date: "3. März 2018"
     - Neutor, alles (über Zeitspanne), 5-11 Uhr: Pendler, Langzeitanalysen möglich: Steigerung des Radverkehrs? eher nicht.
 
 - [Fahrradstadt Münster](http://fahrradstadt.ms)
-- [Outlook / Aktivierungsbild](https://TO.DO)
+- ![Outlook, Aktivierungsbild](https://www.mumbailive.com/images/news/Flying-lanterns-ban-in-mumbai1_1508250351475.jpg)
