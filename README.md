@@ -89,30 +89,3 @@ along with this program](COPYING). If not, see <http://www.gnu.org/licenses/>.
 Datenquelle: Stadt Münster
 
 [Datenlizenz Deutschland – Namensnennung – Version 2.0](http://www.govdata.de/dl-de/by-2-0) (oder [diese pdf-Datei](doc/Stadt_MS_OpenData_Datenlizenz_Deutschland.pdf))
-
-
-The following text is not up-to-date due to repository restructuring (but it's still here to not get lost) -- we are working on it, stay tuned!
-
-## Computing all Bayesian regression models using Docker
-
-In the file `src/03_Bayesian_glms.R` there are some Bayesian regression models specified. Those can be computed with the help of the R package [brms](https://cran.r-project.org/package=brms). Since the computation takes some time and you might also not like to fiddle around with installing all the prerequisites, we created a docker image that you could run on any docker capable computer. After you've run the image you should have some models files saved to your disk in the `results` directory.
-
-This is how to start the docker image.
-First, build it and give it a name (here `predictcyclists`):
-
-sudo docker run --rm --privileged -v $PWD/test:/home/rstudio/results -ti codeformuenster/predict-cyclists:master 
-
-```
-sudo docker build -t predictcyclists .
-```
-
-Then run the docker image and tell it to run the `src/03_Bayesian_glms.R` file:
-
-```
-sudo docker run --rm --user rstudio -v $(pwd):/home/rstudio -w /home/rstudio predictcyclists Rscript src/03_Bayesian_glms.R
-```
-
-If you are running a linux distribution with enabled SELinux support (like Fedora) and get a permission error, you could try to add the `--privileged` flag to the docker command. Otherwise, you might disable SELinux temporarily with `sudo setenforce 0` (check with `getenforce`). Don't forget to enable it back again afterwards with `sudo setenforce 1`.
-
-If all went fine, you should have some `.RData` files (that contain `brms` model fits) after the docker run in the `results` folder. It will take some time, though!
-
