@@ -13,13 +13,14 @@ file <- "data/raw/Fahrradzaehlstellen-Stundenwerte.csv"
 
 df <- 
   read.csv(file, sep = ";", na.strings = "technische Störung") %>%
-  # remove weather (TODO: put it somewhere else)
-  select(c(-Temperatur...C., -Windstärke..km.h., -Wetter)) %>% 
   # renaming columns
   rename(hour = X) %>%
   rename(date = Datum) %>%
+	rename(weather = Wetter) %>% 
+	rename(temperature = Temperatur...C.) %>% 
+	rename(windspeed = Windstärke..km.h.) %>% 
   # wide to long format
-  gather(location, count, -date, -hour) %>%
+  gather(location, count, -date, -hour, -weather, -temperature, -windspeed) %>%
 	mutate(date = as.character(dmy(date))) %>% 
 	mutate(hour = as.integer(substring(hour, 1, 2))) %>% 
 	mutate(vehicle = "bike") #%>% 
