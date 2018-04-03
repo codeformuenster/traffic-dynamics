@@ -27,7 +27,7 @@ Overall, we will try to *keep it simple and shiny*.
 
 All parts of our talk will be connected to traffic data for Münster.
 We look forward to your feedback and ideas for more analyses.
-You find your projects on our [Github page](https://github.com/codeformuenster).
+You find our *traffic dynamics* projects on our [Github page](https://github.com/codeformuenster).
 
 
 ## About the speakers
