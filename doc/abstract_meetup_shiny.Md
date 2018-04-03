@@ -1,6 +1,5 @@
 
-# Look, something shiny: 
-# how to use R Shiny to make Münster traffic data accessible
+# Look, something shiny: how to use R Shiny to make Münster traffic data accessible
 
 ## Abstract
 
@@ -21,7 +20,7 @@ We would like to talk to you about the following topics:
  5. Validating Bayesian and frequentist models with Shiny plots
  6. Group discussion: what else to present with Shiny?
 
-You will not have to bring much to our talk.
+You will not have to bring much previous knowledge to our talk.
 A basic understanding of how R code works will take you far.
 The part about statistical modeling will be as intuitive as possible.
 Overall, we will try to *keep it simple and shiny*.
