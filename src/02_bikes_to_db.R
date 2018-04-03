@@ -24,17 +24,34 @@ df <-
 	mutate(date = as.character(dmy(date))) %>% 
 	mutate(hour = as.integer(substring(hour, 1, 2))) %>% 
 	mutate(vehicle = "bike") #%>% 
-	# TODO are the following columns actually used?
-	#mutate(date_iso = as.character(date(strptime(date, format = "%d/%m/%Y")))) %>% 
-	#mutate(year = year(date_iso)) %>% 
-	#mutate(month = month(date_iso)) %>% 
-	#mutate(day = day(date_iso)) %>% 
-	#mutate(weekday = wday(date_iso, label = TRUE)) %>% 
-  #mutate(weekend = (weekday == 'Sa' | weekday == 'So'))
 
 # write 'df' to SQLite database
 dir.create("data/database", showWarnings = F)
 con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
 dbWriteTable(con, "bikes", df, row.names = F, overwrite = T)
+
 dbExecute(con, "CREATE INDEX timestamp_bikes on bikes (date, hour)")
+
+# add the same weather to cars table
+# weather
+dbExecute(con, "ALTER TABLE cars ADD COLUMN weather TEXT")
+dbExecute(con, "UPDATE cars SET weather = :weather where date = :date and hour = :hour",
+          params = data.frame(weather = as.character(df$weather),
+                            date = df$date,
+          									hour = df$hour))
+
+# windspeed
+dbExecute(con, "ALTER TABLE cars ADD COLUMN windspeed REAL")
+dbExecute(con, "UPDATE cars SET windspeed = :windspeed where date = :date and hour = :hour",
+          params = data.frame(windspeed = df$windspeed,
+                            date = df$date,
+          									hour = df$hour))
+
+# temperature
+dbExecute(con, "ALTER TABLE cars ADD COLUMN temperature REAL")
+dbExecute(con, "UPDATE cars SET temperature = :temperature where date = :date and hour = :hour",
+          params = data.frame(temperature = df$temperature,
+                            date = df$date,
+          									hour = df$hour))
+
 dbDisconnect(con)
