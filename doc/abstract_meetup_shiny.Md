@@ -1,5 +1,6 @@
 
-# Look, something shiny: how to use R Shiny to make Münster traffic data accessible
+# Look, something shiny: 
+# how to use R Shiny to make Münster traffic data accessible
 
 ## Abstract
 
