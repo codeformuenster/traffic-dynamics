@@ -30,8 +30,8 @@ We look forward to your feedback and ideas for more analyses.
 You find your projects on our [Github page](https://github.com/codeformuenster).
 
 
-## About speakers
-The speakers Thomas Kluth and Thorben Jensen are members of the [*Code for Münster*](www.codeformuenster.org) group.
+## About the speakers
+The speakers Thomas Kluth and Thorben Jensen are members of the [*Code for Münster*](https://codeformuenster.org) group.
 We meet each Tuesday at 18:30 at the Dreiklang bar to make our city a better place by coding.
 
 Thomas Kluth ... TODO
