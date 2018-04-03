@@ -11,7 +11,7 @@ sapply(c("dplyr", "DBI", "RSQLite", "tidyr", "lubridate"),
 
 file <- "data/raw/Fahrradzaehlstellen-Stundenwerte.csv"
 
-df <- 
+bikes <- 
   read.csv(file, sep = ";", na.strings = "technische Störung") %>%
   # renaming columns
   rename(hour = X) %>%
@@ -25,33 +25,25 @@ df <-
 	mutate(hour = as.integer(substring(hour, 1, 2))) %>% 
 	mutate(vehicle = "bike") #%>% 
 
-# write 'df' to SQLite database
+# write 'bikes' to SQLite database
 dir.create("data/database", showWarnings = F)
 con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
-dbWriteTable(con, "bikes", df, row.names = F, overwrite = T)
+dbWriteTable(con, "bikes", bikes, row.names = F, overwrite = T)
 
 dbExecute(con, "CREATE INDEX timestamp_bikes on bikes (date, hour)")
 
 # add the same weather to cars table
-# weather
-dbExecute(con, "ALTER TABLE cars ADD COLUMN weather TEXT")
-dbExecute(con, "UPDATE cars SET weather = :weather where date = :date and hour = :hour",
-          params = data.frame(weather = as.character(df$weather),
-                            date = df$date,
-          									hour = df$hour))
+cars <- dbGetQuery(conn = con, "SELECT location, count, date, hour FROM cars")
 
-# windspeed
-dbExecute(con, "ALTER TABLE cars ADD COLUMN windspeed REAL")
-dbExecute(con, "UPDATE cars SET windspeed = :windspeed where date = :date and hour = :hour",
-          params = data.frame(windspeed = df$windspeed,
-                            date = df$date,
-          									hour = df$hour))
+weather_from_bikes <- 
+	bikes %>% 
+	select(date, hour, weather, windspeed, temperature) %>% 
+	filter(weather != "")
 
-# temperature
-dbExecute(con, "ALTER TABLE cars ADD COLUMN temperature REAL")
-dbExecute(con, "UPDATE cars SET temperature = :temperature where date = :date and hour = :hour",
-          params = data.frame(temperature = df$temperature,
-                            date = df$date,
-          									hour = df$hour))
+cars <- 
+	cars %>%
+	inner_join(., weather_from_bikes, by = c("date", "hour"))
+
+dbWriteTable(con, "cars", cars, row.names = F, overwrite = T)
 
 dbDisconnect(con)
