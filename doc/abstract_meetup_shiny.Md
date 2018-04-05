@@ -16,7 +16,7 @@ We would like to introduce Shiny to you using the following topics:
  1. Why we love Shiny, and why you should, too
  2. How Shiny works, from code to browser
  3. How to deploy your R Shiny project with Docker
- 4. Our Shiny project [Traffic Dynamics](https://traffics.codeformuenster.org)
+ 4. Our Shiny project [traffic dynamics](https://traffics.codeformuenster.org)
  5. Validating Bayesian and frequentist models with Shiny plots
  6. Group discussion: what else to present with Shiny?
 
@@ -31,11 +31,11 @@ You find our *traffic dynamics* projects on Code for Münster's [github page](ht
 
 
 ## About the speakers
-The speakers Thomas Kluth and Thorben Jensen are members of [*Code for Münster*](http://codeformuenster.org).
+The speakers Thomas Kluth and Thorben Jensen are members of [Code for Münster](http://codeformuenster.org).
 We meet each Tuesday at 18:30 at the Dreiklang bar to make our city a better place by coding. New coders are always welcome!
 
 Thomas Kluth has studied Computer Science in Münster and Bremen.
-During his currently ongoing Linguistics PhD in Bielefeld, he models human cognitive behavior.
+During his currently ongoing (close-to-be-finished) Linguistics PhD in Bielefeld, he models human cognitive behavior.
 Using computational cognitive models, he aims to link spatial language use with perceptual mechanisms such as visual attention.
 The statistical analysis of empirical data convinced him to use R and Bayesian modeling to explain almost everything. 
 For instance traffic data.
