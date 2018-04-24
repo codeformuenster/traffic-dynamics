@@ -33,7 +33,7 @@ dbWriteTable(con, "bikes", bikes, row.names = F, overwrite = T)
 dbExecute(con, "CREATE INDEX timestamp_bikes on bikes (date, hour)")
 
 # add the same weather to cars table
-cars <- dbGetQuery(conn = con, "SELECT location, count, date, hour FROM cars")
+cars <- dbGetQuery(conn = con, "SELECT location, count, date, hour, vehicle FROM cars")
 
 weather_from_bikes <- 
 	bikes %>% 
