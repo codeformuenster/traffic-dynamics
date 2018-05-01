@@ -1,0 +1,96 @@
+---
+title: "Münster traffic data, Shiny"
+author: "Thomas Kluth, Thorben Jensen"
+date: "R Meetup 2018-06-11"
+output:
+  revealjs::revealjs_presentation:
+    theme: blood
+    center: true
+# install.packages("revealjs")
+# TODOs:
+#   - use shiny PNG as background on title page 
+---
+
+# "I'm here for the Pizza. What *is* Shiny, though?"
+
+***
+*"Shiny is an R package that makes it easy to<br>**build interactive web apps straight from R**<br>...<br>Shiny combines the computational power of R<br>with the interactivity of the modern web."*<br><br>- shiny.rstudio.com
+
+## Shiny<br>= R<br>+ visualization<br>+ interaction {data-background="manhattan.jpg"}
+
+
+# why we love Shiny<br><br><small>and why you should, too</small>
+
+## R centered
+
+- ...
+- ...
+
+## Fast
+
+- Rapid prototyping
+- No HTML, Javascript, PHP, ...
+
+## Shiny
+
+- ...
+- Extendable (e.g. d3)
+
+
+# how Shiny works
+
+## Typical Workflow
+
+1. Draft usual plots, e.g. ```ggplot2```
+2. ...
+3. Profit!
+
+## Parts of a shiny app
+
+...
+
+## Demo!
+
+```https://github.com/ThorbenJensen/garage-shiny```
+
+
+# our project<br><br>Traffic Dynamics
+
+## Why traffic data?
+
+- ...
+
+## Data source
+
+- ...
+
+## Demo!
+
+```http://traffics.codeformuenster.org```
+
+
+# showdown:<br><br>bayesian vs frequentist<br>models in Shiny
+
+## Our questions to the data
+
+- ...
+
+## How to include in Shiny
+
+- ...
+
+## Demo!
+
+```http://traffics.codeformuenster.org```
+
+
+# your turn:<br><br>what else to analyze?
+
+## Our questions to you
+
+- What would you like to know about traffic data?
+- Any ideas for analyses/models?
+- Do you know stakeholders to involve?
+
+
+# our turn:<br><br>more questions?
