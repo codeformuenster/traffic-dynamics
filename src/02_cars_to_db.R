@@ -6,7 +6,7 @@
 
 # load libraries ####
 # use 00_install_R_packages.R for installing missing packages
-sapply(c("dplyr", "assertthat", "lubridate", "tidyr", "DBI", "RSQLite"), 
+sapply(c("dplyr", "assertthat", "lubridate", "chron", "tidyr", "DBI", "RSQLite"), 
        require, character.only = TRUE)
 
 process_df <- function(df) {
@@ -38,9 +38,8 @@ process_df <- function(df) {
   # filter to only add relevant location to the database 
   # as of now: Roxel and all locations where also bicycles are counted
   relevant_locations <-
-  	c("24020", "24100", "24140", "24010", "24120", "24130", "24030", # Roxel
-  		# locations where (closeby) also bicycles are counted, in the same order as http://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/radverkehrszaehlungen.html
-  		"01080",  # Neutor
+  	c(# locations where (closeby) also bicycles are counted, in the same order as http://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/radverkehrszaehlungen.html
+  		"01080", # Neutor
   		"04050", # Wolbecker Straße / Servatiiplatz
   		"03052", # Hüfferstraße
   		"07030", # Hammer Straße
@@ -61,6 +60,11 @@ process_df <- function(df) {
   df <-
     df %>%
     gather(hour, count, -location, -date) %>%
+    mutate(year = as.integer(year(date))) %>%
+    mutate(month = as.integer(month(date))) %>%
+    mutate(day = as.integer(day(date))) %>%
+    mutate(weekday = wday(date, label = T, abbr = T)) %>%
+    mutate(weekend = is.weekend(date)) %>% 
     # 'hour' to integer format
     mutate(hour = substring(hour, 2)) %>% 
     mutate(hour = as.integer(hour)) %>% 
@@ -92,5 +96,6 @@ for (raw_file in raw_files) {
 }
 
 dbExecute(con, "CREATE INDEX timestamp_cars on cars (date, hour)")
+dbExecute(con, "CREATE INDEX year_month_day_cars on cars (year, month, day, hour)")
 dbExecute(con, "CREATE INDEX location_cars on cars (location)")
 dbDisconnect(con)

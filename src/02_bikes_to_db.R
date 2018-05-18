@@ -6,7 +6,7 @@
 
 # load libraries ####
 # use 00_install_R_packages.R for installing missing packages
-sapply(c("dplyr", "DBI", "RSQLite", "tidyr", "lubridate"), 
+sapply(c("dplyr", "DBI", "RSQLite", "tidyr", "chron", "lubridate"), 
        require, character.only = TRUE)
 
 file <- "data/raw/Fahrradzaehlstellen-Stundenwerte.csv"
@@ -22,8 +22,13 @@ bikes <-
   # wide to long format
   gather(location, count, -date, -hour, -weather, -temperature, -windspeed) %>%
 	mutate(date = as.character(dmy(date))) %>% 
-	mutate(hour = as.integer(substring(hour, 1, 2))) %>% 
-	mutate(vehicle = "bike") #%>% 
+	mutate(year = as.integer(year(date))) %>%
+  mutate(month = as.integer(month(date))) %>%
+  mutate(day = as.integer(day(date))) %>%
+  mutate(weekday = wday(date, label = T, abbr = T)) %>%
+  mutate(weekend = is.weekend(date)) %>% 
+  mutate(hour = as.integer(substring(hour, 1, 2))) %>% 
+	mutate(vehicle = "bike")
 
 # write 'bikes' to SQLite database
 dir.create("data/database", showWarnings = F)
@@ -31,19 +36,24 @@ con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
 dbWriteTable(con, "bikes", bikes, row.names = F, overwrite = T)
 
 dbExecute(con, "CREATE INDEX timestamp_bikes on bikes (date, hour)")
+dbExecute(con, "CREATE INDEX year_month_day_bikes on bikes (year, month, day, hour)")
 
+# TODO: make the weather data an own table
 # add the same weather to cars table
-cars <- dbGetQuery(conn = con, "SELECT location, count, date, hour, vehicle FROM cars")
+# cars <- dbGetQuery(conn = con, "SELECT location, count, date, hour, vehicle FROM cars")
+# 
+# weather_from_bikes <- 
+# 	bikes %>% 
+# 	select(date, hour, weather, windspeed, temperature) %>% 
+# 	filter(weather != "")
+# 
+# cars <- 
+# 	cars %>%
+# 	inner_join(., weather_from_bikes, by = c("date", "hour"))
+# 
+# dbWriteTable(con, "cars", cars, row.names = F, overwrite = T)
 
-weather_from_bikes <- 
-	bikes %>% 
-	select(date, hour, weather, windspeed, temperature) %>% 
-	filter(weather != "")
-
-cars <- 
-	cars %>%
-	inner_join(., weather_from_bikes, by = c("date", "hour"))
-
-dbWriteTable(con, "cars", cars, row.names = F, overwrite = T)
+# for better performance, DB is read-only in shiny-app
+dbExecute(con, "PRAGMA synchronous=OFF; PRAGMA journal_mode=OFF;")
 
 dbDisconnect(con)
