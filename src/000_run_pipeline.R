@@ -13,4 +13,5 @@ source("src/00_install_R_packages.R", echo = TRUE)
 source("src/01_download_data.R", echo = TRUE)
 source("src/02_cars_to_db.R", echo = TRUE)
 source("src/02_bikes_to_db.R", echo = TRUE)
-source("src/03_temporal_features.R", echo = TRUE)
+# TODO do we need this table / probably convert to weather table?
+# source("src/03_temporal_features.R", echo = TRUE)
