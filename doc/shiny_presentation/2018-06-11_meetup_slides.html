@@ -454,49 +454,122 @@ document.getElementsByTagName('head')[0].appendChild(style);
     <div class="slides">
 
 <section>
-    <h1 class="title">Münster traffic data, Shiny</h1>
+    <h1 class="title">Münster traffic data, <em>Shiny</em></h1>
     <h2 class="author">Thomas Kluth, Thorben Jensen</h2>
     <h3 class="date">R Meetup 2018-06-11</h3>
 </section>
 
-<section><section id="im-here-for-the-pizza.-what-is-shiny-though" class="titleslide slide level1"><h1>“I’m here for the Pizza. What <em>is</em> Shiny, though?”</h1></section><section class="slide level2">
+<section><section id="im-here-for-the-drinks.-what-is-shiny-though" class="titleslide slide level1"><h1>“I’m here<br>for the drinks.<br>What <em>is</em> Shiny, though?”</h1></section><section class="slide level2">
 
-<p><em>“Shiny is an R package that makes it easy to<br><strong>build interactive web apps straight from R</strong><br>…<br>Shiny combines the computational power of R<br>with the interactivity of the modern web.”</em><br><br>- shiny.rstudio.com</p>
+<p><em>“Shiny is an R package that makes it easy to<br><strong>build interactive web apps straight from R</strong><br>…<br>Shiny combines the computational <strong>power of R</strong><br>with the <strong>interactivity</strong> of the modern web.”</em><br><br>- shiny.rstudio.com</p>
 </section><section id="shiny-r-visualization-interaction" class="slide level2" data-background="manhattan.jpg">
 <h2>Shiny<br>= R<br>+ visualization<br>+ interaction</h2>
 </section></section>
 <section><section id="why-we-love-shiny-and-why-you-should-too" class="titleslide slide level1"><h1>why we love Shiny<br><br><small>and why you should, too</small></h1></section><section id="r-centered" class="slide level2">
 <h2>R centered</h2>
 <ul>
-<li>…</li>
-<li>…</li>
+<li>Get started with 20 lines of code</li>
+<li>Best web tool for R coders</li>
+<li>Well integrated with RStudio</li>
 </ul>
-</section><section id="fast" class="slide level2">
-<h2>Fast</h2>
+</section><section id="quickly-developed" class="slide level2">
+<h2>Quickly developed</h2>
 <ul>
+<li>First app in 15 minutes</li>
 <li>Rapid prototyping</li>
-<li>No HTML, Javascript, PHP, …</li>
+<li>No HTML, Javascript, PHP, Flash, …</li>
 </ul>
 </section><section id="shiny" class="slide level2">
 <h2>Shiny</h2>
 <ul>
-<li>…</li>
+<li>Good looks by default</li>
+<li>Styleable with CSS</li>
 <li>Extendable (e.g. d3)</li>
 </ul>
 </section></section>
 <section><section id="how-shiny-works" class="titleslide slide level1"><h1>how Shiny works</h1></section><section id="typical-workflow" class="slide level2">
 <h2>Typical Workflow</h2>
 <ol type="1">
-<li>Draft usual plots, e.g. <code>ggplot2</code></li>
-<li>…</li>
-<li>Profit!</li>
+<li>Model &amp; visualize, e.g. <code>ggplot2</code></li>
+<li>Include in Shiny, including interactiveness</li>
+<li>App done!</li>
 </ol>
-</section><section id="parts-of-a-shiny-app" class="slide level2">
-<h2>Parts of a shiny app</h2>
-<p>…</p>
+</section><section id="parts-of-shiny-app" class="slide level2">
+<h2>Parts of shiny app</h2>
+<pre><code>library(shiny)
+
+...  # LOAD DATA
+  
+ui &lt;- ...  # FRONTEND
+
+server &lt;- ...  # BACKEND
+
+shinyApp(ui = ui, server = server)  # START APP</code></pre>
 </section><section id="demo" class="slide level2">
 <h2>Demo!</h2>
 <p><code>https://github.com/ThorbenJensen/garage-shiny</code></p>
+</section><section id="part-14-load-data" class="slide level2">
+<h2>Part 1/4: load data</h2>
+<pre><code>df_processed &lt;-
+  df %&gt;%
+  mutate(., free = as.numeric(free)) %&gt;%
+  mutate(., datetime = as_datetime(df$datetime,
+                                   tz = &quot;Europe/Berlin&quot;)) %&gt;%
+  mutate(., time = hms::as.hms(datetime))</code></pre>
+</section><section id="part-24-frontend" class="slide level2">
+<h2>Part 2/4: frontend</h2>
+<pre><code>ui &lt;- fluidPage(
+
+  titlePanel(&quot;Need a parking spot ?&quot;),
+
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(inputId = &quot;garage_name&quot;,
+                  label = &quot;Choose a car park:&quot;,
+                  choices = unique(df_processed$name),
+                  selected = &quot;Parkhaus Karstadt&quot;)
+    ),
+    mainPanel(
+      plotOutput(outputId = &quot;time_series_plot&quot;)
+    )
+  ),
+  theme = &quot;custom.css&quot;
+)</code></pre>
+</section><section id="part-34-css" class="slide level2">
+<h2>Part 3/4: CSS</h2>
+<pre><code>@import url('https://fonts.googleapis.com/css?family=Satisfy');
+
+.h2, h2 {
+  font-size: 60px;
+  font-family: 'Satisfy', courier;
+  color: #f14559;
+}
+
+body {
+  font-size: 20px;
+}
+
+.well {
+  background-color: #f13a5994;
+}</code></pre>
+</section><section id="part-44-backend" class="slide level2">
+<h2>Part 4/4: backend</h2>
+<pre><code>server &lt;- function(input, output) {
+
+  output$time_series_plot &lt;- renderPlot({
+
+    df_processed %&gt;%
+      filter(., name == input$name) %&gt;% 
+      ggplot(data = ., aes(x = time, y = free)) +
+      geom_line(aes(group = date), alpha = .3) +
+      theme_bw() +
+      xlab(&quot;Time of day&quot;) +
+      ylab(&quot;Free spots&quot;) +
+      ggtitle(paste0(&quot;Free parking spots per day for car park '&quot;,
+                     input$garage_name, &quot;'&quot;)) +
+      theme(text = element_text(size = 20))
+  })
+}</code></pre>
 </section></section>
 <section><section id="our-project-traffic-dynamics" class="titleslide slide level1"><h1>our project<br><br>Traffic Dynamics</h1></section><section id="why-traffic-data" class="slide level2">
 <h2>Why traffic data?</h2>

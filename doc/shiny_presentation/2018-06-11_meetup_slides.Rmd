@@ -1,5 +1,5 @@
 ---
-title: "Münster traffic data, Shiny"
+title: "Münster traffic data, *Shiny*"
 author: "Thomas Kluth, Thorben Jensen"
 date: "R Meetup 2018-06-11"
 output:
@@ -11,10 +11,10 @@ output:
 #   - use shiny PNG as background on title page 
 ---
 
-# "I'm here for the Pizza. What *is* Shiny, though?"
+# "I'm here<br>for the drinks.<br>What *is* Shiny, though?"
 
 ***
-*"Shiny is an R package that makes it easy to<br>**build interactive web apps straight from R**<br>...<br>Shiny combines the computational power of R<br>with the interactivity of the modern web."*<br><br>- shiny.rstudio.com
+*"Shiny is an R package that makes it easy to<br>**build interactive web apps straight from R**<br>...<br>Shiny combines the computational **power of R**<br>with the **interactivity** of the modern web."*<br><br>- shiny.rstudio.com
 
 ## Shiny<br>= R<br>+ visualization<br>+ interaction {data-background="manhattan.jpg"}
 
@@ -23,17 +23,20 @@ output:
 
 ## R centered
 
-- ...
-- ...
+- Get started with 20 lines of code
+- Best web tool for R coders
+- Well integrated with RStudio
 
-## Fast
+## Quickly developed
 
+- First app in 15 minutes
 - Rapid prototyping
-- No HTML, Javascript, PHP, ...
+- No HTML, Javascript, PHP, Flash, ...
 
 ## Shiny
 
-- ...
+- Good looks by default
+- Styleable with CSS
 - Extendable (e.g. d3)
 
 
@@ -41,17 +44,101 @@ output:
 
 ## Typical Workflow
 
-1. Draft usual plots, e.g. ```ggplot2```
-2. ...
-3. Profit!
+1. Model & visualize, e.g. ```ggplot2```
+2. Include in Shiny, including interactiveness
+3. App done!
 
-## Parts of a shiny app
+## Parts of shiny app
 
-...
+```
+library(shiny)
+
+...  # LOAD DATA
+  
+ui <- ...  # FRONTEND
+
+server <- ...  # BACKEND
+
+shinyApp(ui = ui, server = server)  # START APP
+```
 
 ## Demo!
 
-```https://github.com/ThorbenJensen/garage-shiny```
+```https://github.com/ThorbenJensen/garage-shiny ```
+
+## Part 1/4: load data
+
+```
+df_processed <-
+  df %>%
+  mutate(., free = as.numeric(free)) %>%
+  mutate(., datetime = as_datetime(df$datetime,
+                                   tz = "Europe/Berlin")) %>%
+  mutate(., time = hms::as.hms(datetime))
+```
+
+## Part 2/4: frontend
+
+```
+ui <- fluidPage(
+
+  titlePanel("Need a parking spot ?"),
+
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(inputId = "garage_name",
+                  label = "Choose a car park:",
+                  choices = unique(df_processed$name),
+                  selected = "Parkhaus Karstadt")
+    ),
+    mainPanel(
+      plotOutput(outputId = "time_series_plot")
+    )
+  ),
+  theme = "custom.css"
+)
+```
+
+## Part 3/4: CSS
+
+```
+@import url('https://fonts.googleapis.com/css?family=Satisfy');
+
+.h2, h2 {
+  font-size: 60px;
+  font-family: 'Satisfy', courier;
+  color: #f14559;
+}
+
+body {
+  font-size: 20px;
+}
+
+.well {
+  background-color: #f13a5994;
+}
+```
+
+
+## Part 4/4: backend
+```
+server <- function(input, output) {
+
+  output$time_series_plot <- renderPlot({
+
+    df_processed %>%
+      filter(., name == input$name) %>% 
+      ggplot(data = ., aes(x = time, y = free)) +
+      geom_line(aes(group = date), alpha = .3) +
+      theme_bw() +
+      xlab("Time of day") +
+      ylab("Free spots") +
+      ggtitle(paste0("Free parking spots per day for car park '",
+                     input$garage_name, "'")) +
+      theme(text = element_text(size = 20))
+  })
+}
+```
 
 
 # our project<br><br>Traffic Dynamics
