@@ -13,7 +13,7 @@ process_df <- function(df) {
   # shift header left and remove last column 
   if (!is.na(colnames(df)[26])) {
     colnames(df) <-
-      colnames(df) %>% 
+      c(colnames(df), "NA") %>% 
       tail(-1)
     assert_that(df %>% dplyr::select(26) %>% is.na %>% all)
     df <-
@@ -22,7 +22,7 @@ process_df <- function(df) {
   }
   
   # DATE
-  # identify date from first column lable
+  # identify date from first column label
   date <-
     df %>%
     colnames %>%
