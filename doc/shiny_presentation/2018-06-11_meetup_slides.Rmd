@@ -127,7 +127,7 @@ server <- function(input, output) {
   output$time_series_plot <- renderPlot({
 
     df_processed %>%
-      filter(., name == input$name) %>% 
+      filter(., name == input$garage_name) %>% 
       ggplot(data = ., aes(x = time, y = free)) +
       geom_line(aes(group = date), alpha = .3) +
       theme_bw() +
@@ -140,6 +140,22 @@ server <- function(input, output) {
 }
 ```
 
+## Containerize it!
+
+why? makes shiny easily deployable!
+
+1. Write Dockerfile
+```
+FROM rocker/shiny
+RUN install2.r --error dplyr lubridate ggplot2 hms
+COPY ./app /srv/shiny-server/
+```
+
+2. Build and run container
+```
+docker build -t garage-shiny .
+docker run --rm -p 3838:3838 garage-shiny
+```
 
 # our project<br><br>Traffic Dynamics
 
