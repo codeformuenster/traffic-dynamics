@@ -159,39 +159,44 @@ docker run --rm -p 3838:3838 garage-shiny
 
 # our project<br><br>Traffic Dynamics
 
-## Why traffic data?
+## Why Traffic Data? Climate Change!
 
 <!---
-% - climate change is a global challenge
-% - in Germany: traffic is responsible for roughly 18% of greenhouse gases
-% - we might stop it on the local level
+ - climate change is a global challenge
+ - we might stop it on the local level
 -->
 
-- because of the climate change
 
-temperature change | CO2 concentration
-:------------------------|--------------------------:
-![temperature change](img/temperature_change.png)|![CO2](img/CO2_concentration.png)
+<img src = "img/temperature_change.png" width = "500 px">
+<img src = "img/CO2_concentration.png" width = "425 px">
 
+## Emissions
 
+<!---
+ - in Germany: traffic is responsible for roughly 18% of greenhouse gases
+ - the second biggest sector of greenhouse gases; the only sector that *grows*
+-->
 
-## traffic
+<img src = "img/emmissions_traffic.png" width = "950 px">
 
+## Kilometers
 
-temperature change | CO2 concentration
-:------------------------|--------------------------:
-![emissions](img/emmissions_traffic.png)|![kilometers](img/kilometers_kfz.png)
+<img src = "img/kilometers_kfz.png" width = "950 px">
 
+- *cars*: at several traffic lights, more than 700 count locations
+- *bicycles*: 8 count locations
 
-## Data source
+## Open Data
 
-- ...
+- hourly traffic counts & weather condition
+- data source: Stadt Münster, open data license
 
-## 
+<img src = "img/traffic_lights.png" width = "475 px">
+<img src = "img/bike_counters.png" width = "400 px">
 
 ## Demo!
 
-```http://traffics.codeformuenster.org```
+`https://traffics.codeformuenster.org`
 
 
 # showdown:<br><br>bayesian vs frequentist<br>models in Shiny
@@ -206,7 +211,7 @@ temperature change | CO2 concentration
 
 ## Demo!
 
-```http://traffics.codeformuenster.org```
+```https://traffics.codeformuenster.org```
 
 
 # your turn:<br><br>what else to analyze?
@@ -223,7 +228,10 @@ temperature change | CO2 concentration
 # Acknowledgments
 
 - TOOO
+- Tobias Bradtke for the infrastructural support
+- Ralf Renkhoff, Stadt Münster
 
 ### image credits
-- https://perspective-daily.de/article/391/SjcGXmvB
-- https://www.umweltbundesamt.de/daten/verkehr/umweltbelastungen-durch-verkehr
+- climate change graphics: https://perspective-daily.de/article/391/SjcGXmvB
+- emissions & kilometers graphics: https://www.umweltbundesamt.de/daten/verkehr/umweltbelastungen-durch-verkehr
+- bike counter map: https://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/radverkehrszaehlungen.html
