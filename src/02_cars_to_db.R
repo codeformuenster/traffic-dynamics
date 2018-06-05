@@ -13,7 +13,7 @@ process_df <- function(df) {
   # shift header left and remove last column 
   if (!is.na(colnames(df)[26])) {
     colnames(df) <-
-      colnames(df) %>% 
+      c(colnames(df), "NA") %>% 
       tail(-1)
     assert_that(df %>% dplyr::select(26) %>% is.na %>% all)
     df <-
@@ -22,7 +22,7 @@ process_df <- function(df) {
   }
   
   # DATE
-  # identify date from first column lable
+  # identify date from first column label
   date <-
     df %>%
     colnames %>%
@@ -63,7 +63,8 @@ process_df <- function(df) {
     mutate(year = as.integer(year(date))) %>%
     mutate(month = as.integer(month(date))) %>%
     mutate(day = as.integer(day(date))) %>%
-    mutate(weekday = wday(date, label = T, abbr = T)) %>%
+    # subtract 1 because sqlite counts Sun = 0 but lubridate Sun = 1
+    mutate(weekday = wday(date, label = F) - 1) %>%
     mutate(weekend = is.weekend(date)) %>% 
     # 'hour' to integer format
     mutate(hour = substring(hour, 2)) %>% 

@@ -16,7 +16,7 @@ output:
 ***
 *"Shiny is an R package that makes it easy to<br>**build interactive web apps straight from R**<br>...<br>Shiny combines the computational **power of R**<br>with the **interactivity** of the modern web."*<br><br>- shiny.rstudio.com
 
-## Shiny<br>= R<br>+ visualization<br>+ interaction {data-background="manhattan.jpg"}
+## Shiny<br>= R<br>+ visualization<br>+ interaction {data-background="img/manhattan.jpg"}
 
 
 # why we love Shiny<br><br><small>and why you should, too</small>
@@ -161,11 +161,33 @@ docker run --rm -p 3838:3838 garage-shiny
 
 ## Why traffic data?
 
-- ...
+<!---
+% - climate change is a global challenge
+% - in Germany: traffic is responsible for roughly 18% of greenhouse gases
+% - we might stop it on the local level
+-->
+
+- because of the climate change
+
+temperature change | CO2 concentration
+:------------------------|--------------------------:
+![temperature change](img/temperature_change.png)|![CO2](img/CO2_concentration.png)
+
+
+
+## traffic
+
+
+temperature change | CO2 concentration
+:------------------------|--------------------------:
+![emissions](img/emmissions_traffic.png)|![kilometers](img/kilometers_kfz.png)
+
 
 ## Data source
 
 - ...
+
+## 
 
 ## Demo!
 
@@ -197,3 +219,11 @@ docker run --rm -p 3838:3838 garage-shiny
 
 
 # our turn:<br><br>more questions?
+
+# Acknowledgments
+
+- TOOO
+
+### image credits
+- https://perspective-daily.de/article/391/SjcGXmvB
+- https://www.umweltbundesamt.de/daten/verkehr/umweltbelastungen-durch-verkehr
