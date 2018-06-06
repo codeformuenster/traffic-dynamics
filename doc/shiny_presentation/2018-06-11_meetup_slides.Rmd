@@ -187,11 +187,9 @@ docker run --rm -p 3838:3838 garage-shiny
 - *bicycles*: 8 count locations
 
 ## Open Data
-
-- hourly traffic counts & weather condition
+- hourly traffic counts & weather conditions
 - data source: Stadt Münster, open data license
-
-<img src = "img/traffic_lights.png" width = "475 px">
+<img src = "img/traffic_lights.png" width = "45%" height = "45%" >
 <img src = "img/bike_counters.png" width = "400 px">
 
 ## Demo!
@@ -199,15 +197,54 @@ docker run --rm -p 3838:3838 garage-shiny
 `https://traffics.codeformuenster.org`
 
 
-# showdown:<br><br>bayesian vs frequentist<br>models in Shiny
+# Showdown:<br><br>Bayesian regression<br>models in Shiny
 
-## Our questions to the data
+## Example question to the data
 
-- ...
+- Does the weather affect the number of cyclists? How?
+
+```
+library(brms)
+
+bike_model_simple <-
+  brm(count ~ temperature + windspeed + rain + month,
+      family = negbinomial,
+      data = bikes_neutor)
+      
+bikes_model_complex <- 
+  brm(count ~ temperature * windspeed * rain * weekday * month,
+      family = negbinomial,
+      data = bikes_neutor)
+```
 
 ## How to include in Shiny
 
-- ...
+- `ui.R`
+
+```
+...
+plotlyOutput("plotTemperature"),
+...
+```
+
+- `server.R`
+
+```
+  output$plotTemperature <- renderPlotly({
+    p <- plot(
+        marginal_effects(bike_model_simple,
+                       effects = "temperature",
+                       probs = c(0.05, 0.95),
+                       plot = FALSE)
+      )[[1]] + 
+      xlab("Temperatur (in °C)") +
+      ylab("Anzahl Fahrräder") +
+      theme_minimal()
+    
+    ggplotly(p)
+  })
+  
+```
 
 ## Demo!
 
