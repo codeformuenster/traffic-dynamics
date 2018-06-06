@@ -3,7 +3,7 @@
 # along with this program (file COPYING). If not, see <http://www.gnu.org/licenses/>.
 
 packages <- c("envDocument", "dplyr", "assertthat", "lubridate", "tidyr", "DBI", "plotly",
-              "RSQLite", "ggplot2", "chron", "darksky", "RCurl", "shinycssloaders")
+              "RSQLite", "ggplot2", "chron", "darksky", "RCurl", "shinycssloaders", "brms")
 
 installed_packages <- installed.packages()[,"Package"]
 
