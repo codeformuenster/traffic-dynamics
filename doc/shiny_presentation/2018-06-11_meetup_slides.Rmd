@@ -209,20 +209,14 @@ docker run --rm -p 3838:3838 garage-shiny
 ```
 library(brms)
 
-bike_model_simple <-
-  brm(count ~ temperature + windspeed + rain + month,
-      family = negbinomial,
-      data = bikes_neutor)
-      
-bikes_model_complex <- 
-  brm(count ~ temperature * windspeed * rain * weekday * month,
-      family = negbinomial,
-      data = bikes_neutor)
+bike_model <- brm(count ~ temperature + windspeed + rain + month,
+                  family = negbinomial,
+                  data = bikes_neutor)
 ```
 
 ## How to include in Shiny
 
-- `ui.R`
+- `ui`
 
 ```
 ...
@@ -230,19 +224,17 @@ plotlyOutput("plotTemperature"),
 ...
 ```
 
-- `server.R`
+- `server`
 
 ```
   output$plotTemperature <- renderPlotly({
-    p <- plot(
-        marginal_effects(bike_model_simple,
+    p <- plot(marginal_effects(bike_model,
                        effects = "temperature",
-                       probs = c(0.05, 0.95),
                        plot = FALSE)
-      )[[1]] + 
-      xlab("Temperatur (in °C)") +
-      ylab("Anzahl Fahrräder") +
-      theme_minimal()
+              )[[1]] + 
+         xlab("Temperatur (in °C)") +
+         ylab("Anzahl Fahrräder") +
+         theme_minimal()
     
     ggplotly(p)
   })
@@ -265,13 +257,18 @@ plotlyOutput("plotTemperature"),
 
 # our turn:<br><br>more questions?
 
-# Acknowledgments
+## contact us
+- t.kluth @ posteo.de
+- jensen.thorben @ gmail.com
 
-- TOOO
-- Tobias Bradtke for the infrastructural support
+## Thanks to
+- Tobias Bradtke, Code for Münster
 - Ralf Renkhoff, Stadt Münster
+- IG Fahrradstadt
 
-### image credits
+## Thank you!
+
+## Sources
 - climate change graphics: https://perspective-daily.de/article/391/SjcGXmvB
 - emissions & kilometers graphics: https://www.umweltbundesamt.de/daten/verkehr/umweltbelastungen-durch-verkehr
 - bike counter map: https://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/radverkehrszaehlungen.html

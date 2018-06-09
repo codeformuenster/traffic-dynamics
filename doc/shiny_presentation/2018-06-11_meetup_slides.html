@@ -622,36 +622,28 @@ docker run --rm -p 3838:3838 garage-shiny</code></pre></li>
 </ul>
 <pre><code>library(brms)
 
-bike_model_simple &lt;-
-  brm(count ~ temperature + windspeed + rain + month,
-      family = negbinomial,
-      data = bikes_neutor)
-      
-bikes_model_complex &lt;- 
-  brm(count ~ temperature * windspeed * rain * weekday * month,
-      family = negbinomial,
-      data = bikes_neutor)</code></pre>
+bike_model &lt;- brm(count ~ temperature + windspeed + rain + month,
+                  family = negbinomial,
+                  data = bikes_neutor)</code></pre>
 </section><section id="how-to-include-in-shiny" class="slide level2">
 <h2>How to include in Shiny</h2>
 <ul>
-<li><code>ui.R</code></li>
+<li><code>ui</code></li>
 </ul>
 <pre><code>...
 plotlyOutput(&quot;plotTemperature&quot;),
 ...</code></pre>
 <ul>
-<li><code>server.R</code></li>
+<li><code>server</code></li>
 </ul>
 <pre><code>  output$plotTemperature &lt;- renderPlotly({
-    p &lt;- plot(
-        marginal_effects(bike_model_simple,
+    p &lt;- plot(marginal_effects(bike_model,
                        effects = &quot;temperature&quot;,
-                       probs = c(0.05, 0.95),
                        plot = FALSE)
-      )[[1]] + 
-      xlab(&quot;Temperatur (in °C)&quot;) +
-      ylab(&quot;Anzahl Fahrräder&quot;) +
-      theme_minimal()
+              )[[1]] + 
+         xlab(&quot;Temperatur (in °C)&quot;) +
+         ylab(&quot;Anzahl Fahrräder&quot;) +
+         theme_minimal()
     
     ggplotly(p)
   })
@@ -668,13 +660,29 @@ plotlyOutput(&quot;plotTemperature&quot;),
 <li>Do you know stakeholders to involve?</li>
 </ul>
 </section></section>
-<section><section id="our-turn-more-questions" class="titleslide slide level1"><h1>our turn:<br><br>more questions?</h1></section></section>
-<section><section id="acknowledgments" class="titleslide slide level1"><h1>Acknowledgments</h1></section><h3 id="image-credits">image credits</h3>
+<section><section id="our-turn-more-questions" class="titleslide slide level1"><h1>our turn:<br><br>more questions?</h1></section><section id="contact-us" class="slide level2">
+<h2>contact us</h2>
+<ul>
+<li>t.kluth @ posteo.de</li>
+<li>jensen.thorben @ gmail.com</li>
+</ul>
+</section><section id="thanks-to" class="slide level2">
+<h2>Thanks to</h2>
+<ul>
+<li>Tobias Bradtke, Code for Münster</li>
+<li>Ralf Renkhoff, Stadt Münster</li>
+<li>IG Fahrradstadt</li>
+</ul>
+</section><section id="thank-you" class="slide level2">
+<h2>Thank you!</h2>
+</section><section id="sources" class="slide level2">
+<h2>Sources</h2>
 <ul>
 <li>climate change graphics: <a href="https://perspective-daily.de/article/391/SjcGXmvB" class="uri">https://perspective-daily.de/article/391/SjcGXmvB</a></li>
 <li>emissions &amp; kilometers graphics: <a href="https://www.umweltbundesamt.de/daten/verkehr/umweltbelastungen-durch-verkehr" class="uri">https://www.umweltbundesamt.de/daten/verkehr/umweltbelastungen-durch-verkehr</a></li>
 <li>bike counter map: <a href="https://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/radverkehrszaehlungen.html" class="uri">https://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/radverkehrszaehlungen.html</a></li>
-</ul></section>
+</ul>
+</section></section>
     </div>
   </div>
 
