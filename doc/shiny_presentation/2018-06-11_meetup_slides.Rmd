@@ -11,6 +11,9 @@ output:
 #   - use shiny PNG as background on title page 
 ---
 
+# {data-background="img/codeforms.jpg"}
+
+
 # "I'm here<br>for the drinks.<br>What *is* Shiny, though?"
 
 ***
