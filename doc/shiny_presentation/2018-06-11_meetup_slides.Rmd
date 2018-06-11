@@ -162,7 +162,7 @@ docker run --rm -p 3838:3838 garage-shiny
 
 # our project<br><br>Traffic Dynamics
 
-## Why Traffic Data? Climate Change!
+## Why Traffic Data?<br>Climate Change!
 
 <!---
  - climate change is a global challenge
