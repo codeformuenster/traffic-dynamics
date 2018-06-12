@@ -270,5 +270,6 @@ plotlyOutput("plotTemperature"),
 
 ## Sources
 - climate change graphics: https://perspective-daily.de/article/391/SjcGXmvB
-- emissions & kilometers graphics: https://www.umweltbundesamt.de/daten/verkehr/umweltbelastungen-durch-verkehr
+- emissions graphics: https://www.umweltbundesamt.de/daten/verkehr/umweltbelastungen-durch-verkehr#textpart-3
+- kilometers graphics: https://www.umweltbundesamt.de/daten/verkehr/fahrleistungen-verkehrsaufwand-modal-split#textpart-1
 - bike counter map: https://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/radverkehrszaehlungen.html
