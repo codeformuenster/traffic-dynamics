@@ -13,8 +13,7 @@ dir.create("data/raw/cars_unzipped", showWarnings = F)
 
 # DOWNLOAD BICYCLE DATA
 url = "https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/fahrrad/Fahrradzaehlstellen-Stundenwerte.csv"
-download.file(url = url,
-              destfile = "data/raw/Fahrradzaehlstellen-Stundenwerte.csv")
+download.file(url = url, destfile = "data/raw/Fahrradzaehlstellen-Stundenwerte.csv")
 
 # DOWNLOAD CAR DATA
 # 2015
@@ -29,13 +28,18 @@ download.file(url = url, destfile = "data/raw/kfzzaehlstellen2017.zip")
 # 2018
 url = "https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/kfz/kfzzaehlstellen2018.zip"
 download.file(url = url, destfile = "data/raw/kfzzaehlstellen2018.zip")
+# 2019 until August
+url = "https://github.com/codeformuenster/open-data/raw/master/verkehrsdaten/kfz/kfzzaehlstellen2019BisAugust.zip"
+download.file(url = url, destfile = "data/raw/kfzzaehlstellen2019BisAugust.zip")
 
 # UNZIP CAR DATA
-unzip(zipfile = "data/raw/kfzzaehlstellen2015.zip", 
+unzip(zipfile = "data/raw/kfzzaehlstellen2015.zip",
       exdir = "data/raw/cars_unzipped/")
-unzip(zipfile = "data/raw/kfzzaehlstellen2016.zip", 
+unzip(zipfile = "data/raw/kfzzaehlstellen2016.zip",
       exdir = "data/raw/cars_unzipped/")
-unzip(zipfile = "data/raw/kfzzaehlstellen2017.zip", 
+unzip(zipfile = "data/raw/kfzzaehlstellen2017.zip",
       exdir = "data/raw/cars_unzipped/")
-unzip(zipfile = "data/raw/kfzzaehlstellen2018.zip", 
+unzip(zipfile = "data/raw/kfzzaehlstellen2018.zip",
+      exdir = "data/raw/cars_unzipped/")
+unzip(zipfile = "data/raw/kfzzaehlstellen2019BisAugust.zip",
       exdir = "data/raw/cars_unzipped/")

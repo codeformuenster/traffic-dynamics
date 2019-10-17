@@ -9,29 +9,59 @@
 sapply(c("dplyr", "assertthat", "lubridate", "chron", "tidyr", "DBI", "RSQLite"), 
        require, character.only = TRUE)
 
-process_df <- function(df) {
-  # shift header left and remove last column 
+process_df <- function(df, filename) {
+  
+  # shift header left and remove last column, if necessary
   if (!is.na(colnames(df)[26])) {
-    colnames(df) <-
-      c(colnames(df), "NA") %>% 
-      tail(-1)
-    assert_that(df %>% dplyr::select(26) %>% is.na %>% all)
+    # second if does not fit in the first expression due to non-short-circuit R
+    # (if there is no 26'th column, the expression will fail ...)
+    if (all(is.na(df[26]))) {
+      colnames(df) <-
+        c(colnames(df), "NA") %>%
+        tail(-1)
+      assert_that(df %>% dplyr::select(26) %>% is.na %>% all)
+      df <-
+        df %>%
+        dplyr::select(-26)
+    }
+  }
+  
+  # remove whole column even if classification seems to work for two junctions
+  # see https://github.com/codeformuenster/traffic-dynamics/issues/13
+  if ("X" %in% colnames(df)) {
     df <-
       df %>%
-      dplyr::select(-26)
+      dplyr::select(-X)
+  }
+  # from Oct 2018 onwards
+  if ("Klasse" %in% colnames(df)) {
+    df <-
+      df %>%
+      dplyr::select(-Klasse)
+  }
+  # from mid-december onwards: wrong naming of columns (see raw files)
+  # crude measure: remove supoosed classification column, if there are too many "500"s
+  if (sum(df[,2] == 500, na.rm = T) > 510) {
+    df <-
+      df %>%
+      dplyr::select(-2)
+  }
+  
+  # not NA if is needed for empty files
+  if (!is.na(df[1, 1])) {
+    # remove metadata about not happening classification (from August 2018 onwards)
+    if (startsWith(as.character(df[1, 1]), "Datum")) {
+      df <- df[-seq(1,12), ]
+    }
   }
   
   # DATE
-  # identify date from first column label
-  date <-
-    df %>%
-    colnames %>%
-    .[1] %>%
-    ymd(.)
-  # add date to new column
+  # identify date from filename
+  date_from_filename <- ymd(substr(filename, 1, 10))
+  # add date from filename to new column
   df <- 
     df %>%
-    mutate(date = as.character(date))
+    mutate(date = as.character(date_from_filename))
   # rename first header to 'location'
   colnames(df)[1] <- "location"
   
@@ -43,7 +73,7 @@ process_df <- function(df) {
   		"04050", # Wolbecker Straße / Servatiiplatz
   		"03052", # Hüfferstraße
   		"07030", # Hammer Straße
-  		"04051", # Eisenbahnstraße (there are no traffic lights on the Promenade, this one is one the parallel street
+  		"04051", # Eisenbahnstraße (there are no traffic lights on the Promenade at this place, this one is one the parallel street
   		"04073", # Gartenstraße
   		"04061", # Warendorfer Straße
   		"04010", # Hafenstraße
@@ -65,10 +95,10 @@ process_df <- function(df) {
     mutate(day = as.integer(day(date))) %>%
     # subtract 1 because sqlite counts Sun = 0 but lubridate Sun = 1
     mutate(weekday = wday(date, label = F) - 1) %>%
-    mutate(weekend = is.weekend(date)) %>% 
+    mutate(weekend = is.weekend(date)) %>%
     # 'hour' to integer format
-    mutate(hour = substring(hour, 2)) %>% 
-    mutate(hour = as.integer(hour)) %>% 
+    mutate(hour = substring(hour, 2)) %>%
+    mutate(hour = as.integer(hour)) %>%
   	mutate(vehicle = "car")
 
   return(df)
@@ -84,15 +114,16 @@ con <- dbConnect(SQLite(), dbname = "data/database/traffic_data.sqlite")
 if (dbExistsTable(con, "cars")) { dbRemoveTable(con, "cars") }
 
 # EACH source file: read, preprocess, add to 'df_target'
-for (raw_file in raw_files) {
-  print(paste("processing ", raw_file))
+for (raw_file_name in raw_files) {
+  print(paste("processing ", raw_file_name))
   df_source <- 
-    read.csv(paste(data_folder, raw_file, sep = ""),
-             sep = ";", row.names = NULL) %>%
-    process_df()
+    read.csv(paste(data_folder, raw_file_name, sep = ""),
+             sep = ";", row.names = NULL)
+  
+  df_processed <- process_df(df_source, strsplit(raw_file_name, "/")[[1]][2])
   
   # write 'df_source' to SQLite database
-  dbWriteTable(con, "cars", df_source, 
+  dbWriteTable(con, "cars", df_processed, 
                append = T, row.names = F, overwrite = F)
 }
 
