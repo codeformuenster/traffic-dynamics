@@ -71,10 +71,13 @@ process_df <- function(df, filename) {
   	c(# locations where (closeby) also bicycles are counted, in the same order as http://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/radverkehrszaehlungen.html
   		"01080", # Neutor
   		"04050", # Wolbecker Straße / Servatiiplatz
-  		"03052", # Hüfferstraße
-  		"07030", # Hammer Straße
-  		"04051", # Eisenbahnstraße (there are no traffic lights on the Promenade at this place, this one is one the parallel street
+  		"03052", # Hüfferstraße 1
+  		"01123", # Hüfferstraße 2
+  		"07030", # Hammer Straße 1
+  		"07080", # Hammer Straße / Kreuzung Geiststraße; TODO Fahrspurfilterung)
+  		"04051", # Eisenbahnstraße
   		"04073", # Gartenstraße
+  		"03160", # Gartenstraße Kreuzung Ring: TODO Fahrspurfilterung
   		"04061", # Warendorfer Straße
   		"04010", # Hafenstraße
   		"01190", # Weseler Straße / Kolde-Ring
