@@ -70,9 +70,8 @@ process_df <- function(df, filename) {
   relevant_locations <-
   	c(# locations where (closeby) also bicycles are counted, in the same order as http://www.stadt-muenster.de/verkehrsplanung/verkehr-in-zahlen/radverkehrszaehlungen.html
   		"01080", # Neutor
-  		"04050", # Wolbecker Straße / Servatiiplatz
-  		"03052", # Hüfferstraße 1
-  		"01123", # Hüfferstraße 2
+  		"09040", # Wolbecker Straße / Dortmunder Straße
+  		"01123", # Hüfferstraße / Badstraße
   		"07030", # Hammer Straße 1
   		"07080", # Hammer Straße / Kreuzung Geiststraße; TODO Fahrspurfilterung)
   		"04051", # Eisenbahnstraße
