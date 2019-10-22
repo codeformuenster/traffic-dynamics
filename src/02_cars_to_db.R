@@ -72,11 +72,10 @@ process_df <- function(df, filename) {
   		"01080", # Neutor
   		"09040", # Wolbecker Straße / Dortmunder Straße
   		"01123", # Hüfferstraße / Badstraße
-  		"07030", # Hammer Straße 1
-  		"07080", # Hammer Straße / Kreuzung Geiststraße; TODO Fahrspurfilterung)
+  		"07080", # Hammer Straße / Kreuzung Geiststraße
   		"04051", # Eisenbahnstraße
-  		"04073", # Gartenstraße
-  		"03160", # Gartenstraße Kreuzung Ring: TODO Fahrspurfilterung
+  		"04070", # Gartenstraße / Bohlweg
+  		"03160", # Gartenstraße / Kreuzung Ring
   		"04061", # Warendorfer Straße
   		"04010", # Hafenstraße
   		"01190", # Weseler Straße / Kolde-Ring
