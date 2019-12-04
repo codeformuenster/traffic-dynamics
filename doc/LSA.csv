@@ -1,0 +1,309 @@
+Steuergruppe,Technik,ID,StrA,StrB,StrC,StrD,NbW,NbX,NbY,NbZ,Lat,Long
+-,-,01010,Steinfurter Straße,B54,,,01020,,,,51.987988,7.580732
+-,-,01020,Steinfurter Straße,Wikinghege,,,01010,01225,,,51.984179,7.588471
+3,Siemens,01025,Steinfurter Straße,Austermannstraße,,,01020,01030,,,51.978525,7.597848
+3,Swarco,01030,Steinfurter Straße,Johann Krane Weg,,,01025,01040,,,51.976496,7.601292
+3,Swarco,01040,Steinfurter Straße,-,,,01030,01050,,,51.975575,7.602957
+3,Swarco,01050,Steinfurter Straße,York-Ring,Orleans-Ring,,01061,03080,01040,01051,51.973454,7.606579
+3,Swarco,01051,York-Ring,Gasselstiege,Koburger Weg,,01050,02020,,,51.974256,7.610026
+3,Swarco,01060,Steinfurter Straße,Kapuzinerstraße,,,01070,01061,,,51.970725,7.610388
+3,Swarco,01061,Steinfurter Straße,Catharina-Müller-Straße,,,01050,01060,,,51.971428,7.609448
+3,Swarco,01070,Steinfurter Straße,Grevener Straße,,,01081,01060,02010,01080,51.969341,7.612381
+3,Swarco,01080,Steinfurter Straße,Wilhelmstraße,Lazarettstraße,,01090,01081,01070,03132,51.967301,7.615026
+3,Swarco,01081,Grevener Straße,Wilhelmstraße,,,03080,01070,01080,,51.967335,7.612275
+3,Swarco,01090,Schlossplatz,Münzstraße,,,01100,01080,06020,,51.966332,7.617064
+3,Swarco,01100,Schlossplatz,Überwasserstraße,,,01110,01090,,,51.965257,7.617598
+3,Swarco,01110,Schlossplatz,Frauenstraße,,,01120,01100,,,51.963462,7.617913
+3,Swarco,01120,Schlossplatz,Gerichtsstraße,Universitätsstraße,Am Stadtgraben,01130,01123,01110,01121,51.961875,7.617535
+3,Siemens,01121,Universitätsstraße,Krummer Timpen,,,01120,,,,51.961645,7.619268
+3,Swarco,01123,Gerichtsstraße,Badestraße,,,03052,01120,,,51.961970,7.614767
+4,Siemens,01130,Am Stadtgraben,Georgskommende,,,01140,01120,,,51.959620,7.618456
+4,Siemens,01140,Am Stadtgraben,Adenauerallee,Aegidiistraße,Weseler Straße,01150,01130,,,51.957311,7.619682
+4,Siemens,01150,Weseler Straße,Bismarckallee,,,01140,01160,,,51.956164,7.619446
+4,Siemens,01160,Weseler Straße,Moltkestraße,,,01170,03022,01150,01161,51.954972,7.619875
+4,Siemens,01161,Moltkestraße,Hermannstraße,Marks-Haindorf-Stiege,,01160,,,,51.955356,7.621938
+4,Siemens,01170,Weseler Straße,Geiststraße,Lühnstiege,,01190,01160,,,51.952615,7.619152
+4,Siemens,01190,Weseler Straße,Kolde-Ring,,,01195,01196,01170,01191,51.949828,7.616891
+4,Swarco,01191,Geiststraße,Donders-Ring,Hochstraße,,01192,01190,01170,,51.949642,7.621687
+4,Swarco,01192,Geiststraße,Kurze Straße,Turmstraße,,07080,01191,07050,,51.947820,7.622093
+4,Siemens,01195,Weseler Straße,Sperlichstraßre,,,01200,01190,,,51.946753,7.614221
+4,Stuehrenberg,01196,Kolde-Ring,Von-Stauffenberg-Straße,,,03023,01190,,,51.949740,7.613763
+9,Siemens,01200,Weseler Straße,Sentmaringer Weg,,,01210,01195,,,51.943934,7.612002
+9,Siemens,01210,Weseler Straße,Bonhoefferstraße,Inselbogen,,01220,01211,01200,,51.940769,7.609347
+14,Siemens,01211,Inselbogen,Grüner Grund,,,01210,07111,,,51.939778,7.613120
+9,Siemens,01220,Weseler Straße,Buckstraße,,,01210,01230,,,51.937959,7.605832
+9,Siemens,01230,Weseler Straße,-,,,01220,01240,,,51.936395,7.603573
+9,Siemens,01240,Weseler Straße,Weseler Straße,,,01230,01250,,,51.935192,7.602000
+9,Siemens,01250,Weseler Straße,Boeselagerstraße,,,01252,01251,01240,,51.934764,7.600286
+-,Swarco,01251,Mecklenbecker Straße,Boeselagerstraße,,,01272,01250,,,51.939548,7.591980
+9,Siemens,01252,Weseler Straße,Kerkheideweg,,,01260,01250,,,51.931725,7.594880
+9,Stuehrenberg,01260,Weseler Straße,Mersmannstiege,,,01261,01262,01252,,51.930275,7.592401
+9,Stuehrenberg,01261,Weseler Straße,Fritz-Stricker-Straße,,,01270,01260,,,51.928793,7.589582
+9,Stuehrenberg,01262,Mersmannstiege,Daimlerweg,,,01260,,,,51.929723,7.594581
+9,Stuehrenberg,01270,Weseler Straße,Dingbängerweg,,,01273,01271,01261,,51.926716,7.583667
+9,Siemens,01271,Dingbängerweg,Am Hof Hesselmann,Schlautstiege,,01272,01270,,,51.931105,7.580378
+9,Siemens,01272,Mecklenbecker Straße,Dingbängerweg,,,24030,01251,01271,,51.934374,7.578893
+9,Stuehrenberg,01273,Weseler Straße,Meyerbeerstraße,,,01274,01270,,,51.925305,7.579253
+9,Siemens,01274,Weseler Straße,,,,01273,01280,,,51.925043,7.576758
+9,Stuehrenberg,01280,Weseler Straße,Heroldstraße,Meckmannweg,,01290,01274,,,51.924940,7.572885
+9,Stuehrenberg,01290,Weseler Straße,Untietheide,Zur Landwehr,,01300,01280,,,51.925265,7.563067
+9,Stuehrenberg,01300,Weseler Straße,An der Hansalinie,,,01290,23010,,,51.925251,7.560317
+3,Swarco,02010,Grevener Straße,Melcherstraße,Harkortstraße,,01070,02020,,,51.971287,7.612593
+3,Swarco,02020,Grevener Straße,York-Ring,Friesenring,,02010,01051,02030,02021,51.974323,7.612349
+3,Swarco,02021,Friesenring,Kinderhauser Straße,,,02020,03120,,,51.974332,7.613557
+10,Swarco,02030,Grevener Straße,Dorpatweg,,,02020,02040,,,51.976348,7.612261
+10,Swarco,02040,Grevener Straße,Meßkamp,,,02030,02041,,,51.980174,7.611972
+10,Swarco,02041,Grevener Straße,-,,,02040,02050,,,51.982518,7.611778
+10,Swarco,02050,Grevener Straße,Nienkamp,Dreizehnerstraße,,02041,02070,,,51.983708,7.611632
+10,Swarco,02070,Grevener Straße,Westhoffstraße,,,02050,12100,02080,,51.989225,7.611277
+10,Swarco,02080,Grevener Straße,Am Burloh,Bröderichweg,,02070,12090,02090,02082,51.993446,7.612331
+10,Swarco,02081,Kanalstraße,Bröderichweg,,,05015,02082,,,51.993495,7.621705
+10,Swarco,02082,Bröderichweg,Regina-Protmann-Straße,,,02080,02081,,,51.993084,7.617424
+10,Swarco,02090,Grevener Straße,Janningsweg,,,02080,02100,,,51.995729,7.612859
+10,Swarco,02100,Grevener Straße,Wangeroogeweg,Kristiansandstraße,,02090,12060,,,51.997768,7.613470
+6,Swarco,03020,Kolde-Ring,Kardinal-von-Galen-Ring,Mecklenbecker Straße,Scharnhorststraße,03023,03021,03022,01251,51.949451,7.606336
+6,Avt-Stoye,03021,Kardinal-von-Galen-Ring,-,,,03020,03030,,,51.952935,7.603236
+-,Siemens,03022,Scharnhorststraße,Offenbergstraße,,,03020,01160,,,51.952055,7.611720
+6,Avt-Stoye,03023,Kolde-Ring,Sperlichstraße,,,03020,01196,,,51.949154,7.610137
+6,Avt-Stoye,03030,Kardinal-von-Galen-Ring,Annette-Allee,Sentruper Straße,,03021,03031,03040,,51.955303,7.602766
+6,Swarco,03031,Sentruper Straße,Scheffer-Boichorst-Straße,,,03030,,,,51.954147,7.597998
+6,Avt-Stoye,03040,Kardinal-von-Galen-Ring,Vesaliusweg,Niels-Stensen-Straße,,03030,03050,,,51.956761,7.602816
+6,Avt-Stoye,03050,Kardinal-von-Galen-Ring,Hüfferstraße,Rishon-Le-Zion-Ring,Waldeyerstraße,03040,03060,03052,,51.959581,7.602583
+3,Siemens,03052,Hüfferstraße,Himmelreichallee,,,03050,01123,,,51.961450,7.609580
+6,Avt-Stoye,03060,Rishon-Le-Zion-Ring,Sertürnerstraße,,,03050,03065,,,51.961194,7.602565
+6,Siemens,03065,Rishon-Le-Zion-Ring,Domagkstraße,,,03060,03070,,,51.963579,7.601816
+6,Avt-Stoye,03070,Rishon-Le-Zion-Ring,Einsteinstraße,Orleans-Ring,Coesfelder Kreuz,03065,16130,03080,01081,51.965147,7.601624
+6,Avt-Stoye,03080,Orleans-Ring,Wilhelmstraße,Apffelstaedtstraße,,03070,16160,01050,01081,51.968928,7.602755
+2,Avt-Stoye,03120,Friesenring,Jahnstraße,,,02021,03130,,,51.974585,7.618741
+2,Avt-Stoye,03130,Friesenring,Wienburgsstraße,Cheruskerring,,03131,03120,03140,,51.974709,7.623580
+2,Swarco,03131,Wienburgstraße,Wichernstraße,Nordstraße,Melcherstraße,03132,02010,03130,,51.972305,7.622813
+2,Swarco,03132,Nordstraße,Hoyastraße,Studtstraße,,01080,03131,03151,,51.970164,7.622183
+2,Avt-Stoye,03140,Cheruskerring,Langemarckstraße,,,03130,03150,,,51.973874,7.628973
+2,Avt-Stoye,03150,Cheruskerring,Kanalstraße,Lublinring,,03151,03140,03152,03160,51.973072,7.632853
+2,Swarco,03151,Kanalstraße,Maximilianstraße,,,03132,03150,04073,,51.970101,7.631218
+-,-,03152,Kanalstraße,Wibbeltstraße,,03140,03153,,,,51.976992,7.634624
+-,Swarco,03153,Kanalstraße,-,,03152,05015,,,,51.978965,7.633270
+2,Avt-Stoye,03160,Lublinring,Gartenstraße,Niedersachsenring,,04073,03150,05010,03170,51.972486,7.636285
+2,Avt-Stoye,03170,Niedersachsenring,Piusallee,Goldstraße,,04072,03160,05030,03171,51.971255,7.640703
+2,Avt-Stoye,03171,Niedersachsenring,Schleswiger Straße,,,03170,03180,,,51.969388,7.643464
+12,Siemens,03172,Rostockweg,Mecklenburger Straße,Stettiner Straße,,03170,03182,,,51.971402,7.645305
+2,Avt-Stoye,03180,Niedersachsenring,Ostmarkstraße,Kaiser-Wilhelm-Ring,Bohlweg,03171,04072,03181,03210,51.967654,7.645540
+2,Avt-Stoye,03181,Ostmarkstraße,Dieckstraße,Kirchstraße,,03180,03182,06164,,51.968001,7.647283
+12,Siemens,03182,Dieckstraße,Kärntner Straße,,,03181,03172,06165,,51.970727,7.649445
+1,Swarco,03210,Kaiser-Wilhelm-Ring,Warendorfer Straße,Hohenzollernring,,03220,06130,03180,06150,51.963698,7.646968
+1,Swarco,03220,Hohenzollernring,Mauritzsteinpfad,Sankt-Mauritz-Freiheit,,03221,03210,,,51.962601,7.647447
+1,Swarco,03221,Hohenzollernring,Lortzingstraße,Bernsmeyerstiege,,03230,03220,,,51.960008,7.647490
+1,Swarco,03230,Hohenzollernring,Sternstraße,Manfred-von-Richthofen-Straße,,03240,03221,03231,,51.959012,7.647438
+1,Swarco,03231,Manfred-von-Richthofen-Straße,Andreas-Hofer-Straße,,,09060,03230,03232,,51.958786,7.653049
+1,Siemens,03232,Andreas-Hofer-Straße,Mauritz-Lindenweg,Eugen-Müller-Straße,,03231,,,,51.962474,7.654036
+1,Swarco,03240,Hohenzollernring,Sophienstraße,,,03250,03230,,,51.956990,7.646772
+1,Siemens,03250,Hohenzollernring,Wolbecker Straße,Hansaring,,03260,09040,03240,09050,51.955475,7.645744
+1,Swarco,03260,Hansaring,Schillerstraße,,,03270,03250,,,51.954546,7.644977
+1,Swarco,03270,Hansaring,Dortmunder Straße,,,03290,09040,03260,,51.953217,7.641583
+7,Swarco,03290,Hansaring,Albersloher Weg,Hafenstraße,Bremer Straße,08020,04011,04030,03270,51.952891,7.636615
+5,Swarco,03291,Bremer Straße,Hamburger Straße,Bremer Platz,,03290,04030,09011,,51.955868,7.637311
+5,Siemens,04010,Hafenstraße,Frie-Vendt-Straße,Von-Steuben-Straße,,11020,04120,04020,04011,51.954021,7.631337
+5,Siemens,04011,Hafenstraße,Bahnhofstraße,Friedrich-Ebert-Straße,,11020,04010,04030,03290,51.953742,7.632646
+5,Swarco,04020,Von-Steuben-Straße,Bahnhofstraße,Herwarthstraße,,04010,04100,04030,,51.955727,7.632768
+5,Swarco,04030,Bahnhofstraße,Windthorststraße,,,04020,04090,04040,03291,51.956799,7.634120
+5,Siemens,04040,Bahnhofstraße,Urbanstraße,,,04030,04080,04050,,51.958261,7.634721
+5,Swarco,04050,Bahnhofstraße,Servatiiplatz,Eisenbahnstraße,Wolbecker Straße,04040,04051,09010,,51.959668,7.635000
+5,Siemens,04051,Eisenbahnstraße,-,,,04050,04060,,,51.960419,7.635097
+5,Swarco,04052,Friedrichstraße,-,,,04061,,,,51.960356,7.635781
+5,Swarco,04060,Eisenbahnstraße,Mauritzstraße,Fürstenbergstraße,Freiherr-vom-Stein-Platz,04051,06070,04070,04061,51.961981,7.635377
+5,Swarco,04061,Friedrichstraße,Freiherr-vom-Stein-Platz,Piusallee,Warendorfer Straße,04052,04060,04072,06120,51.961895,7.636310
+5,Swarco,04070,Eisenbahnstraße,Hörsterstraße,Gartenstraße,Bohlweg,04060,06060,04074,04072,51.965613,7.634209
+5,Swarco,04072,Bohlweg,Piusallee,,,04061,04070,03171,03180,51.966674,7.639319
+2,Swarco,04073,Gartenstraße,-,,,04074,03151,03160,,51.967808,7.633261
+5,Swarco,04074,Gartenstraße,Maximilianstraße,Stühmerweg,,04070,04073,,,51.969713,7.633985
+5,Siemens,04080,Von-Vincke-Straße,Urbanstraße,,,04090,04050,04040,,51.958533,7.632733
+5,Siemens,04090,Von-Vincke-Straße,Windthorststraße,Engelenschanze,Engelstraße,04110,04080,04030,,51.957453,7.631579
+5,Siemens,04100,Herwarthstraße,Engelstraße,Schorlemerstraße,,04120,04110,04090,04020,51.956246,7.631278
+5,Siemens,04110,Schorlemerstraße,Engelenschanze,,,04090,04100,,,51.956504,7.630433
+5,Siemens,04120,Hafenstraße,Engelstraße,,,04100,04010,,,51.954498,7.629769
+11,Avt-Stoye,05010,Hoher Heckenweg,Gartenstraße,,,03160,05011,05030,,51.973529,7.636574
+11,Siemens,05011,Gartenstraße,,,,05010,,,,51.976978,7.635948
+-,Swarco,05015,Kanalstraße,Nevinghoff,,02081,03153,,,,51.983583,7.629836
+11,Siemens,05030,Hoher Heckenweg,Piusallee,,,05010,05040,,,51.975182,7.639793
+11,Siemens,05040,Hoher Heckenweg,Im Hangenfeld,,,05030,05050,,,51.976511,7.641344
+11,Siemens,05050,Hoher Heckenweg,Kösliner Straße,Rumphorstweg,,05040,05090,,,51.977495,7.642620
+11,Siemens,05090,Hoher Heckenweg,Edelbach,,,05050,05100,,,51.985706,7.647130
+11,Siemens,05100,Hoher Heckenweg,An der Meerwiese,Volbachweg,,05090,05120,,,51.987852,7.647882
+11,Avt-Stoye,05120,Hoher Heckenweg,Königsberger Straße,,,05100,05122,05121,,51.992901,7.648332
+11,Siemens,05121,Königsberger Straße,Elbinger Straße,,,05120,27040,,,51.994778,7.653435
+11,Siemens,05122,Königsberger Straße,Görlitzer Straße,,,05123,05120,,,51.992591,7.644168
+11,Swarco,05123,Königsberger Straße,Kiesekampweg,Holtmannsweg,Coerheide,05122,,,,51.994068,7.639215
+5,Swarco,06020,Münzstraße,Hollenbeckerstraße,,,01090,06030,,,51.966680,7.620130
+5,Swarco,06030,Bergstraße,Am Kreuztor,Schlaunstraße,,06020,06040,,,51.965956,7.623727
+5,Swarco,06040,Bergstraße,Tibusstraße,An der Apostelkirche,,06030,06050,,,51.965284,7.626403
+5,Swarco,06050,An der Apostelkirche,Neubrückenstraße,Voßgasse,,06040,06060,,,51.964697,7.628534
+5,Swarco,06060,Voßgasse,Hörsterstraße,Bült,Alter Fischmarkt,06050,06070,04070,,51.964145,7.630007
+5,Swarco,06070,Mauritzstraße,Asche,,,06060,04060,,,51.962915,7.631872
+1,Swarco,06120,Warendorfer Straße,Gereonstraße,Friedensstraße,,03220,06130,03180,06150,51.961777,7.642288
+1,Swarco,06130,Warendorfer Straße,Oststraße,,,06120,03210,,,51.962146,7.643993
+1,Swarco,06150,Warendorfer Straße,Wiener Straße,Dechaneistraße,,03210,06164,06155,,51.964840,7.650691
+-,Stuehrenberg,06155,Warendorfer Straße,Egbertstraße,,,06150,06160,,,51.965586,7.652588
+12,Siemens,06160,Warendorfer Straße,Danziger Freiheit,Schiffahrter Damm,,06155,06161,06170,,51.966999,7.656445
+12,Siemens,06161,Schiffahrter Damm,Ostmarkstraße,,,06160,06164,06162,06170,51.967947,7.655765
+12,Siemens,06162,Schiffahrter Damm,Kärntner Straße,Weserstraße,,06161,06165,06163,,51.969851,7.656400
+12,Siemens,06163,Schiffahrter Damm,Pötterhoek,Saarstraße,,06162,,,,51.971910,7.657065
+12,Siemens,06164,Ostmarkstraße,Wiener Straße,,,03181,06150,06161,,51.968178,7.651623
+12,Siemens,06165,Kärntner Straße,-,,,03182,06162,,,51.970185,7.653313
+12,Siemens,06170,Warendorfer Straße,Admiral-Spee-Straße,,,06160,06161,06190,,51.967216,7.658164
+-,-,06190,Warendorfer Straße,Wilhelmshavenufer,,,06170,06200,,,51.968436,7.664566
+-,-,06200,Warendorfer Straße,,,,06190,06210,,,51.969306,7.668915
+-,-,06210,Warendorfer Straße,Mondstraße,Dyckburgstraße,,06200,10040,10050,,51.970710,7.676411
+8,Siemens,07030,Hammer Straße,Goebenstraße,Bernhardstraße,,07040,,,,51.952662,7.625546
+8,Siemens,07040,Hammer Straße,Burgstraße,Jägerstraße,,07030,07050,,,51.950858,7.624962
+8,Siemens,07050,Hammer Straße,Kurze Straße,,,07040,07080,01192,,51.947670,7.623923
+8,Siemens,07080,Hammer Straße,Geiststraße,,,01192,07050,07090,,51.945277,7.623199
+8,Siemens,07090,Hammer Straße,Fehrbellingstraße,,,07080,07100,,,51.942967,7.623529
+8,Siemens,07100,Hammer Straße,Friedrich-Ebert-Straße,,,07110,07090,11080,,51.941889,7.623774
+8,Siemens,07110,Hammer Straße,Metzer Straße,,,07120,07111,07090,,51.940822,7.624053
+14,Siemens,07111,Metzer Straße,Weißenburgstraße,,,01211,07110,,,51.940325,7.620812
+8,Siemens,07120,Hammer Straße,Münstermannweg,,,07130,07110,,,51.939405,7.624503
+8,Stuehrenberg,07130,Hammer Straße,Umgehungsstraße,,,07140,01240,07120,08040,51.936631,7.625156
+8,Siemens,07140,Hammer Straße,Duesbergweg,,,07141,07150,07130,,51.934240,7.625811
+-,Siemens,07141,Hammer Straße,Werlandstraße,,,13061,07140,,,51.933253,7.620051
+8,Siemens,07150,Hammer Straße,Siemensstraße,Am Berg Fidel,,07151,07140,,,51.931919,7.626697
+-,Siemens,07151,Siemensstraße,,,,07150,10010S,,,51.932685,7.630649
+15,Siemens,10010N,Industrieweg,Robert-Bosch-Straße,,,10010S,08031,,,51.939107,7.635303
+15,Siemens,10010S,Robert-Bosch-Straße,,,,10010N,,,,51.937812,7.635792
+8,Siemens,07170,Hammer Straße,-,,,07180,07150,,,51.926698,7.628906
+8,Siemens,07180,Hammer Straße,Vennheideweg,,,07190,07170,,,51.921338,7.631250
+8,Siemens,07190,Hammer Straße,Vennheideweg,Hohe Geest,,07200,07180,,,51.919350,7.631687
+8,Siemens,07200,Hammer Straße,Meesenstiege,Merkureck,,07201,07190,21170,,51.913549,7.632883
+8,Siemens,07201,Merkureck,Hohe Geest,,,07200,,,,51.914355,7.635695
+7,Swarco,08020,Albersloher Weg,Hafenplatz,,,08030,03290,,,51.950909,7.636940
+7,Swarco,08030,Albersloher Weg,Lippstädter Straße,,,08031,10010N,08020,,51.949905,7.638031
+7,Swarco,08031,Albersloher Weg,Kiesekamps Mühle,Am Hawerkamp,,08030,08032,,,51.948803,7.640121
+7,Swarco,08032,Albersloher Weg,Hafengrenzweg,,,08031,08041,,,51.948079,7.641556
+7,Swarco,08040,Albersloher Weg,Umgehungsstraße,,,08041,08050,,,51.943498,7.647250
+7,Swarco,08041,Albersloher Weg,Theodor-Scheiwe-Straße,Nieberdingstraße,,08032,08040,,,51.945146,7.645644
+7,Siemens,08050,Albersloher Weg,Egbert-Snoek-Straße,,,08040,08052,,,51.941226,7.649841
+7,Siemens,08052,Albersloher Weg,,,,08050,08053,,,51.940019,7.651630
+7,Siemens,08053,Albersloher Weg,Willy-Brandt-Weg,,,08052,08054,,,51.938749,7.653240
+7,Swarco,08054,Albersloher Weg,Martin-Luther-King-Weg,,,08053,08060,,,51.936452,7.656654
+7,Siemens,08060,Albersloher Weg,An den Loddenbüschen,Heumannsweg,,08070,08065,08054,,51.934498,7.659685
+8,Stuehrenberg,08061,An den Loddenbüschen,Höltenweg,Loddenheide,,08062,08065,,,51.928646,7.647973
+8,Stuehrenberg,08062,Trauttmansdorffstraße,Siemensstraße,,,08063,08061,,,51.925356,7.634347
+8,Stuehrenberg,08063,Trauttmansdorffstraße,,,,08062,,,,51.924906,7.630630
+8,Stuehrenberg,08065,An den Loddenbüschen,Martin-Luther-King-Weg,,,08061,08060,,,51.931653,7.654651
+7,Siemens,08070,Albersloher Weg,Münnichweg,,,08080,08060,,,51.932378,7.662838
+7,Siemens,08080,Albersloher Weg,Letterhausweg,Erbdrostenweg,,08070,08090,,,51.930840,7.664888
+7,Siemens,08090,Albersloher Weg,Gremmendorfer Weg,,,08100,08080,08091,,51.928441,7.667576
+17,Swarco,08091,Gremmendorfer Weg,,,,08090,,,,51.930320,7.674904
+7,Siemens,08100,Albersloher Weg,,,,08090,08110,,,51.926616,7.669555
+7,Siemens,08110,Albersloher Weg,Paul-Engelhard-Weg,,,08100,08120,,,51.925736,7.670523
+7,Siemens,08120,Albersloher Weg,Keltenweg,Heidestraße,,08110,08130,,,51.923796,7.672644
+7,Siemens,08130,Albersloher Weg,Angelsachsenweg,,,08120,08140,,,51.923114,7.673337
+17,Swarco,08140,Albersloher Weg,,,,08130,29100,,,51.920574,7.676230
+1,Siemens,09040,Wolbecker Straße,Sauerländer Weg,Bremer Platz,,03270,09010,03250,,51.958491,7.638262
+1,Siemens,09050,Wolbecker Straße,Ewaldistraße,,,03250,09060,,,51.955061,7.648750
+1,Siemens,09060,Wolbecker Straße,Andreas-Hofer-Straße,,,09050,03231,09070,,51.954838,7.652621
+1,-,09070,Wolbecker Straße,Lohausweg,,,09060,09080,,,51.953388,7.661824
+1,-,09080,Wolbecker Straße,,,,09090,09070,,,51.951857,7.666650
+16,Siemens,09090,Wolbecker Straße,Laerer Landweg,,,09080,09100,,,51.951274,7.670085
+16,Swarco,09100,Wolbecker Straße,Mondstraße,Schmittingheide,,09101,09090,27150,,51.949445,7.675398
+-,Siemens,09101,Schmittingheide,Hegerskamp,Honebachaue,,09100,08060,,,51.946626,7.673288
+-,-,09110,Münsterstraße,Laerer Werseufer,Wersewinkel,,09100,28030,,,51.945657,7.690362
+-,-,10040,Dyckburgstraße,,,,06210,10050,,,51.973146,7.677056
+-,-,10050,Warendorfer Straße,,,,06210,10040,27140,,51.972017,7.683615
+10,Swarco,12020,Brüningheide,Feldstiegenkamp,,,-,,,,51.998525,7.597664
+10,Swarco,12040,Kristiansandstraße,Von-Humboldt-Straße,,,12060,,,,51.997015,7.603488
+10,Swarco,12060,Kristiansandstraße,Pastorsesch,,,12040,02100,,,51.997944,7.611569
+10,Swarco,12090,Am Burloh,Rektoratsweg,,,12100,02080,,,51.993781,7.607811
+10,Swarco,12100,Westhoffstraße,Rektoratsweg,,,12110,12090,02070,,51.989353,7.608609
+10,Swarco,12110,Westhoffstraße,Grotemeyerstraße,,,12100,,,,51.992080,7.598887
+14,Swarco,13050,Kappenberger Damm,Davensberger Straße,Siebenbürgenweg,,13060,,,,51.932573,7.607466
+14,Swarco,13060,Kappenberger Damm,Düesbergweg,Geringhoffstraße,,13050,13070,13061,,51.930488,7.606585
+-,Swarco,13061,Düesbergweg,,,,13060,07141,,,51.931104,7.612930
+14,Siemens,13070,Kappenberger Damm,Brunnenweg,Drensteinfurtweg,,13060,13080,,,51.927145,7.605181
+-,Siemens,13080,Kappenberger Damm,Werneweg,,,13070,22110,,,51.924232,7.604010
+6,Avt-Stoye,16130,Coesfelder Kreuz,Corrensstraße,Albert-Schweitzer-Straße,Von-Esmarch-Straße,16170,16250,03070,,51.964828,7.598578
+6,Siemens,16160,Corrensstraße,Apffelstaedtstraße,Mendelstraße,,03080,16170,,,51.969900,7.596636
+6,Siemens,16170,Von-Esmarch-Straße,Schreiberstraße,Fliednerstraße,,16130,,,,51.965063,7.594413
+6,Siemens,16180,Von-Esmarch-Straße,-,,,16190,,,,51.967198,7.580455
+6,Swarco,16190,Enschedeweg,-,,,16180,16220,,,51.967553,7.579637
+6,Siemens,16200,Rüschhausweg,-,,,16240,,,,51.971341,7.569596
+6,Siemens,16210,Hensenstraße,-,,,16240,16220,,,51.973705,7.572178
+6,Swarco,16220,Enschedeweg,Gievenbecker Weg,Hensenstraße,Gescherweg,16210,16190,,,51.972385,7.575866
+6,Siemens,16240,Hensenstraße,Dieckmannstraße,Rüschhausweg,,16200,16210,,,51.972889,7.566268
+-,Siemens,16250,Roxeler Straße,Albert-Schweitzer-Straße,,,16260,16130,,,51.962499,7.587466
+-,Swarco,16260,Roxeler Straße,Niedenstiege,Schmeddingstraße,,16270,16250,,,51.960535,7.582072
+-,Avt-Stoye,16270,Roxeler Straße,Gievenbecker Reihe,,,16275,16260,,,51.960296,7.579384
+-,-,16275,Roxeler Straße,Kaserne,,,16280,16270,,,51.959116,7.576295
+-,Stuehrenberg,16280,Roxeler Straße,Dieckmannstraße,,,16290,16275,,,51.957581,7.572591
+-,-,16290,Roxeler Straße,Ramertsweg,,,24030,16280,,,51.955736,7.567698
+13,Swarco,21010,Westfalenstraße,Amelsbürener Straße,Marktallee,,21100,21180,21140,21110,51.902480,7.638160
+13,Swarco,21020,Marktallee,Hohe Geest,Am Klosterwald,,21180,21190,21120,,51.903867,7.642091
+13,Swarco,21040,Marktallee,Glasuritstraße,Osttor,Hülsebrockstraße,21160,21210,21150,21190,51.905112,7.651280
+13,Swarco,21050,Osttor,Rubensstraße,,,29010,21130,,,51.906378,7.674091
+13,Swarco,21060,Westfalenstraße,,,,21060,,,,51.896751,7.642688
+13,Swarco,21080,Hohe Geest,Hülsebrockstraße,Hummelbrink,,21120,,,,51.907192,7.638932
+13,Swarco,21091,Burgwall,Meesenstiege,,,21150,,,,51.906163,7.624700
+13,Swarco,21100,Westfalenstraße,An der Alten Kirche,,,21170,21010,,,51.905338,7.635785
+13,Stuehrenberg,21110,Amelsbürener Straße,Rückertstraße,Caldeloerweg,,21010,,,,51.898864,7.627321
+13,Swarco,21120,Hohe Geest,Zur Alten Feuerwache,,,21080,21020,,,51.905485,7.640533
+13,Swarco,21130,Osttor,Loddenweg,,,21050,21165,,,51.905989,7.667363
+13,Swarco,21140,Westfalenstraße,,,,21060,21010,,,51.899754,7.640330
+13,Swarco,21150,Hülsebrockstraße,,,,21080,21040,,,51.908288,7.646231
+13,Swarco,21160,Osttor,-,,,21165,21040,,,51.905960,7.661721
+13,Stuehrenberg,21165,Osttor,Ringstraße,Immenkamp,,21130,21160,,,51.905798,7.664218
+13,Stuehrenberg,21170,Westfalenstraße,Burgwall,,,07200,21100,,,51.908900,7.632856
+13,Swarco,21180,Marktallee,-,,,21010,21020,,,51.902939,7.639324
+13,Swarco,21190,Marktallee,-,,,21020,21040,,,51.904241,7.645027
+13,Swarco,21210,Glasuritstraße,Max-Winkelmann-Straße,,,21040,21220,,,51.903457,7.651811
+13,Swarco,21220,Glasuritstraße,,,,21210,,,,51.901720,7.651122
+13,Stuehrenberg,21230,Meesenstiege,Helene-Weigel-Weg,,,21240,21091,,,51.902385,7.625578
+13,Stuehrenberg,21240,Meesenstiege,Franz-Berding-Weg,Wielandstraße,,21230,,,,51.900243,7.624539
+-,-,22080,Kappenberger Damm,,,,22090,,,,51.887636,7.575954
+-,-,22090,Kappenberger Damm,,,,22080,22120,,,51.885625,7.572330
+-,Swarco,22100,Davertstraße,Zum Häpper,Deermannstraße,,-,,,,51.884870,7.604812
+-,-,22110,Kappenberger Damm,Wiedaustraße,,,-,,,,51.893867,7.578663
+-,-,22120,Kappenberger Damm,-,,,22090,,,,51.876925,7.566444
+-,Siemens,23010,Weseler Straße,Oberort,Dülmener Straße,Osthofstraße,23120,23110,01300,,51.924739,7.527097
+-,Swarco,23100,Osthofstraße,Am Kämpken,Steinkuhle,,23110,,,,51.920294,7.527225
+-,Swarco,23110,Osthofstraße,-,,,23010,23100,,,51.922661,7.526737
+-,Swarco,23120,Dülmener Straße,-,,,23130,23010,,,51.925131,7.524990
+-,Swarco,23130,Dülmener Straße,,,,23120,,,,51.924815,7.522744
+-,Siemens,24010,Annette-von-Droste-Hülshoff-Straße,Tilbecker Straße,Pienersallee,,24140,24020,,,51.954139,7.532458
+-,Swarco,24020,Alter Gemeindeplatz,Annette-von-Droste-Hülshoff-Straße,Auf dem Dorn,,24010,24100,,,51.955548,7.532383
+-,-,24030,Roxeler Straße,Dingbängerweg,,,16290,24130,,,51.952614,7.553038
+-,Siemens,24100,Havixbecker Straße,-,,,24020,24120,,,51.955164,7.534116
+-,Siemens,24120,Roxeler Straße,Im Seihof,Havixbecker Straße,Dorffeldstraße,24100,24130,,,51.954478,7.535681
+-,Swarco,24130,Roxeler Straße,Schelmenstiege,,,24120,24030,,,51.955164,7.541582
+-,Swarco,24140,Tilbecker Straße,-,,,24010,,,,51.953761,7.529060
+-,-,25010,Hülshoffstraße,Von-Schonebeck-Ring,,,25020,25030,,,51.997439,7.554958
+-,-,25020,Hülshoffstraße,Altenberger Straße,Hägerstraße,,25100,25010,,,52.000048,7.556536
+-,Swarco,25030,Hülshoffstraße,Von-Schonebeck-Ring,Isolde-Kurz-Straße,,25010,25040,,,51.993896,7.548363
+-,-,25040,Rüschhausweg,Hülshoffstraße,,,25030,,,,51.988372,7.539664
+-,Swarco,25100,Altenberger Straße,,,,25020,25110,,,51.998981,7.560186
+-,Swarco,25110,Altenberger Straße,,,,25100,,,,51.997728,7.562805
+-,-,26010,Sprakeler Straße,,,,26020,02100,,,52.031932,7.620579
+-,-,26020,Aldruper Straße,Gimbter Straße,,,26010,,,,52.043584,7.621200
+-,-,27010,Warendorfer Straße,Alter Mühlenweg,Handorfer Straße,,27100,27140,,,51.976568,7.705183
+-,-,27020,Sudmühlenstraße,Schiffahrter Damm,,,27030,27050,,,51.999771,7.670404
+-,Swarco,27030,Sudmühlenstraße,Dyckburgstraße,,,27020,27100,,,51.993080,7.687456
+-,-,27040,Schiffahrter Damm,Königsberger Straße,,,27050,27060,05121,,51.993103,7.666002
+-,-,27050,Schiffahrter Damm,An der Alten Ziegelei,,,27020,27040,,,51.996738,7.668300
+-,-,27060,Schiffahrter Damm,An der Kleimannbrücke,Rudolf-Diesel-Straße,,27040,,,,51.990288,7.664255
+-,Siemens,27100,Handorfer Straße,Patronillaplatz,,,27010,27030,,,51.987917,7.698946
+16,Swarco,27110,Mondstraße,An der Konradkirche,,,06210,27120,,,51.963118,7.676036
+16,Siemens,27120,Mondstraße,Pleistermühlenweg,,,27130,27110,,,51.961324,7.675532
+16,Siemens,27130,Mondstraße,-,,,27120,27150,,,51.956196,7.677074
+-,-,27140,Warendorfer Straße,Hugerlandshofweg,Pleistermühlenweg,,27010,10050,,,51.973555,7.693625
+16,Siemens,27150,Mondstraße,Vischeringweg,Bretanoweg,,27130,09100,,,51.952769,7.676659
+-,Siemens,28010,Zumbuschstraße,Hiltruper Straße,Petersheide,,28120,,,,51.911891,7.722313
+-,Swarco,28020,Am Steintor,Hiltruper Straße,,,28130,,,,51.915818,7.727328
+-,-,28030,Freckenhorster Straße,Münsterstraße,,,09110,28040,,,51.938066,7.712679
+-,-,28040,Freckenhorster Straße,Telgter Straße,,,-,,,,51.929570,7.754068
+-,-,28050,L585,,,,28060,,,,51.917567,7.712709
+-,-,28060,L585,Eschstraße,,,28050,28130,,,51.920742,7.713390
+-,Swarco,28110,Hofstraße,,,,-,,,,51.916629,7.733596
+-,Siemens,28120,Hiltruper Straße,Von-Holte-Straße,Buxtrup,,28010,,,,51.911258,7.715774
+-,Siemens,28130,Münsterstraße,Eschstraße,Am Borggarten,,28020,,,,51.921295,7.728334
+-,-,29010,Albersloher Weg,Hiltruper Straße,Osttor,,29120,21050,,,51.910150,7.689384
+17,Siemens,29100,Albersloher Weg,Homannstraße,,,08140,29110,,,51.918964,7.677960
+17,Siemens,29110,Albersloher Weg,Am Blaukreuzwäldchen,,,29100,29120,,,51.915211,7.681999
+-,Swarco,29120,Albersloher Weg,Am Schütthook,,,29110,29010,,,51.913619,7.683936
